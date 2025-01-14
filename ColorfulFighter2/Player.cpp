@@ -68,7 +68,7 @@ namespace
 	constexpr int kCanselGraceFrame = 20;
 
 	//SE‚Ì‰¹—Ê
-	constexpr int kSeVolume = 200;
+	constexpr int kSeVolume = 120;
 
 	//Ÿ—˜ƒ|[ƒY‚ğ‚·‚é‚Ü‚Å‚É‚©‚©‚éŠÔ
 	constexpr int kChangeWinPoseFrame = 120;

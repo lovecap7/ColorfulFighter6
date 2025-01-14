@@ -36,7 +36,7 @@ namespace
 	constexpr int kGuardAnimFinishIndex = 210;
 	
 	//seƒ{ƒŠƒ…[ƒ€
-	constexpr int kSeVolume = 200;
+	constexpr int kSeVolume = 120;
 }
 
 GameManager::GameManager():
