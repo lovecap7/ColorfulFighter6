@@ -14,10 +14,9 @@ namespace
 	constexpr int kCenterY = Game::kScreenHeight / 2;
 	//ƒJ[ƒ\ƒ‹
 	constexpr int kCursorOffset = 50;
-	//ƒAƒCƒRƒ“‚Ì‰¡•
-	constexpr int kIconWidth = 200;
-	//—§‚¿ŠG‚Ì‰¡•
-	constexpr int kImageWidth = 300;
+	//—§‚¿ŠG‚Ì‘å‚«‚³
+	constexpr int kPlayerImageWidth = 300;
+	constexpr int kPlayerImageHeight = 500;
 
 	//ƒRƒ}ƒ“ƒh‹Z‚Ì”
 	constexpr int kCommandIndexMin = 1;
@@ -68,6 +67,8 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 	m_selectSehandle = LoadSoundMem("./SE/Select/SelectSE.mp3");
 	m_cursorMoveSehandle = LoadSoundMem("./SE/Select/CursorMoveSE.mp3");
 	m_cancelSehandle = LoadSoundMem("./SE/Select/CancelSE.mp3");
+	//”wŒi
+	m_backHandle = LoadGraph("img/CharacterSelect/SelectBack.png");
 
 	for (int i = 0; i < kCommandNum; ++i)
 	{
@@ -383,10 +384,10 @@ void CharacterselectScene::Update(Input& input, Input& input2)
 void CharacterselectScene::Draw()
 {
 	//”wŒi
-	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x555555, true);
+	DxLib::DrawGraph(0, 0, m_backHandle, true);
 	//—§‚¿ŠG
-	DxLib::DrawGraph(0, 100, m_imageChara1Handle, true);//1P
-	DxLib::DrawTurnGraph(Game::kScreenWidth - kImageWidth, 100, m_imageChara1Handle, true);//2P
+	DxLib::DrawGraph(0, 20, m_imageChara1Handle, true);//1P
+	DxLib::DrawTurnGraph(Game::kScreenWidth - kPlayerImageWidth, 20, m_imageChara1Handle, true);//2P
 
 	//‹Z1
 	DrawCircle(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, kIconRadius, 0x22ff22, true, true);
@@ -514,12 +515,12 @@ void CharacterselectScene::Draw()
 	{
 		DrawRectRotaGraphFast(
 			(kCommandIconImageWidth * kCommandIconImageScale) * (i + 1),
-			(Game::kScreenHeight / 2),
+			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP1Handle[i], true);
 		DrawRectRotaGraphFast(
 			Game::kScreenWidth - ((kCommandIconImageWidth * kCommandIconImageScale) * (i + 1)),
-			(Game::kScreenHeight / 2),
+			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
 	}

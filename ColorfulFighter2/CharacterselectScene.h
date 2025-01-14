@@ -44,6 +44,9 @@ private:
     int m_selectSehandle;
     int m_cursorMoveSehandle;
     int m_cancelSehandle;
+
+    //îwåi
+    int m_backHandle;
 public:
     CharacterselectScene(SceneController& controller);
 
