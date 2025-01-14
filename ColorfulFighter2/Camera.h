@@ -8,7 +8,8 @@ private:
 	
 	//—h‚ê‚éƒJƒƒ‰‚ÌˆÚ“®—Ê
 	Vector3 m_shakeVelo;
-	void ShakeCamera(Player& p1, Player& p2,bool isShake);
+	void ShakeCamera(Player& p1, Player& p2, GameManager& gameManager);
+	bool m_isInitShakeVelo;
 public:
 	
 	Camera();

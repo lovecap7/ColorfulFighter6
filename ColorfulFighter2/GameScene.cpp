@@ -143,7 +143,7 @@ GameScene::GameScene(SceneController& controller):
 void GameScene::Update(Input& input, Input& input2)
 {
 #if _DEBUG
-	if (input.IsTrigger("Pause"))
+	if (input.IsTrigger("Select"))
 	{
 		//‰Ÿ‚³‚ê‚½‚çŸ‚Ìó‘Ô‚É‘@ˆÛ
 		//Ÿ‚Ìó‘Ô‚Í‚±‚ÌƒNƒ‰ƒX‚ªŠo‚¦‚Ä‚¨‚­

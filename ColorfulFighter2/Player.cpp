@@ -885,7 +885,7 @@ bool Player::CheckDead()
 		//‰Ÿ‚µ‡‚¢”»’è‚ğÁ‚·(‰æ–ÊŠO‚És‚­‚½‚ß‚É)
 		ResetPushBox();
 		//‰æ–ÊŠO‚É‚Á”ò‚Ô
-		if (0 < m_pos.x && m_pos.x < kStageWidth)
+		if ((0 - kPlayerWidth) < m_pos.x && m_pos.x < (kStageWidth + kPlayerWidth))
 		{
 			m_velocity.x *= 1.5f;
 			m_velocity.y -= 10.0f;

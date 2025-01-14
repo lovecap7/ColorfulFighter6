@@ -13,7 +13,7 @@ namespace
 {
 	//ヒットストップの時間
 	constexpr int kHitStopFinishFrame = 8;
-	constexpr int kKoStopFinishFrame = 90;
+	constexpr int kKoStopFinishFrame = 40;
 
 	//2本先に取ったら勝ち
 	constexpr int kGamesetWinNum = 2;
@@ -335,6 +335,24 @@ void GameManager::CheckKO(Player& p1, Player& p2)
 		m_se->SetSE(m_koSeHandle);
 		m_se->Volume(kSeVolume);
 		m_se->PlayOnce();
+		//相打ち
+		if ((p1.GetHp() <= 0 && p2.GetHp() <= 0) || (p1.GetHp() == p2.GetHp() && m_time <= 0))
+		{
+			//引き分けはそのままラウンドチェンジ
+			return;
+		}
+		//P1の勝ち
+		else if (((p1.GetHp() > 0 && p2.GetHp() <= 0) || (p1.GetHp() > p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
+		{
+			m_isTimeUpOrKo = true;
+			m_winNumP1++;
+		}
+		//P2の勝ち
+		else if (((p1.GetHp() <= 0 && p2.GetHp() > 0) || (p1.GetHp() < p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
+		{
+			m_isTimeUpOrKo = true;
+			m_winNumP2++;
+		}
 	}
 
 	//ラウンドをゲームシーンで切り替え
@@ -363,26 +381,6 @@ void GameManager::CheckKO(Player& p1, Player& p2)
 			m_roundNumber++;
 			return;
 		}
-	}
-
-
-	//相打ち
-	if ((p1.GetHp() <= 0 && p2.GetHp() <= 0) || (p1.GetHp() == p2.GetHp() && m_time <= 0))
-	{
-		//引き分けはそのままラウンドチェンジ
-		return;
-	}
-	//P1の勝ち
-	else if (((p1.GetHp() > 0 && p2.GetHp() <= 0) || (p1.GetHp() > p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
-	{
-		m_isTimeUpOrKo = true;
-		m_winNumP1++;
-	}
-	//P2の勝ち
-	else if (((p1.GetHp() <= 0 && p2.GetHp() > 0) || (p1.GetHp() < p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
-	{
-		m_isTimeUpOrKo = true;
-		m_winNumP2++;
 	}
 }
 

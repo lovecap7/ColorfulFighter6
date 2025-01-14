@@ -101,6 +101,8 @@ public:
 	void OffIsChangeRound() { m_isChangeRound = false; }
 	//ƒQ[ƒ€I—¹
 	bool GetIsGameset() { return m_isGameset; }
+	//KO‚©timeup‚µ‚½‚©
+	bool GetIsTimeUpOrKo() { return m_isTimeUpOrKo; }
 	//Ÿ—˜”
 	int GetWinNumP1() { return m_winNumP1; }
 	int GetWinNumP2() { return m_winNumP2; }

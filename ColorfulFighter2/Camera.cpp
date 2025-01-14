@@ -7,7 +7,7 @@
 
 namespace
 {
-	constexpr float kShakeVeloX = 26.0f;
+	constexpr float kShakeVeloX = 20.0f;
 	constexpr float kShakeVeloY = 10.0f;
 	constexpr int kStageWidth = 2600;
 }
@@ -15,7 +15,8 @@ namespace
 Camera::Camera():
 	m_pos(),
 	m_drawOffset(),
-	m_shakeVelo()
+	m_shakeVelo(),
+	m_isInitShakeVelo(false)
 {
 }
 
@@ -60,7 +61,7 @@ void Camera::Update(Player& p1,Player& p2, GameManager& gameManager)
 	m_drawOffset.y = m_drawOffset.y + (Game::kScreenHeight / 2);
 	
 	//ヒットストップ中揺れる
-	ShakeCamera(p1, p2, gameManager.GetIsHitStop());
+	ShakeCamera(p1, p2, gameManager);
 
 #if _DEBUG
 	DrawFormatString(300, 0, 0xffffff, "cameraPos(%2.0f,%2.0f)", m_pos.x, m_pos.y);
@@ -78,10 +79,29 @@ float Camera::GetCameraRightWallPos()
 	return m_pos.x + (Game::kScreenWidth / 2);
 }
 
-void Camera::ShakeCamera(Player& p1, Player& p2,bool isShake)
+void Camera::ShakeCamera(Player& p1, Player& p2, GameManager& gameManager)
 {
-	if (isShake)
+	//ヒットストップ中に揺れる
+	if (gameManager.GetIsHitStop())
 	{
+		//一度だけ初期化する
+		if (!m_isInitShakeVelo)
+		{
+			if (!gameManager.GetIsTimeUpOrKo())
+			{
+				//縦揺れだけ
+				m_shakeVelo.x = 0;
+				m_shakeVelo.y = kShakeVeloY;
+			}
+			else
+			{
+				//KOしたら横揺れも入れる
+				m_shakeVelo.x = kShakeVeloX;
+				m_shakeVelo.y = kShakeVeloY;
+			}
+			m_isInitShakeVelo = true;
+		}
+
 		m_drawOffset.x += m_shakeVelo.x;
 		m_drawOffset.y += m_shakeVelo.y;
 		m_shakeVelo.x *= -1;
@@ -97,17 +117,6 @@ void Camera::ShakeCamera(Player& p1, Player& p2,bool isShake)
 	}
 	else
 	{
-		if ((p1.GetHp() > 0) && (p2.GetHp() > 0))
-		{
-			//縦揺れだけ
-			m_shakeVelo.x = 0;
-			m_shakeVelo.y = kShakeVeloY;
-		}
-		else
-		{
-			//KOしたら横揺れも入れる
-			m_shakeVelo.x = kShakeVeloX;
-			m_shakeVelo.y = kShakeVeloY;
-		}
+		m_isInitShakeVelo = false;
 	}
 }

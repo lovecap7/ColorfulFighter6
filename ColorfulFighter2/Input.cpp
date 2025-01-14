@@ -11,9 +11,9 @@ namespace
 
 	//コマンド猶予フレーム
 	//通常
-	constexpr int kDirInputgraceFrame = 16;
+	constexpr int kDirInputgraceFrame = 30;
 	//タメ
-	constexpr int kKeepInputgraceFrame = 16;
+	constexpr int kKeepInputgraceFrame = 30;
 	//タメに必要なフレーム
 	constexpr int kKeepFrame = 40;
 }
