@@ -2710,6 +2710,10 @@ void Player::DamageUpdate(Input& input, std::shared_ptr<Player> enemy, std::shar
 	//攻撃判定リセット
 	ResetAttackBox();
 	ResetGraspBox();
+	//投げリセット
+	m_isHitGrasp = false;
+	m_isThrown = false;
+	m_isThrowSuccess = false;
 	//ガードできない
 	m_isGuard = false;
 	//硬直フレーム
@@ -2788,6 +2792,10 @@ void Player::DownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared
 	//攻撃判定リセット
 	ResetAttackBox();
 	ResetGraspBox();
+	//投げリセット
+	m_isHitGrasp = false;
+	m_isThrown = false;
+	m_isThrowSuccess = false;
 	//ガードできない
 	m_isGuard = false;
 	//SE
@@ -2856,6 +2864,10 @@ void Player::DownAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::
 	//攻撃判定リセット
 	ResetAttackBox();
 	ResetGraspBox();
+	//投げリセット
+	m_isHitGrasp = false;
+	m_isThrown = false;
+	m_isThrowSuccess = false;
 	//ガードできない
 	m_isGuard = false;
 	//地面についたらダウン

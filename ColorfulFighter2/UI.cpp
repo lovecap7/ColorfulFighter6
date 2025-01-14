@@ -7,15 +7,13 @@ namespace
 {
 	//HPバーの座標
 	constexpr float kHpPosXP1 = (Game::kScreenWidth / 2) - 120.0f;//X座標の起点
-	constexpr float kHpPosXP2 = (Game::kScreenWidth / 2) + 120.f;//X座標の起点
+	constexpr float kHpPosXP2 = (Game::kScreenWidth / 2) + 120.0f;//X座標の起点
 	constexpr float kHpPosY = 60.0;
-	constexpr float kHpFrameOffset = 10.0;
+	constexpr float kHpFrameOffset = 10.0f;
 	
-
 	//HPバーの横幅と縦幅
-	constexpr float kHpWidth = 500.0;
-	constexpr float kHpHeight = 50.0;
-
+	constexpr float kHpWidth = 500.0f;
+	constexpr float kHpHeight = 50.0f;
 
 	//KO
 	constexpr float kCenterPosX = Game::kScreenWidth / 2;
@@ -363,6 +361,14 @@ void UI::DrawBack()
 	{
 		DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0xffffff, true);
 	}
+	//決着がついた際の文字（KOとかTIMEUPとか)
+	if (m_isTimeupOrKo)
+	{
+		DrawRectRotaGraphFast(
+			kCenterPosX, kCenterPosY,
+			0, 0, 512, 512,
+			2.0f, 0.0f, m_finishRoundHandle, true, false);
+	}
 
 	////P1のHPのバック
 	DrawBoxAA(kHpPosXP1, kHpPosY,
@@ -435,15 +441,6 @@ void UI::DrawBack()
 
 void UI::DrawFront()
 {
-	//決着がついた際の文字（KOとかTIMEUPとか)
-	if (m_isTimeupOrKo)
-	{
-		DrawRectRotaGraphFast(
-			kCenterPosX, kCenterPosY,
-			0, 0, 512, 512,
-			2.0f, 0.0f, m_finishRoundHandle, true, false);
-	}
-
 	//試合結果
 	if(m_isResult)
 	{

@@ -215,9 +215,9 @@ void GameScene::Draw()
 	}
 	m_bullet1->Draw(*m_camera);
 	m_bullet2->Draw(*m_camera);
+	m_ui->DrawFront();
 	//フェードインアウト
 	m_gameManager->Draw(*m_camera);
-	m_ui->DrawFront();
 
 #if _DEBUG	
 	DrawString(10, 10, "GameScene", 0xffffff);
