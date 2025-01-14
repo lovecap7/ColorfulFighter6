@@ -47,6 +47,8 @@ private:
 
     //背景
     int m_backHandle;
+    //テキスト
+    int m_selectTextHandle;
 public:
     CharacterselectScene(SceneController& controller);
 

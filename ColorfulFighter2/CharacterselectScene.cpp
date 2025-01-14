@@ -69,6 +69,8 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 	m_cancelSehandle = LoadSoundMem("./SE/Select/CancelSE.mp3");
 	//îwåi
 	m_backHandle = LoadGraph("img/CharacterSelect/SelectBack.png");
+	//ÉeÉLÉXÉg
+	m_selectTextHandle = LoadGraph("img/CharacterSelect/SelectText.png");
 
 	for (int i = 0; i < kCommandNum; ++i)
 	{
@@ -389,6 +391,8 @@ void CharacterselectScene::Draw()
 	DxLib::DrawGraph(0, 20, m_imageChara1Handle, true);//1P
 	DxLib::DrawTurnGraph(Game::kScreenWidth - kPlayerImageWidth, 20, m_imageChara1Handle, true);//2P
 
+
+	//ãZÇÃÉAÉCÉRÉì
 	//ãZ1
 	DrawCircle(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, kIconRadius, 0x22ff22, true, true);
 	//ãZ2
@@ -524,6 +528,8 @@ void CharacterselectScene::Draw()
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
 	}
+
+	DrawRotaGraph(kCenterX, 100, 1.0, 0, m_selectTextHandle, true, 0, 0);
 #if _DEBUG	
 	DxLib::DrawString(10, 10, "CharacterselectScene", 0xffffff);
 	for (int i = 0;i < 3;++i)
