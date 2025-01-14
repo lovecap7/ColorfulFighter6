@@ -13,7 +13,7 @@ namespace
 {
 	//ヒットストップの時間
 	constexpr int kHitStopFinishFrame = 8;
-	constexpr int kKoStopFinishFrame = 40;
+	constexpr int kKoStopFinishFrame = 50;
 
 	//2本先に取ったら勝ち
 	constexpr int kGamesetWinNum = 2;
