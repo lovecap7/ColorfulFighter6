@@ -517,6 +517,18 @@ void CharacterselectScene::Draw()
 		//コマンド
 	for (int i = 0; i < 3; ++i)
 	{
+		//バック
+		DrawRectRotaGraphFast(
+			(kCommandIconImageWidth* kCommandIconImageScale)* (i + 1),
+			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
+			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
+			kCommandIconImageScale, 0.0f, m_selectCommandIconP1Handle[i], true);
+		DrawRectRotaGraphFast(
+			Game::kScreenWidth - ((kCommandIconImageWidth * kCommandIconImageScale) * (i + 1)),
+			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
+			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
+			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
+		//選んだ技のアイコン
 		DrawRectRotaGraphFast(
 			(kCommandIconImageWidth * kCommandIconImageScale) * (i + 1),
 			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
