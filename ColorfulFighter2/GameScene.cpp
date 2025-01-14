@@ -201,9 +201,7 @@ void GameScene::Draw()
 {
 	//ステージ
 	StageDraw();
-
-	m_ui->AlwaysDraw();
-	m_ui->DirectionDraw();
+	m_ui->DrawBack();
 	//攻撃したほうを前に描画
 	if (m_gameManager->GetIsDrawFrontP1())
 	{
@@ -219,6 +217,7 @@ void GameScene::Draw()
 	m_bullet2->Draw(*m_camera);
 	//フェードインアウト
 	m_gameManager->Draw(*m_camera);
+	m_ui->DrawFront();
 
 #if _DEBUG	
 	DrawString(10, 10, "GameScene", 0xffffff);

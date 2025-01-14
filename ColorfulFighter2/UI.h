@@ -4,10 +4,10 @@ class GameManager;
 class UI
 {
 private:
-	float m_p1HpMax;
-	float m_p2HpMax;
-	float m_p1Hp;
-	float m_p2Hp;
+	float m_hpbarMaxP1;
+	float m_hpbarMaxP2;
+	float m_hpbarP1;
+	float m_hpbarP2;
 	int m_frameCount;
 	//試合終了の際のUI
 	bool m_isTimeupOrKo;
@@ -70,13 +70,24 @@ private:
 	int m_commandIconHandle[9];
 	int m_selectCommandIconP1Handle[3];//P1が選んだコマンドを表示
 	int m_selectCommandIconP2Handle[3];//P2が選んだコマンドを表示
+
+	//ダメージ表記
+	int m_damageDisplayCountFrameP1;
+	int m_damageDisplayCountFrameP2;
+	void DamageUI();
+	float m_damagebarP1;
+	float m_damagebarP2;
+	//1フレーム前のHPの値を保持
+	int m_beforeHpP1;
+	int m_beforeHpP2;
+
 public:
 	UI(int* selectCommandIndexP1, int* selectCommandIndexP2);
 	~UI();
 
 	void Init(float p1Hp, float p2Hp, GameManager& gameManager);
 	void Update(float p1Hp, float p2Hp,GameManager& gameManager);
-	void AlwaysDraw();//常時出てるUI
-	void DirectionDraw();//演出で出るUI
+	void DrawBack();//常時出てるUI
+	void DrawFront();//演出で出るUI
 };
 

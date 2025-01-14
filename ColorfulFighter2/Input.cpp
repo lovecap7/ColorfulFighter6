@@ -6,14 +6,14 @@ namespace
 	constexpr float kTriggerPower = 128;
 
 	//スティックの入力成立の大きさ
-	constexpr int kLeftStickPowerX = 100;
-	constexpr int kLeftStickPowerY = 450;
+	constexpr int kLeftStickPowerX = 50;
+	constexpr int kLeftStickPowerY = 50;
 
 	//コマンド猶予フレーム
 	//通常
-	constexpr int kDirInputgraceFrame = 30;
+	constexpr int kDirInputgraceFrame = 20;
 	//タメ
-	constexpr int kKeepInputgraceFrame = 30;
+	constexpr int kKeepInputgraceFrame = 25;
 	//タメに必要なフレーム
 	constexpr int kKeepFrame = 40;
 }
