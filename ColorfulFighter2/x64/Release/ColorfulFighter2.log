@@ -1,0 +1,164 @@
+﻿  Application.cpp
+  Bullet.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Bullet.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Bullet.cpp(12,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Bullet.cpp(18,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Bullet.cpp(25,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Bullet.cpp(32,33): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+  Camera.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Camera.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Camera.cpp(78,41): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Camera.cpp(78,26): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  CollisionCheck.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'CollisionCheck.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CollisionCheck.cpp(131,20): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CollisionCheck.cpp(147,20): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CollisionCheck.cpp(161,20): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CollisionCheck.cpp(176,20): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Player.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Player.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(474,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(473,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(472,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(471,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(482,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(481,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(480,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(479,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(489,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(488,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(487,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(486,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(496,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(495,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(494,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(493,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(503,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(502,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(501,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(500,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(512,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(511,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(510,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(509,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(519,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(518,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(517,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(516,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(530,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(529,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(528,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(527,47): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(538,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(537,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(536,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(535,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(545,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(544,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(543,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(542,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(552,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(551,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(550,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(549,49): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(559,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(558,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(557,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(556,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(568,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(567,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(566,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(565,53): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(576,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(575,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(574,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.cpp(573,52): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Chara.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'Chara.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(702,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(773,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(845,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(919,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(990,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1061,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1132,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1204,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1275,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1347,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1420,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1494,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(1588,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2089,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2102,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2222,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2227,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2373,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2389,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2705,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Chara.cpp(2723,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  CharacterselectScene.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'CharacterselectScene.cpp' をコンパイルしています)
+  
+  GameManager.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'GameManager.cpp' をコンパイルしています)
+  
+  GameScene.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'GameScene.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Player.h(64,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'GameScene.cpp' をコンパイルしています)
+  
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\GameScene.cpp(115,8): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\GameScene.cpp(113,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Input.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\Input.cpp(465,30): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+  ResultScene.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'ResultScene.cpp' をコンパイルしています)
+  
+  SceneController.cpp
+  SE.cpp
+  SoundManager.cpp
+  TitleScene.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
+  
+  UI.cpp
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(302,17): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(302,4): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(311,34): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(311,17): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(324,23): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(324,16): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(328,23): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(328,16): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(333,18): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(333,4): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(343,24): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(343,17): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(351,24): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(351,17): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(358,32): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(358,16): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(363,23): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\UI.cpp(363,16): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コード生成しています。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\ColorfulFighter2\SceneController.cpp(47): warning C4715: 'SceneController::GetSelectCommandIndex': 値を返さないコントロール パスがあります。
+  415 of 1254 functions (33.1%) were compiled, the rest were copied from previous compilation.
+    152 functions were new in current compilation
+    62 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  ColorfulFighter2.vcxproj -> C:\Users\lovecap\Documents\GitHub\ColorfulFighter5\x64\Release\ColorfulFighter2.exe
