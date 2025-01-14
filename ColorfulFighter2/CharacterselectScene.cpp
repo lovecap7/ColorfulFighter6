@@ -34,6 +34,8 @@ namespace
 	constexpr float kCommandIconImageScale = 0.5f;
 	constexpr int kCommandIconImageWidth = 200;
 	constexpr int kCommandIconImageHight = 200;
+	//選べるコマンド技の数
+	constexpr int kSelectCommandNum = 3;
 }
 
 CharacterselectScene::CharacterselectScene(SceneController& controller):
@@ -43,9 +45,7 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 	m_isSelectP1(false),
 	m_isSelectP2(false),
 	m_selectCommandIndexP1{0,0,0},
-	m_selectCommandIndexP2{0,0,0},
-	m_selectCommandIconP1Handle{-1,-1,-1},
-	m_selectCommandIconP2Handle{-1,-1,-1}
+	m_selectCommandIndexP2{0,0,0}
 	
 {
 	//イメージ画像(立ち絵)
@@ -72,6 +72,7 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 	//テキスト
 	m_selectTextHandle = LoadGraph("img/CharacterSelect/SelectText.png");
 
+	//アイコン
 	for (int i = 0; i < kCommandNum; ++i)
 	{
 		switch (i)
@@ -80,7 +81,7 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command1.png");
 			break;
 		case 1:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command1.png");
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command2.png");
 			break;
 		case 2:
 			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command3.png");
@@ -106,6 +107,13 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 		default:
 			break;
 		}
+	}
+	//空であることを表示
+	m_nullCommandIconHandle = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/SelectNull.png");
+	for (int i = 0; i < kSelectCommandNum; ++i)
+	{
+		m_selectCommandIconP1Handle[i] = m_nullCommandIconHandle;
+		m_selectCommandIconP2Handle[i] = m_nullCommandIconHandle;
 	}
 }
 
@@ -286,7 +294,7 @@ void CharacterselectScene::Update(Input& input, Input& input2)
 			if (m_selectCommandIndexP1[2 - i] != 0)
 			{
 				m_selectCommandIndexP1[2 - i] = 0;
-				m_selectCommandIconP1Handle[2 - i] = -1;
+				m_selectCommandIconP1Handle[2 - i] = m_nullCommandIconHandle;
 				break;
 			}
 		}
@@ -334,7 +342,7 @@ void CharacterselectScene::Update(Input& input, Input& input2)
 			if (m_selectCommandIndexP2[2 - i] != 0)
 			{
 				m_selectCommandIndexP2[2 - i] = 0;
-				m_selectCommandIconP2Handle[2 - i] = -1;
+				m_selectCommandIconP2Handle[2 - i] = m_nullCommandIconHandle;
 				break;
 			}
 		}
@@ -517,17 +525,6 @@ void CharacterselectScene::Draw()
 		//コマンド
 	for (int i = 0; i < 3; ++i)
 	{
-		//バック
-		DrawRectRotaGraphFast(
-			(kCommandIconImageWidth* kCommandIconImageScale)* (i + 1),
-			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
-			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
-			kCommandIconImageScale, 0.0f, m_selectCommandIconP1Handle[i], true);
-		DrawRectRotaGraphFast(
-			Game::kScreenWidth - ((kCommandIconImageWidth * kCommandIconImageScale) * (i + 1)),
-			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
-			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
-			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
 		//選んだ技のアイコン
 		DrawRectRotaGraphFast(
 			(kCommandIconImageWidth * kCommandIconImageScale) * (i + 1),
@@ -546,8 +543,8 @@ void CharacterselectScene::Draw()
 	DxLib::DrawString(10, 10, "CharacterselectScene", 0xffffff);
 	for (int i = 0;i < 3;++i)
 	{
-		DrawFormatString(400, 50 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
-		DrawFormatString(1000, 50 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
+		DrawFormatString(400, 800 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
+		DrawFormatString(1000, 800 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
 	}
 #endif
 	

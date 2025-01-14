@@ -18,6 +18,7 @@ private:
     int m_commandIconHandle[9];
     int m_selectCommandIconP1Handle[3];//P1が選んだコマンドを表示
     int m_selectCommandIconP2Handle[3];//P2が選んだコマンドを表示
+    int m_nullCommandIconHandle;//コマンド技を選んでいない時に表示する画像
 
     //P1のカーソル
     int m_cursorP1Handle;
