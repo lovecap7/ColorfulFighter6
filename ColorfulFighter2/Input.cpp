@@ -6,8 +6,8 @@ namespace
 	constexpr float kTriggerPower = 128;
 
 	//スティックの入力成立の大きさ
-	constexpr int kLeftStickPowerX = 50;
-	constexpr int kLeftStickPowerY = 50;
+	constexpr int kLeftStickPowerX = 10;
+	constexpr int kLeftStickPowerY = 10;
 
 	//コマンド猶予フレーム
 	//通常
@@ -152,22 +152,22 @@ void Input::Init()
 	//後ろタメ前
 	// ソニックブーム
 	m_commandList["4K6"] = { StickDir::Right ,StickDir::Left };	//右向き
-	m_commandList["1K6"] = { StickDir::Right ,StickDir::LeftDown };	//右向きソニックブーム(斜め溜め)
+	//m_commandList["1K6"] = { StickDir::Right ,StickDir::LeftDown };	//右向きソニックブーム(斜め溜め)
 	m_commandList["6K4"] = { StickDir::Left ,StickDir::Right };	//左向きソニックブーム
-	m_commandList["3K4"] = { StickDir::Left ,StickDir::RightDown };	//左向きソニックブーム(斜め溜め)
+	//m_commandList["3K4"] = { StickDir::Left ,StickDir::RightDown };	//左向きソニックブーム(斜め溜め)
 	//下タメ上要素(サマーソルト)
 	//サマソだけ斜め上でも成立したわ(向きも特に関係ない)
 	//たぶん真上だけだと入力難しいからだと思う優しいね^^
 	m_commandList["2K8"] = { StickDir::Up ,StickDir::Down };	
-	m_commandList["2K7"] = { StickDir::LeftUp ,StickDir::Down };	
-	m_commandList["2K9"] = { StickDir::RightUp ,StickDir::Down };	
+	/*m_commandList["2K7"] = { StickDir::LeftUp ,StickDir::Down };	
+	m_commandList["2K9"] = { StickDir::RightUp ,StickDir::Down };	*/
 	//斜め下タメ上要素
-	m_commandList["1K8"] = { StickDir::Up ,StickDir::LeftDown };		//左下+上
-	m_commandList["1K7"] = { StickDir::LeftUp ,StickDir::LeftDown };	//左下+左上
-	m_commandList["1K9"] = { StickDir::RightUp ,StickDir::LeftDown };	//左下+右上
-	m_commandList["3K8"] = { StickDir::Up ,StickDir::RightDown };		//右下+上
-	m_commandList["3K7"] = { StickDir::LeftUp ,StickDir::RightDown };	//右下+左上
-	m_commandList["3K9"] = { StickDir::RightUp ,StickDir::RightDown };	//右下+右上
+	//m_commandList["1K8"] = { StickDir::Up ,StickDir::LeftDown };		//左下+上
+	//m_commandList["1K7"] = { StickDir::LeftUp ,StickDir::LeftDown };	//左下+左上
+	//m_commandList["1K9"] = { StickDir::RightUp ,StickDir::LeftDown };	//左下+右上
+	//m_commandList["3K8"] = { StickDir::Up ,StickDir::RightDown };		//右下+上
+	//m_commandList["3K7"] = { StickDir::LeftUp ,StickDir::RightDown };	//右下+左上
+	//m_commandList["3K9"] = { StickDir::RightUp ,StickDir::RightDown };	//右下+右上
 
 	//スクリュー
 	m_commandList["RightOneRevolution"] = { StickDir::Up ,StickDir::Left,StickDir::Down, StickDir::Right };	//右向き
@@ -309,11 +309,44 @@ bool Input::CheckKeepCommand(std::string command)
 {
 	//フレームを数えるために用意
 	int frame = 0;
+	//タメのフレームを数えるために用意
+	int keepFrame = 0;
 	//コマンド成立の方向キーの最初を0とする
 	int index = 0;
+
 	//これまでの入力内容を見ていく
 	for (auto& data : m_stickDirInfo)
 	{
+		//タメの部分だけ斜めでも成立していることにしたい
+		if (index == (m_commandList.at(command).size() - 1))
+		{
+			if (data.dir == StickDir::RightUp || data.dir == StickDir::RightDown)
+			{
+				data.dir =  StickDir::Right ;
+				//成功しているならタメのフレームを足していく
+				if(data.dir == m_commandList.at(command).at(index));
+				{
+					keepFrame += data.frame;
+				}
+			}
+			if ((data.dir == StickDir::LeftUp || data.dir == StickDir::LeftDown))
+			{
+				data.dir = StickDir::Left;
+				if (data.dir == m_commandList.at(command).at(index));
+				{
+					keepFrame += data.frame;
+				}
+			}
+			if (data.dir == StickDir::RightDown || data.dir == StickDir::LeftDown)
+			{
+				data.dir = StickDir::Down;
+				if (data.dir == m_commandList.at(command).at(index));
+				{
+					keepFrame += data.frame;
+				}
+			}
+		}
+		
 		//入力内容にコマンドの条件に当てはまるキーがあった時
 		if (data.dir == m_commandList.at(command).at(index))
 		{
@@ -322,8 +355,10 @@ bool Input::CheckKeepCommand(std::string command)
 			//コマンドの方向キーのタメの部分をチェック
 			if (index == m_commandList.at(command).size())
 			{
+				//成功しているならタメのフレームを足していく
+				keepFrame += data.frame;
 				//フレームが40フレームを超えてるか
-				if (data.frame > kKeepFrame)
+				if (keepFrame > kKeepFrame)
 				{
 					//listの先頭にコマンド成立のフレームを入れる
 					StickDirInfo info;
@@ -335,8 +370,8 @@ bool Input::CheckKeepCommand(std::string command)
 				}
 				else
 				{
-					//失敗
-					return false;
+					//いったん戻す
+					index = 1;
 				}
 			}
 		}

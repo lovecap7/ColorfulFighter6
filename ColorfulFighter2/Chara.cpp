@@ -50,6 +50,9 @@ namespace
 	constexpr int kStartFrameCommand4Light = 9;
 	constexpr int kAllFrameCommand4High = 49;
 	constexpr int kStartFrameCommand4High = 15;
+	constexpr float kCommand4VeloX = 30.0f;
+	constexpr float kCommand4VeloY = -10.0f;
+
 
 	//ソニックブーム
 	constexpr int kAllFrameCommand5 = 40;
@@ -207,10 +210,10 @@ bool Chara::SuccessCommandCheck(Input& input, Player& player)
 		}
 		if (
 			input.CheckKeepCommand("4K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("6K4") && player.GetDirState() ||
-			//斜めタメ
-			input.CheckKeepCommand("1K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("3K4") && player.GetDirState())
+			input.CheckKeepCommand("6K4") && player.GetDirState())// ||
+			////斜めタメ
+			//input.CheckKeepCommand("1K6") && !player.GetDirState() ||
+			//input.CheckKeepCommand("3K4") && player.GetDirState())
 		{
 			m_commandIndex = static_cast<int>(Command::Sonic);
 			return CheckMyCommand();
@@ -251,26 +254,26 @@ bool Chara::SuccessCommandCheck(Input& input, Player& player)
 		//後ろ溜め
 		if (
 			input.CheckKeepCommand("4K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("6K4") && player.GetDirState() ||
-			//斜めタメ
-			input.CheckKeepCommand("1K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("3K4") && player.GetDirState())
+			input.CheckKeepCommand("6K4") && player.GetDirState() )//||
+			////斜めタメ
+			//input.CheckKeepCommand("1K6") && !player.GetDirState() ||
+			//input.CheckKeepCommand("3K4") && player.GetDirState())
 		{
 			m_commandIndex = static_cast<int>(Command::Supairaru);
 			return CheckMyCommand();
 		}
 		if (
 			//下タメ上要素(サマーソルト)
-			input.CheckKeepCommand("2K8") ||
-			input.CheckKeepCommand("2K7") ||
-			input.CheckKeepCommand("2K9") ||
-			//斜め下タメ上要素
-			input.CheckKeepCommand("1K8") ||
-			input.CheckKeepCommand("1K7") ||
-			input.CheckKeepCommand("1K9") ||
-			input.CheckKeepCommand("3K8") ||
-			input.CheckKeepCommand("3K7") ||
-			input.CheckKeepCommand("3K9"))
+			input.CheckKeepCommand("2K8") )//||
+			//input.CheckKeepCommand("2K7") ||
+			//input.CheckKeepCommand("2K9") ||
+			////斜め下タメ上要素
+			//input.CheckKeepCommand("1K8") ||
+			//input.CheckKeepCommand("1K7") ||
+			//input.CheckKeepCommand("1K9") ||
+			//input.CheckKeepCommand("3K8") ||
+			//input.CheckKeepCommand("3K7") ||
+			//input.CheckKeepCommand("3K9"))
 		{
 			m_commandIndex = static_cast<int>(Command::Rolling);
 			return CheckMyCommand();
@@ -2440,7 +2443,8 @@ void Chara::GetGiveEffectCommand4(Player& player)
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 	{
-		m_velocity.x = 20.0f;
+		m_velocity.y = kCommand4VeloY;
+		m_velocity.x = kCommand4VeloX;
 		if (player.GetDirState())
 		{
 			m_velocity.x *= -1;
@@ -2456,7 +2460,7 @@ void Chara::GetGiveEffectCommand4(Player& player)
 	//弱版
 	else if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
 	{
-		m_velocity.x = 15.0f;
+		m_velocity.x = kCommand4VeloX;
 		if (player.GetDirState())
 		{
 			m_velocity.x *= -1;
