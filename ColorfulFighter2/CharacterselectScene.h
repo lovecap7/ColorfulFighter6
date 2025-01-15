@@ -20,17 +20,21 @@ private:
     int m_selectCommandIconP1Handle[3];//P1が選んだコマンドを表示
     int m_selectCommandIconP2Handle[3];//P2が選んだコマンドを表示
     int m_nullCommandIconHandle;//コマンド技を選んでいない時に表示する画像
+    //9個並んでるアイコンの描画
     void DrawCommandIcon();
 
     //P1のカーソル
     int m_cursorP1Handle;
     //P2のカーソル
     int m_cursorP2Handle;
+    //カーソルの描画
     void DrawCursor();
+    int m_countFrame;
    
     //現在の技のセレクト番号
     int m_currentSelectCommandIndexP1;
     int m_currentSelectCommandIndexP2;
+    //選んだコマンド技の描画
     void DrawSelectPlayerCommandIcon();
     //技を3つ決定したらtrue
     bool m_isSelectFinishP1;
@@ -68,6 +72,8 @@ private:
     //フェードインするために使う
     std::shared_ptr<FadeManager> m_fadeManager;
     bool m_isFadeIn;
+    //Loading中の画像
+    int m_loadingHandle;
 public:
     CharacterselectScene(SceneController& controller);
 

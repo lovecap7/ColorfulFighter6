@@ -128,7 +128,7 @@ void GameManager::NoStopUpdate(Player& p1, Player& p2)
 	}
 
 	//フェードアウトしたらゲーム開始の準備
-	if (m_fadeManager->GetFadeFrameCount() <= 0)
+	if (m_fadeManager->IsFinishFadeOut())
 	{
 		//ゲーム開始時
 		m_startRoundCount++;
@@ -360,7 +360,7 @@ void GameManager::CheckKO(Player& p1, Player& p2)
 	{
 		//フェードインしきったらラウンドを切り替え
 		m_isFadeIn = true;
-		if (m_fadeManager->GetFadeFrameCount() >= 255)
+		if (m_fadeManager->IsFinishFadeIn())
 		{
 			//2本とったらゲーム終了
 			if (m_winNumP1 >= kGamesetWinNum)

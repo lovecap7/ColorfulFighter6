@@ -49,7 +49,7 @@ void CharacterselectScene::SelectP1(Input& input)
 {
 	if (m_isSelectFinishP1)
 	{
-		if (input.IsTrigger("X"))
+		if (input.IsTrigger("A"))
 		{
 			//準備完了
 			m_currentReadyP1Handle = m_readyHandle;
@@ -205,7 +205,7 @@ void CharacterselectScene::SelectP2(Input& input)
 {
 	if (m_isSelectFinishP2)
 	{
-		if (input.IsTrigger("X"))
+		if (input.IsTrigger("A"))
 		{
 			//準備完了
 			m_currentReadyP2Handle = m_readyHandle;
@@ -363,7 +363,8 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 	m_isReadyP2(false),
 	m_selectCommandIndexP1{0,0,0},
 	m_selectCommandIndexP2{0,0,0},
-	m_isFadeIn(false)
+	m_isFadeIn(false),
+	m_countFrame(0)
 	
 {
 	//イメージ画像(立ち絵)
@@ -433,18 +434,21 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 		m_selectCommandIconP1Handle[i] = m_nullCommandIconHandle;
 		m_selectCommandIconP2Handle[i] = m_nullCommandIconHandle;
 	}
-	m_gettingReadyHandle = LoadGraph("./img/CharacterSelect/Ready_Off.png");;//準備中
-	m_readyHandle = LoadGraph("./img/CharacterSelect/Ready_On.png");;//準備完了
+	m_gettingReadyHandle = LoadGraph("./img/CharacterSelect/Ready_Off.png");//準備中
+	m_readyHandle = LoadGraph("./img/CharacterSelect/Ready_On.png");//準備完了
 	m_currentReadyP1Handle = m_gettingReadyHandle;//準備完了かどうかを表示
 	m_currentReadyP2Handle = m_gettingReadyHandle;
 
 	//フェードインするときに使う
 	m_fadeManager = std::make_shared<FadeManager>();
+	//ローディング画面
+	m_loadingHandle = LoadGraph("./img/Loading/NowLoading.png");
 }
 
 void CharacterselectScene::Update(Input& input, Input& input2)
 {
-
+	//ちかちかに使う
+	m_countFrame++;
 	//このシーンでやりたいこと
 	//キャラクターを決定したらそのキャラクターの
 	//ポインタを次のシーンに渡したい
@@ -508,6 +512,7 @@ void CharacterselectScene::Draw()
 	DxLib::DrawGraph(0, 20, m_imageChara1Handle, true);//1P
 	DxLib::DrawTurnGraph(Game::kScreenWidth - kPlayerImageWidth, 20, m_imageChara1Handle, true);//2P
 
+	//準備できたかの確認
 	if (m_isSelectFinishP1)
 	{
 		DxLib::DrawGraph(kReadyPosXP1, kReadyPosY, m_currentReadyP1Handle, true);//1PのReady
@@ -516,8 +521,6 @@ void CharacterselectScene::Draw()
 	{
 		DxLib::DrawGraph(kReadyPosXP2, kReadyPosY, m_currentReadyP2Handle, true);//2PのReady
 	}
-	
-
 	//技のアイコン
 	DrawCommandIcon();
 
@@ -531,6 +534,12 @@ void CharacterselectScene::Draw()
 
 	//フェードイン
 	m_fadeManager->FadeDraw(m_isFadeIn);
+	//フェードインしきってから表示
+	if (m_fadeManager->IsFinishFadeIn())
+	{
+		DxLib::DrawGraph(0, 0, m_loadingHandle, true);
+	}
+	
 #if _DEBUG	
 	DxLib::DrawString(10, 10, "CharacterselectScene", 0xffffff);
 	for (int i = 0;i < 3;++i)
@@ -612,60 +621,105 @@ void CharacterselectScene::DrawCommandIcon()
 void CharacterselectScene::DrawCursor()
 {
 	//カーソル
-	for (int i = 1; i <= 2; ++i)
+	//P1
+	//ちかちか
+	
+	if ((m_countFrame % 10 == 0) && !m_isSelectFinishP1)
 	{
-		//P1
-		int selectIndex = m_currentSelectCommandIndexP1;
-		int cursorHandle = m_cursorP1Handle;
-		//P2
-		if (i == 2)
-		{
-			selectIndex = m_currentSelectCommandIndexP2;
-			cursorHandle = m_cursorP2Handle;
-		}
-
-		switch (selectIndex)
-		{
-		case 1:
-			//技1
-			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 2:
-			//技2
-			DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 3:
-			//技3
-			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 4:
-			//技4
-			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 5:
-			//技5
-			DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 6:
-			//技6
-			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 7:
-			//技7
-			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 8:
-			//技8
-			DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		case 9:
-			//技9
-			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
-			break;
-		default:
-			break;
-		}
+		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
 	}
+	switch (m_currentSelectCommandIndexP1)
+	{
+	case 1:
+		//技1
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 2:
+		//技2
+		DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 3:
+		//技3
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 4:
+		//技4
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 5:
+		//技5
+		DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 6:
+		//技6
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 7:
+		//技7
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 8:
+		//技8
+		DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	case 9:
+		//技9
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+		break;
+	default:
+		break;
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+
+
+	//P2
+	//ちかちか
+	if ((m_countFrame % 10 == 0) && !m_isSelectFinishP2)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
+	}
+	switch (m_currentSelectCommandIndexP2)
+	{
+	case 1:
+		//技1
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 2:
+		//技2
+		DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 3:
+		//技3
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 4:
+		//技4
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 5:
+		//技5
+		DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 6:
+		//技6
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 7:
+		//技7
+		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 8:
+		//技8
+		DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	case 9:
+		//技9
+		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+		break;
+	default:
+		break;
+	}
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 void CharacterselectScene::DrawSelectPlayerCommandIcon()

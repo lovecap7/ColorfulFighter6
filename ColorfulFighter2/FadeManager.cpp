@@ -50,7 +50,7 @@ void FadeManager::FadeDraw(bool isFadeIn)
 	//Å¬’l‚És‚Á‚½‚Æ‚«
 	if (m_fadeFrameCount <= 0)
 	{
-		m_isFinishFadeOut = false;
+		m_isFinishFadeOut = true;
 		m_fadeFrameCount = 0;
 	}
 	else

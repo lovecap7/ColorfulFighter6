@@ -2,8 +2,8 @@
 C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
   (ソース ファイル 'CharacterselectScene.cpp' をコンパイルしています)
   
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(679,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(678,54): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(684,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(683,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(733,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(732,54): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(738,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.cpp(737,23): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
