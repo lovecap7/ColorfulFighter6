@@ -213,7 +213,7 @@ void GameManager::Draw(Camera& camera)
 void GameManager::FadeDraw()
 {
 	//フェードインアウト
-	m_fadeManager->Fade(m_isFadeIn);
+	m_fadeManager->FadeDraw(m_isFadeIn);
 }
 
 void GameManager::HitEffectDraw(Camera& camera)

@@ -7,6 +7,7 @@
 #include "Chara.h"
 #include "BGM.h"
 #include "SE.h"
+#include "FadeManager.h"
 
 namespace
 {
@@ -36,16 +37,333 @@ namespace
 	constexpr int kCommandIconImageHight = 200;
 	//選べるコマンド技の数
 	constexpr int kSelectCommandNum = 3;
+
+	//Ready
+	constexpr int kReadyPosXP1 = 50;
+	constexpr int kReadyPosXP2 = Game::kScreenWidth - 350;
+	constexpr int kReadyPosY = 650;
+}
+
+
+void CharacterselectScene::SelectP1(Input& input)
+{
+	if (m_isSelectFinishP1)
+	{
+		if (input.IsTrigger("X"))
+		{
+			//準備完了
+			m_currentReadyP1Handle = m_readyHandle;
+			m_isReadyP1 = true;
+		}
+		//キャンセル
+		if (input.IsTrigger("B"))
+		{
+			//取り消す
+			if (m_isReadyP1)
+			{
+				//確認に変換
+				m_currentReadyP1Handle = m_gettingReadyHandle;
+				m_isReadyP1 = false;
+			}
+			else//また選び直す
+			{
+				//キャンセルの音
+				m_seP1->Stop();
+				m_seP1->SetSE(m_cancelSehandle);
+				m_seP1->Volume(150);
+				m_seP1->PlayOnce();
+				m_isSelectFinishP1 = false;
+				for (int i = 0; i < 3; ++i)
+				{
+					//最後に選んだ順に消す
+					if (m_selectCommandIndexP1[2 - i] != 0)
+					{
+						m_selectCommandIndexP1[2 - i] = 0;
+						m_selectCommandIconP1Handle[2 - i] = m_nullCommandIconHandle;
+						break;
+					}
+				}
+			}
+			
+		}
+	}
+	else
+	{
+		//選ぶ
+		if (input.IsTrigger("Left"))
+		{
+			//カーソル移動の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_cursorMoveSehandle);
+			m_seP1->Volume(100);
+			m_seP1->PlayOnce();
+
+			m_currentSelectCommandIndexP1--;
+			if (m_currentSelectCommandIndexP1 % 3 == 0)
+			{
+				m_currentSelectCommandIndexP1 += kOneRowCommandNum;
+			}
+		}
+		if (input.IsTrigger("Right"))
+		{
+			//カーソル移動の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_cursorMoveSehandle);
+			m_seP1->Volume(100);
+			m_seP1->PlayOnce();
+
+			m_currentSelectCommandIndexP1++;
+			if ((m_currentSelectCommandIndexP1 - 1) % kOneRowCommandNum == 0)
+			{
+				m_currentSelectCommandIndexP1 -= kOneRowCommandNum;
+			}
+		}
+		if (input.IsTrigger("Up"))
+		{
+			//カーソル移動の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_cursorMoveSehandle);
+			m_seP1->Volume(100);
+			m_seP1->PlayOnce();
+
+			m_currentSelectCommandIndexP1 -= kOneColumnCommandNum;
+			if (m_currentSelectCommandIndexP1 < kCommandIndexMin)
+			{
+				m_currentSelectCommandIndexP1 += (kOneColumnCommandNum * kOneRowCommandNum);
+			}
+		}
+		if (input.IsTrigger("Down"))
+		{
+			//カーソル移動の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_cursorMoveSehandle);
+			m_seP1->Volume(100);
+			m_seP1->PlayOnce();
+
+			m_currentSelectCommandIndexP1 += kOneColumnCommandNum;
+			if (m_currentSelectCommandIndexP1 > kCommandIndexMax)
+			{
+				m_currentSelectCommandIndexP1 -= (kOneColumnCommandNum * kOneRowCommandNum);
+			}
+
+		}
+		if (input.IsTrigger("A"))
+		{
+			//決定の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_selectSehandle);
+			m_seP1->Volume(150);
+			m_seP1->PlayOnce();
+			for (int i = 0; i < 3; ++i)
+			{
+				//同じ技は選べない
+				if (m_selectCommandIndexP1[i] == m_currentSelectCommandIndexP1)
+				{
+					break;
+				}
+				//空ならインデックスを入れる
+				if (m_selectCommandIndexP1[i] == 0)
+				{
+					m_selectCommandIndexP1[i] = m_currentSelectCommandIndexP1;
+					m_selectCommandIconP1Handle[i] = m_commandIconHandle[m_selectCommandIndexP1[i] - 1];//アイコン表示
+					break;
+				}
+			}
+			//3つ選んだらカーソルを動かせなくする
+			if (m_selectCommandIndexP1[2] != 0)
+			{
+				m_isSelectFinishP1 = true;
+			}
+		}
+		//選びなおす
+		if (input.IsTrigger("B"))
+		{
+			//キャンセルの音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_cancelSehandle);
+			m_seP1->Volume(150);
+			m_seP1->PlayOnce();
+			m_isSelectFinishP1 = false;
+			for (int i = 0; i < 3; ++i)
+			{
+				//最後に選んだ順に消す
+				if (m_selectCommandIndexP1[2 - i] != 0)
+				{
+					m_selectCommandIndexP1[2 - i] = 0;
+					m_selectCommandIconP1Handle[2 - i] = m_nullCommandIconHandle;
+					break;
+				}
+			}
+		}
+		//準備ができていないことを表示
+		m_currentReadyP1Handle = m_gettingReadyHandle;
+		m_isReadyP1 = false;
+	}
+}
+
+void CharacterselectScene::SelectP2(Input& input)
+{
+	if (m_isSelectFinishP2)
+	{
+		if (input.IsTrigger("X"))
+		{
+			//準備完了
+			m_currentReadyP2Handle = m_readyHandle;
+			m_isReadyP2 = true;
+		}
+		//取り消す
+		if (input.IsTrigger("B"))
+		{
+			if (m_isReadyP2)
+			{
+				//確認に変換
+				m_currentReadyP2Handle = m_gettingReadyHandle;
+				m_isReadyP2 = false;
+			}
+			else//また選び直す
+			{
+				//キャンセルの音
+				m_seP2->Stop();
+				m_seP2->SetSE(m_cancelSehandle);
+				m_seP2->Volume(150);
+				m_seP2->PlayOnce();
+				m_isSelectFinishP2 = false;
+				//最後に選んだ順に消す
+				for (int i = 0; i < 3; ++i)
+				{
+					if (m_selectCommandIndexP2[2 - i] != 0)
+					{
+						m_selectCommandIndexP2[2 - i] = 0;
+						m_selectCommandIconP2Handle[2 - i] = m_nullCommandIconHandle;
+						break;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (input.IsTrigger("Left"))
+		{
+			//カーソル移動の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_cursorMoveSehandle);
+			m_seP2->Volume(100);
+			m_seP2->PlayOnce();
+
+			m_currentSelectCommandIndexP2--;
+			if (m_currentSelectCommandIndexP2 % 3 == 0)
+			{
+				m_currentSelectCommandIndexP2 += kOneRowCommandNum;
+			}
+		}
+		if (input.IsTrigger("Right"))
+		{
+			//カーソル移動の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_cursorMoveSehandle);
+			m_seP2->Volume(100);
+			m_seP2->PlayOnce();
+
+			m_currentSelectCommandIndexP2++;
+			if ((m_currentSelectCommandIndexP2 - 1) % kOneRowCommandNum == 0)
+			{
+				m_currentSelectCommandIndexP2 -= kOneRowCommandNum;
+			}
+		}
+		if (input.IsTrigger("Up"))
+		{
+			//カーソル移動の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_cursorMoveSehandle);
+			m_seP2->Volume(100);
+			m_seP2->PlayOnce();
+
+			m_currentSelectCommandIndexP2 -= kOneColumnCommandNum;
+			if (m_currentSelectCommandIndexP2 < kCommandIndexMin)
+			{
+				m_currentSelectCommandIndexP2 += (kOneColumnCommandNum * kOneRowCommandNum);
+			}
+		}
+		if (input.IsTrigger("Down"))
+		{
+			//カーソル移動の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_cursorMoveSehandle);
+			m_seP2->Volume(100);
+			m_seP2->PlayOnce();
+
+			m_currentSelectCommandIndexP2 += kOneColumnCommandNum;
+			if (m_currentSelectCommandIndexP2 > kCommandIndexMax)
+			{
+				m_currentSelectCommandIndexP2 -= (kOneColumnCommandNum * kOneRowCommandNum);
+			}
+
+		}
+		//決定
+		if (input.IsTrigger("A"))
+		{
+			//決定の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_selectSehandle);
+			m_seP2->Volume(100);
+			m_seP2->PlayOnce();
+			for (int i = 0; i < 3; ++i)
+			{
+				//同じ技は選べない
+				if (m_selectCommandIndexP2[i] == m_currentSelectCommandIndexP2)
+				{
+					break;
+				}
+				//空ならインデックスを入れる
+				if (m_selectCommandIndexP2[i] == 0)
+				{
+					m_selectCommandIndexP2[i] = m_currentSelectCommandIndexP2;
+					m_selectCommandIconP2Handle[i] = m_commandIconHandle[m_selectCommandIndexP2[i] - 1];//アイコン表示
+					break;
+				}
+			}
+			if (m_selectCommandIndexP2[2] != 0)
+			{
+				m_isSelectFinishP2 = true;
+			}
+		}
+		//選びなおす
+		if (input.IsTrigger("B"))
+		{
+			//キャンセルの音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_cancelSehandle);
+			m_seP2->Volume(150);
+			m_seP2->PlayOnce();
+			m_isSelectFinishP2 = false;
+			//最後に選んだ順に消す
+			for (int i = 0; i < 3; ++i)
+			{
+				if (m_selectCommandIndexP2[2 - i] != 0)
+				{
+					m_selectCommandIndexP2[2 - i] = 0;
+					m_selectCommandIconP2Handle[2 - i] = m_nullCommandIconHandle;
+					break;
+				}
+			}
+		}
+		m_currentReadyP2Handle = m_gettingReadyHandle;
+		m_isReadyP2 = false;
+	}
 }
 
 CharacterselectScene::CharacterselectScene(SceneController& controller):
 	SceneBase(controller),
 	m_currentSelectCommandIndexP1(1),
 	m_currentSelectCommandIndexP2(2),
-	m_isSelectP1(false),
-	m_isSelectP2(false),
+	m_isSelectFinishP1(false),
+	m_isSelectFinishP2(false),
+	m_isReadyP1(false),
+	m_isReadyP2(false),
 	m_selectCommandIndexP1{0,0,0},
-	m_selectCommandIndexP2{0,0,0}
+	m_selectCommandIndexP2{0,0,0},
+	m_isFadeIn(false)
 	
 {
 	//イメージ画像(立ち絵)
@@ -115,6 +433,13 @@ CharacterselectScene::CharacterselectScene(SceneController& controller):
 		m_selectCommandIconP1Handle[i] = m_nullCommandIconHandle;
 		m_selectCommandIconP2Handle[i] = m_nullCommandIconHandle;
 	}
+	m_gettingReadyHandle = LoadGraph("./img/CharacterSelect/Ready_Off.png");;//準備中
+	m_readyHandle = LoadGraph("./img/CharacterSelect/Ready_On.png");;//準備完了
+	m_currentReadyP1Handle = m_gettingReadyHandle;//準備完了かどうかを表示
+	m_currentReadyP2Handle = m_gettingReadyHandle;
+
+	//フェードインするときに使う
+	m_fadeManager = std::make_shared<FadeManager>();
 }
 
 void CharacterselectScene::Update(Input& input, Input& input2)
@@ -123,241 +448,25 @@ void CharacterselectScene::Update(Input& input, Input& input2)
 	//このシーンでやりたいこと
 	//キャラクターを決定したらそのキャラクターの
 	//ポインタを次のシーンに渡したい
-
-	//決定していなければ選べる
-	if (!m_isSelectP1)
+	//P1のセレクト
+	SelectP1(input);
+	//P2のセレクト
+	SelectP2(input2);
+	//2人が準備完了したらゲームシーンへ
+	if (m_isReadyP1 && m_isReadyP2)
 	{
-
-		if (input.IsTrigger("Left"))
+		m_isFadeIn = true;
+		//フェードインしてからシーン移動
+		if (m_fadeManager->IsFinishFadeIn())
 		{
-			//カーソル移動の音
-			m_seP1->Stop();
-			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
-			m_seP1->PlayOnce();
+			//選んだコマンド技のインデックスを次のシーンに渡すために保存
+			m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
 
-			m_currentSelectCommandIndexP1--;
-			if (m_currentSelectCommandIndexP1 % 3 == 0)
-			{
-				m_currentSelectCommandIndexP1 += kOneRowCommandNum;
-			}
+			//押されたら次の状態に繊維
+			//次の状態はこのクラスが覚えておく
+			m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
+			return;//忘れずreturn
 		}
-		if (input.IsTrigger("Right"))
-		{
-			//カーソル移動の音
-			m_seP1->Stop();
-			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
-			m_seP1->PlayOnce();
-
-			m_currentSelectCommandIndexP1++;
-			if ((m_currentSelectCommandIndexP1 - 1) % kOneRowCommandNum == 0)
-			{
-				m_currentSelectCommandIndexP1 -= kOneRowCommandNum;
-			}
-		}
-		if (input.IsTrigger("Up"))
-		{
-			//カーソル移動の音
-			m_seP1->Stop();
-			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
-			m_seP1->PlayOnce();
-
-			m_currentSelectCommandIndexP1 -= kOneColumnCommandNum;
-			if (m_currentSelectCommandIndexP1 < kCommandIndexMin)
-			{
-				m_currentSelectCommandIndexP1 += (kOneColumnCommandNum * kOneRowCommandNum);
-			}
-		}
-		if (input.IsTrigger("Down"))
-		{
-			//カーソル移動の音
-			m_seP1->Stop();
-			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
-			m_seP1->PlayOnce();
-
-			m_currentSelectCommandIndexP1 += kOneColumnCommandNum;
-			if (m_currentSelectCommandIndexP1 > kCommandIndexMax)
-			{
-				m_currentSelectCommandIndexP1 -= (kOneColumnCommandNum * kOneRowCommandNum);
-			}
-			
-		}
-
-		
-	}
-	if (!m_isSelectP2)
-	{
-
-		if (input2.IsTrigger("Left"))
-		{
-			//カーソル移動の音
-			m_seP2->Stop();
-			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
-			m_seP2->PlayOnce();
-
-			m_currentSelectCommandIndexP2--;
-			if (m_currentSelectCommandIndexP2 % 3 == 0)
-			{
-				m_currentSelectCommandIndexP2 += kOneRowCommandNum;
-			}
-		}
-		if (input2.IsTrigger("Right"))
-		{
-			//カーソル移動の音
-			m_seP2->Stop();
-			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
-			m_seP2->PlayOnce();
-
-			m_currentSelectCommandIndexP2++;
-			if ((m_currentSelectCommandIndexP2 - 1) % kOneRowCommandNum == 0)
-			{
-				m_currentSelectCommandIndexP2 -= kOneRowCommandNum;
-			}
-		}
-		if (input2.IsTrigger("Up"))
-		{
-			//カーソル移動の音
-			m_seP2->Stop();
-			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
-			m_seP2->PlayOnce();
-
-			m_currentSelectCommandIndexP2 -= kOneColumnCommandNum;
-			if (m_currentSelectCommandIndexP2 < kCommandIndexMin)
-			{
-				m_currentSelectCommandIndexP2 += (kOneColumnCommandNum * kOneRowCommandNum);
-			}
-		}
-		if (input2.IsTrigger("Down"))
-		{
-			//カーソル移動の音
-			m_seP2->Stop();
-			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
-			m_seP2->PlayOnce();
-
-			m_currentSelectCommandIndexP2 += kOneColumnCommandNum;
-			if (m_currentSelectCommandIndexP2 > kCommandIndexMax)
-			{
-				m_currentSelectCommandIndexP2 -= (kOneColumnCommandNum * kOneRowCommandNum);
-			}
-
-		}
-	}
-	
-
-	if (input.IsTrigger("Ok"))
-	{
-		//決定の音
-		m_seP1->Stop();
-		m_seP1->SetSE(m_selectSehandle);
-		m_seP1->Volume(150);
-		m_seP1->PlayOnce();
-		for (int i = 0;i < 3;++i)
-		{
-			//同じ技は選べない
-			if (m_selectCommandIndexP1[i] == m_currentSelectCommandIndexP1)
-			{
-				break;
-			}
-			//空ならインデックスを入れる
-			if (m_selectCommandIndexP1[i] == 0)
-			{
-				m_selectCommandIndexP1[i] = m_currentSelectCommandIndexP1;
-				m_selectCommandIconP1Handle[i] = m_commandIconHandle[m_selectCommandIndexP1[i] - 1];//アイコン表示
-				break;
-			}
-		}
-		//3つ選んだらカーソルを動かせなくする
-		if (m_selectCommandIndexP1[2] != 0)
-		{
-			m_isSelectP1 = true;
-		}
-	}
-	//選びなおす
-	if (input.IsTrigger("Cancel"))
-	{
-		//キャンセルの音
-		m_seP1->Stop();
-		m_seP1->SetSE(m_cancelSehandle);
-		m_seP1->Volume(150);
-		m_seP1->PlayOnce();
-		m_isSelectP1 = false;
-		for (int i = 0;i < 3;++i)
-		{
-			//最後に選んだ順に消す
-			if (m_selectCommandIndexP1[2 - i] != 0)
-			{
-				m_selectCommandIndexP1[2 - i] = 0;
-				m_selectCommandIconP1Handle[2 - i] = m_nullCommandIconHandle;
-				break;
-			}
-		}
-	}
-
-	if (input2.IsTrigger("Ok"))
-	{
-		//決定の音
-		m_seP2->Stop();
-		m_seP2->SetSE(m_selectSehandle);
-		m_seP2->Volume(100);
-		m_seP2->PlayOnce();
-		for (int i = 0;i < 3;++i)
-		{
-			//同じ技は選べない
-			if (m_selectCommandIndexP2[i] == m_currentSelectCommandIndexP2)
-			{
-				break;
-			}
-			//空ならインデックスを入れる
-			if (m_selectCommandIndexP2[i] == 0)
-			{
-				m_selectCommandIndexP2[i] = m_currentSelectCommandIndexP2;
-				m_selectCommandIconP2Handle[i] = m_commandIconHandle[m_selectCommandIndexP2[i] - 1];//アイコン表示
-				break;
-			}
-		}
-		if (m_selectCommandIndexP2[2] != 0)
-		{
-			m_isSelectP2 = true;
-		}
-	}
-	//選びなおす
-	if (input2.IsTrigger("Cancel"))
-	{
-		//キャンセルの音
-		m_seP2->Stop();
-		m_seP2->SetSE(m_cancelSehandle);
-		m_seP2->Volume(150);
-		m_seP2->PlayOnce();
-		m_isSelectP2 = false;
-		//最後に選んだ順に消す
-		for (int i = 0;i < 3;++i)
-		{
-			if (m_selectCommandIndexP2[2 - i] != 0)
-			{
-				m_selectCommandIndexP2[2 - i] = 0;
-				m_selectCommandIconP2Handle[2 - i] = m_nullCommandIconHandle;
-				break;
-			}
-		}
-	}
-	//2人が選んだらゲームシーンへ
-	if ((m_isSelectP1 && m_isSelectP2) && (input.IsTrigger("Start") || input2.IsTrigger("Start")))
-	{
-
-		//選んだコマンド技のインデックスを次のシーンに渡すために保存
-		m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
-
-		//押されたら次の状態に繊維
-		//次の状態はこのクラスが覚えておく
-		m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
-		return;//忘れずreturn
 	}
 #if _DEBUG
 	//デバッグ用
@@ -399,8 +508,42 @@ void CharacterselectScene::Draw()
 	DxLib::DrawGraph(0, 20, m_imageChara1Handle, true);//1P
 	DxLib::DrawTurnGraph(Game::kScreenWidth - kPlayerImageWidth, 20, m_imageChara1Handle, true);//2P
 
+	if (m_isSelectFinishP1)
+	{
+		DxLib::DrawGraph(kReadyPosXP1, kReadyPosY, m_currentReadyP1Handle, true);//1PのReady
+	}
+	if (m_isSelectFinishP2)
+	{
+		DxLib::DrawGraph(kReadyPosXP2, kReadyPosY, m_currentReadyP2Handle, true);//2PのReady
+	}
+	
 
 	//技のアイコン
+	DrawCommandIcon();
+
+	//カーソル
+	DrawCursor();
+
+	//選んだコマンドの表示
+	DrawSelectPlayerCommandIcon();
+	//"コマンド技を3つ選んでください"のテキスト
+	DrawRotaGraph(kCenterX, 100, 1.0, 0, m_selectTextHandle, true, 0, 0);
+
+	//フェードイン
+	m_fadeManager->FadeDraw(m_isFadeIn);
+#if _DEBUG	
+	DxLib::DrawString(10, 10, "CharacterselectScene", 0xffffff);
+	for (int i = 0;i < 3;++i)
+	{
+		DrawFormatString(400, 800 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
+		DrawFormatString(1000, 800 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
+	}
+#endif
+	
+}
+
+void CharacterselectScene::DrawCommandIcon()
+{
 	//技1
 	DrawCircle(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, kIconRadius, 0x22ff22, true, true);
 	//技2
@@ -410,7 +553,7 @@ void CharacterselectScene::Draw()
 	//技4
 	DrawCircle(kCenterX - kIconPosOffset, kCenterY, kIconRadius, 0xff22ff, true, true);
 	//技5
-	DrawCircle(kCenterX, kCenterY, kIconRadius,0x22ffff, true, true);
+	DrawCircle(kCenterX, kCenterY, kIconRadius, 0x22ffff, true, true);
 	//技6
 	DrawCircle(kCenterX + kIconPosOffset, kCenterY, kIconRadius, 0xffff22, true, true);
 	//技7
@@ -464,9 +607,12 @@ void CharacterselectScene::Draw()
 			break;
 		}
 	}
+}
 
+void CharacterselectScene::DrawCursor()
+{
 	//カーソル
-	for (int i = 1; i <= 2;++i)
+	for (int i = 1; i <= 2; ++i)
 	{
 		//P1
 		int selectIndex = m_currentSelectCommandIndexP1;
@@ -510,7 +656,7 @@ void CharacterselectScene::Draw()
 			break;
 		case 8:
 			//技8
-			DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0,cursorHandle, true, 0, 0);
+			DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, cursorHandle, true, 0, 0);
 			break;
 		case 9:
 			//技9
@@ -520,9 +666,11 @@ void CharacterselectScene::Draw()
 			break;
 		}
 	}
+}
 
-	//選んだコマンドの表示
-		//コマンド
+void CharacterselectScene::DrawSelectPlayerCommandIcon()
+{
+	//コマンド
 	for (int i = 0; i < 3; ++i)
 	{
 		//選んだ技のアイコン
@@ -537,15 +685,4 @@ void CharacterselectScene::Draw()
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
 	}
-
-	DrawRotaGraph(kCenterX, 100, 1.0, 0, m_selectTextHandle, true, 0, 0);
-#if _DEBUG	
-	DxLib::DrawString(10, 10, "CharacterselectScene", 0xffffff);
-	for (int i = 0;i < 3;++i)
-	{
-		DrawFormatString(400, 800 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
-		DrawFormatString(1000, 800 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
-	}
-#endif
-	
 }
