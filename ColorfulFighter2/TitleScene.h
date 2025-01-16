@@ -8,6 +8,10 @@ class TitleScene :
 private:
     int m_titleHandle;
     std::shared_ptr<BGM> m_bgm;
+
+    //テキストが出たり消えたりする
+    int m_countFrame;
+    void BlinkingTextDraw();
 public:
     TitleScene(SceneController& contoller);
 

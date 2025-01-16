@@ -12,11 +12,27 @@ namespace
 	constexpr int kPosXOffset = 100;
 	constexpr int kPosY1Offset = -100;
 	constexpr int kPosY2Offset = -200;
+	constexpr int kTextHiddenFrame = 60;
+	constexpr int kFrameReset = kTextHiddenFrame * 2;
+
+}
+
+void TitleScene::BlinkingTextDraw()
+{
+	if (m_countFrame < kTextHiddenFrame)
+	{
+		DrawString((Game::kScreenWidth / 2) - 100, 700, "< PUSH A BUTON >", 0xffffff);
+	}
+	if (kFrameReset < m_countFrame)
+	{
+		m_countFrame = 0;
+	}
 }
 
 TitleScene::TitleScene(SceneController& contoller) :
 	SceneBase(contoller),
-	m_titleHandle(LoadGraph("./img/title/ColorfulFighter_2.png"))
+	m_titleHandle(LoadGraph("./img/title/ColorfulFighter_2.png")),
+	m_countFrame(0)
 {
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
@@ -27,6 +43,7 @@ TitleScene::TitleScene(SceneController& contoller) :
 
 void TitleScene::Update(Input& input, Input& input2)
 {
+	m_countFrame++;
 	if (input.IsTrigger("A"))
 	{
 		//âüÇ≥ÇÍÇΩÇÁéüÇÃèÛë‘Ç…ë@à€
@@ -44,5 +61,5 @@ void TitleScene::Draw()
 	
 	DrawExtendGraph(kPosXOffset, kPosY1Offset, Game::kScreenWidth - kPosXOffset, Game::kScreenHeight + kPosY2Offset,
 		m_titleHandle, true);
-	//DrawString(550, 500, "GAME START", 0xffffff);
+	BlinkingTextDraw();
 }

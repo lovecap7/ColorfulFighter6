@@ -171,57 +171,69 @@ bool Chara::SuccessCommandCheck(Input& input, Player& player)
 {
 	//いったん空にする
 	m_commandIndex = static_cast<int>(Command::Null);
-	if (player.GetAttackAttackTypes() == AttackTypes::LightPunch || 
-		player.GetAttackAttackTypes() == AttackTypes::HighPunch)
+	if ((player.GetAttackAttackTypes() == AttackTypes::LightPunch) ||
+		(player.GetAttackAttackTypes() == AttackTypes::HighPunch))
 	{
 		if (input.CheckDirCommand("RightOneRevolution") ||
 			input.CheckDirCommand("LeftOneRevolution"))
 		{
 			m_commandIndex = static_cast<int>(Command::Sukuryuu);
-			return CheckMyCommand();
+			//成功してるならリターンを返す
+			if (CheckMyCommand())
+			{
+				return true;
+			}
 		}
 		//昇竜拳
-		if (input.CheckDirCommand("623") && !player.GetDirState() ||//右向き
-			input.CheckDirCommand("421") && player.GetDirState() ||//左向き
-			input.CheckDirCommand("323") && !player.GetDirState() ||
-			input.CheckDirCommand("121") && player.GetDirState() ||
-			input.CheckDirCommand("636") && !player.GetDirState() ||
-			input.CheckDirCommand("414") && player.GetDirState() )
+		if ((input.CheckDirCommand("623") && !player.GetDirState()) ||//右向き
+			(input.CheckDirCommand("421") && player.GetDirState()) ||//左向き
+			(input.CheckDirCommand("323") && !player.GetDirState()) ||
+			(input.CheckDirCommand("121") && player.GetDirState()) ||
+			(input.CheckDirCommand("636") && !player.GetDirState()) ||
+			(input.CheckDirCommand("414") && player.GetDirState()))
 		{
 			m_commandIndex = static_cast<int>(Command::Shouryuken);
-			return CheckMyCommand();
+			if (CheckMyCommand())
+			{
+				return true;
+			}
 		}
-
-		if (input.CheckDirCommand("HalfTurnRightStart") && !player.GetDirState() ||
-			input.CheckDirCommand("HalfTurnLeftStart") && player.GetDirState())
-		{
-			//ワイルドハント
-			m_commandIndex = static_cast<int>(Command::Wildhant);
-			return CheckMyCommand();
-		}
-
 		//波動拳
-		if (input.CheckDirCommand("236") && !player.GetDirState() ||
-			input.CheckDirCommand("214") && player.GetDirState())
+		if ((input.CheckDirCommand("236") && !player.GetDirState()) ||
+			(input.CheckDirCommand("214") && player.GetDirState()))
 		{
 			//波動拳
 			m_commandIndex = static_cast<int>(Command::Hadouken);
-			return CheckMyCommand();
+			if (CheckMyCommand())
+			{
+				return true;
+			}
 		}
-		if (
-			input.CheckKeepCommand("4K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("6K4") && player.GetDirState())// ||
-			////斜めタメ
-			//input.CheckKeepCommand("1K6") && !player.GetDirState() ||
-			//input.CheckKeepCommand("3K4") && player.GetDirState())
+		if ((input.CheckDirCommand("HalfTurnRightStart") && !player.GetDirState()) ||
+			(input.CheckDirCommand("HalfTurnLeftStart") && player.GetDirState()))
+		{
+			//ワイルドハント
+			m_commandIndex = static_cast<int>(Command::Wildhant);
+			if (CheckMyCommand())
+			{
+				return true;
+			}
+		}
+
+		
+		if ((input.CheckKeepCommand("4K6") && !player.GetDirState()) ||
+			(input.CheckKeepCommand("6K4") && player.GetDirState()))
 		{
 			m_commandIndex = static_cast<int>(Command::Sonic);
-			return CheckMyCommand();
+			if (CheckMyCommand())
+			{
+				return true;
+			}
 		}
 	}
 
-	if (player.GetAttackAttackTypes() == AttackTypes::LightKick ||
-		player.GetAttackAttackTypes() == AttackTypes::HighKick)
+	if ((player.GetAttackAttackTypes() == AttackTypes::LightKick) ||
+		(player.GetAttackAttackTypes() == AttackTypes::HighKick))
 	{
 		//竜巻
 		if (input.CheckDirCommand("214"))
@@ -229,12 +241,18 @@ bool Chara::SuccessCommandCheck(Input& input, Player& player)
 			if (!player.GetDirState())
 			{
 				m_commandIndex = static_cast<int>(Command::Tatumaki);
-				return CheckMyCommand();
+				if (CheckMyCommand())
+				{
+					return true;
+				}
 			}
 			else
 			{
 				m_commandIndex = static_cast<int>(Command::Wave);
-				return CheckMyCommand();
+				if (CheckMyCommand())
+				{
+					return true;
+				}
 			}
 		}
 		if (input.CheckDirCommand("236"))
@@ -242,41 +260,38 @@ bool Chara::SuccessCommandCheck(Input& input, Player& player)
 			if (!player.GetDirState())
 			{
 				m_commandIndex = static_cast<int>(Command::Wave);
-				return CheckMyCommand();
+				if (CheckMyCommand())
+				{
+					return true;
+				}
 			}
 			else
 			{
 				m_commandIndex = static_cast<int>(Command::Tatumaki);
-				return CheckMyCommand();
+				if (CheckMyCommand())
+				{
+					return true;
+				}
 			}
 		}
 	
 		//後ろ溜め
-		if (
-			input.CheckKeepCommand("4K6") && !player.GetDirState() ||
-			input.CheckKeepCommand("6K4") && player.GetDirState() )//||
-			////斜めタメ
-			//input.CheckKeepCommand("1K6") && !player.GetDirState() ||
-			//input.CheckKeepCommand("3K4") && player.GetDirState())
+		if ((input.CheckKeepCommand("4K6") && !player.GetDirState()) ||
+			(input.CheckKeepCommand("6K4") && player.GetDirState()))
 		{
 			m_commandIndex = static_cast<int>(Command::Supairaru);
-			return CheckMyCommand();
-		}
-		if (
-			//下タメ上要素(サマーソルト)
-			input.CheckKeepCommand("2K8") )//||
-			//input.CheckKeepCommand("2K7") ||
-			//input.CheckKeepCommand("2K9") ||
-			////斜め下タメ上要素
-			//input.CheckKeepCommand("1K8") ||
-			//input.CheckKeepCommand("1K7") ||
-			//input.CheckKeepCommand("1K9") ||
-			//input.CheckKeepCommand("3K8") ||
-			//input.CheckKeepCommand("3K7") ||
-			//input.CheckKeepCommand("3K9"))
+			if (CheckMyCommand())
+			{
+				return true;
+			}
+		}//下タメ上要素(サマーソルト)
+		if (input.CheckKeepCommand("2K8"))
 		{
 			m_commandIndex = static_cast<int>(Command::Rolling);
-			return CheckMyCommand();
+			if (CheckMyCommand())
+			{
+				return true;
+			}
 		}
 	}
 
