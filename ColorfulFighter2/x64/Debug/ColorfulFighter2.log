@@ -1,6 +1,6 @@
-﻿  Input.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Input.cpp(327,56): warning C4390: ';': 制御が空の文が見つかりました。意図した記述でしょうか?
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Input.cpp(335,57): warning C4390: ';': 制御が空の文が見つかりました。意図した記述でしょうか?
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Input.cpp(343,57): warning C4390: ';': 制御が空の文が見つかりました。意図した記述でしょうか?
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Input.cpp(505,30): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+﻿  TitleScene.cpp
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
+  
+  LINK : 前回のインクリメンタル リンクで C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
