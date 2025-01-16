@@ -1,7 +1,7 @@
 #include "ResultScene.h"
 #include "SceneController.h"
 #include "Input.h"
-#include "CharacterselectScene.h"
+#include "CommandSelectScene.h"
 #include <DxLib.h>
 #include "game.h"
 #include "BGM.h"
@@ -44,7 +44,7 @@ void ResultScene::Update(Input& input, Input& input2)
 	{
 		//‰Ÿ‚³‚ê‚½‚çŸ‚Ìó‘Ô‚É‘@ˆÛ
 		//Ÿ‚Ìó‘Ô‚Í‚±‚ÌƒNƒ‰ƒX‚ªŠo‚¦‚Ä‚¨‚­
-		m_controller.ChangeScene(std::make_shared<CharacterselectScene>(m_controller));
+		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
 		return;//–Y‚ê‚¸return
 	}
 }

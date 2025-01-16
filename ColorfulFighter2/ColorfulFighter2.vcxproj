@@ -147,7 +147,7 @@
     <ClCompile Include="FadeManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Chara.cpp" />
-    <ClCompile Include="CharacterselectScene.cpp" />
+    <ClCompile Include="CommandSelectScene.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -170,7 +170,7 @@
     <ClInclude Include="FadeManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Chara.h" />
-    <ClInclude Include="CharacterselectScene.h" />
+    <ClInclude Include="CommandSelectScene.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />

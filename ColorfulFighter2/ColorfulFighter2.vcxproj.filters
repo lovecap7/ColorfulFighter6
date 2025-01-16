@@ -87,7 +87,7 @@
     <ClCompile Include="FadeManager.cpp">
       <Filter>Scenes\GameScene</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterselectScene.cpp">
+    <ClCompile Include="CommandSelectScene.cpp">
       <Filter>Scenes\CharacterselectScene</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
@@ -164,7 +164,7 @@
     <ClInclude Include="SE.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterselectScene.h">
+    <ClInclude Include="CommandSelectScene.h">
       <Filter>Scenes\CharacterselectScene</Filter>
     </ClInclude>
     <ClInclude Include="Chara.h">
