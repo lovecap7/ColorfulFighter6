@@ -6,12 +6,12 @@ namespace
 	constexpr float kTriggerPower = 128;
 
 	//スティックの入力成立の大きさ
-	constexpr int kLeftStickPowerX = 10;
-	constexpr int kLeftStickPowerY = 10;
+	constexpr int kLeftStickPowerX = 20;
+	constexpr int kLeftStickPowerY = 20;
 
 	//コマンド猶予フレーム
 	//通常
-	constexpr int kDirInputgraceFrame = 20;
+	constexpr int kDirInputgraceFrame = 25;
 	//タメ
 	constexpr int kKeepInputgraceFrame = 25;
 	//タメに必要なフレーム
@@ -152,26 +152,14 @@ void Input::Init()
 	//後ろタメ前
 	// ソニックブーム
 	m_commandList["4K6"] = { StickDir::Right ,StickDir::Left };	//右向き
-	//m_commandList["1K6"] = { StickDir::Right ,StickDir::LeftDown };	//右向きソニックブーム(斜め溜め)
 	m_commandList["6K4"] = { StickDir::Left ,StickDir::Right };	//左向きソニックブーム
-	//m_commandList["3K4"] = { StickDir::Left ,StickDir::RightDown };	//左向きソニックブーム(斜め溜め)
-	//下タメ上要素(サマーソルト)
-	//サマソだけ斜め上でも成立したわ(向きも特に関係ない)
-	//たぶん真上だけだと入力難しいからだと思う優しいね^^
+	//下タメ上
 	m_commandList["2K8"] = { StickDir::Up ,StickDir::Down };	
-	/*m_commandList["2K7"] = { StickDir::LeftUp ,StickDir::Down };	
-	m_commandList["2K9"] = { StickDir::RightUp ,StickDir::Down };	*/
-	//斜め下タメ上要素
-	//m_commandList["1K8"] = { StickDir::Up ,StickDir::LeftDown };		//左下+上
-	//m_commandList["1K7"] = { StickDir::LeftUp ,StickDir::LeftDown };	//左下+左上
-	//m_commandList["1K9"] = { StickDir::RightUp ,StickDir::LeftDown };	//左下+右上
-	//m_commandList["3K8"] = { StickDir::Up ,StickDir::RightDown };		//右下+上
-	//m_commandList["3K7"] = { StickDir::LeftUp ,StickDir::RightDown };	//右下+左上
-	//m_commandList["3K9"] = { StickDir::RightUp ,StickDir::RightDown };	//右下+右上
+	
 
 	//スクリュー
-	m_commandList["RightOneRevolution"] = { StickDir::Up ,StickDir::Left,StickDir::Down, StickDir::Right };	//右向き
-	m_commandList["LeftOneRevolution"] = { StickDir::Up ,StickDir::Right,StickDir::Down, StickDir::Left };	//左向き
+	m_commandList["RightOneRevolution"] = { StickDir::LeftUp ,StickDir::Left,StickDir::Down, StickDir::Right };	//右から
+	m_commandList["LeftOneRevolution"] = { StickDir::RightUp ,StickDir::Right,StickDir::Down, StickDir::Left };	//左から
 
 	//半回転
 	m_commandList["HalfTurnRightStart"] = { StickDir::Left ,StickDir::Down,StickDir::Right };	//右向き
@@ -290,7 +278,7 @@ bool Input::CheckDirCommand(std::string command)
 			{
 				//listの先頭にコマンド成立のフレームを入れる
 				StickDirInfo info;
-				info.frame = kDirInputgraceFrame;
+				info.frame = 1;
 				info.dir = StickDir::Command;
 				m_stickDirInfo.push_front(info);
 				return true;
@@ -320,33 +308,58 @@ bool Input::CheckKeepCommand(std::string command)
 		//タメの部分だけ斜めでも成立していることにしたい
 		if (index == (m_commandList.at(command).size() - 1))
 		{
+			//元の方向を覚えておく
+			StickDir originDir = data.dir;
 			if (data.dir == StickDir::RightUp || data.dir == StickDir::RightDown)
 			{
+				//右として扱う
 				data.dir =  StickDir::Right ;
 				//成功しているならタメのフレームを足していく
-				if(data.dir == m_commandList.at(command).at(index));
+				if(data.dir == m_commandList.at(command).at(index))
 				{
 					keepFrame += data.frame;
+				}
+				else//失敗してるならもとに戻す
+				{
+					data.dir = originDir;
 				}
 			}
 			if ((data.dir == StickDir::LeftUp || data.dir == StickDir::LeftDown))
 			{
+				//左として扱う
 				data.dir = StickDir::Left;
-				if (data.dir == m_commandList.at(command).at(index));
+				if (data.dir == m_commandList.at(command).at(index))
 				{
 					keepFrame += data.frame;
+				}
+				else
+				{
+					data.dir = originDir;
 				}
 			}
 			if (data.dir == StickDir::RightDown || data.dir == StickDir::LeftDown)
 			{
+				//下として扱う
 				data.dir = StickDir::Down;
-				if (data.dir == m_commandList.at(command).at(index));
+				if (data.dir == m_commandList.at(command).at(index))
 				{
 					keepFrame += data.frame;
 				}
+				else
+				{
+					data.dir = originDir;
+				}
 			}
 		}
-		
+		else//タメの部分以外の時
+		{
+			//下タメ上のコマンドの際[上]の入力を斜め上での成立するようにしたいので
+			//[斜め上]を[上]として扱う
+			if (data.dir == StickDir::RightUp || data.dir == StickDir::LeftUp)
+			{
+				data.dir = StickDir::Up;
+			}
+		}
 		//入力内容にコマンドの条件に当てはまるキーがあった時
 		if (data.dir == m_commandList.at(command).at(index))
 		{
@@ -362,7 +375,7 @@ bool Input::CheckKeepCommand(std::string command)
 				{
 					//listの先頭にコマンド成立のフレームを入れる
 					StickDirInfo info;
-					info.frame = kDirInputgraceFrame;
+					info.frame = 1;
 					info.dir = StickDir::Command;
 					m_stickDirInfo.push_front(info);
 					//成立
