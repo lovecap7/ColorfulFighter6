@@ -6,18 +6,6 @@ private:
 	int m_seHandle;
 	//ˆê“x‚¾‚¯ŒÄ‚Î‚ê‚½‚¢‚Ì‚ÅboolŒ^‚Åˆê“xŒÄ‚Î‚ê‚½‚çtrue‚É‚µ‚ÄŒÄ‚×‚È‚­‚·‚é
 	bool m_isPlay;
-
-
-	//SE
-	int m_seHit1;
-	int m_seHit2;
-	int m_seGuard;
-	int m_seRound1;
-	int m_seRound2;
-	int m_seRound3;
-	int m_seRoundOver;
-	int m_seFight;
-	int m_seKo;
 public:
 	SE();
 	~SE();
