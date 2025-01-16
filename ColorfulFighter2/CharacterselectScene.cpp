@@ -44,6 +44,156 @@ namespace
 	constexpr int kReadyPosY = 650;
 }
 
+CharacterselectScene::CharacterselectScene(SceneController& controller) :
+	SceneBase(controller),
+	m_currentSelectCommandIndexP1(1),
+	m_currentSelectCommandIndexP2(2),
+	m_isSelectFinishP1(false),
+	m_isSelectFinishP2(false),
+	m_isReadyP1(false),
+	m_isReadyP2(false),
+	m_selectCommandIndexP1{ 0,0,0 },
+	m_selectCommandIndexP2{ 0,0,0 },
+	m_isFadeIn(false),
+	m_countFrame(0),
+	//イメージ画像(立ち絵)
+	m_imageChara1Handle(LoadGraph("img/CharacterSelect/FighterImage/Chara1Image.png")),
+	//カーソル
+	m_cursorP1Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP1.png")),
+	m_cursorP2Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP2.png")),
+	//SEの音源
+	m_selectSehandle(LoadSoundMem("./SE/Select/SelectSE.mp3")),
+	m_cursorMoveSehandle(LoadSoundMem("./SE/Select/CursorMoveSE.mp3")),
+	m_cancelSehandle(LoadSoundMem("./SE/Select/CancelSE.mp3")),
+	//背景
+	m_backHandle(LoadGraph("img/CharacterSelect/SelectBack.png")),
+	//テキスト
+	m_selectTextHandle(LoadGraph("img/CharacterSelect/SelectText.png"))
+
+	
+{
+	//BGM
+	m_bgm = std::make_shared<BGM>();
+	int bgmhandle = LoadSoundMem("./BGM/BGM_SelectScene.mp3");
+	m_bgm->SetBGM(bgmhandle);
+	m_bgm->Volume(100);
+	m_bgm->PlayLoop();
+	//SE
+	m_seP1 = std::make_shared<SE>();
+	m_seP2 = std::make_shared<SE>();
+	//アイコン
+	for (int i = 0; i < kCommandNum; ++i)
+	{
+		switch (i)
+		{
+		case 0:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command1.png");
+			break;
+		case 1:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command2.png");
+			break;
+		case 2:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command3.png");
+			break;
+		case 3:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command4.png");
+			break;
+		case 4:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command5.png");
+			break;
+		case 5:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command6.png");
+			break;
+		case 6:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command7.png");
+			break;
+		case 7:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command8.png");
+			break;
+		case 8:
+			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command9.png");
+			break;
+		default:
+			break;
+		}
+	}
+	//空であることを表示
+	m_nullCommandIconHandle = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/SelectNull.png");
+	for (int i = 0; i < kSelectCommandNum; ++i)
+	{
+		m_selectCommandIconP1Handle[i] = m_nullCommandIconHandle;
+		m_selectCommandIconP2Handle[i] = m_nullCommandIconHandle;
+	}
+	m_gettingReadyHandle = LoadGraph("./img/CharacterSelect/Ready_Off.png");//準備中
+	m_readyHandle = LoadGraph("./img/CharacterSelect/Ready_On.png");//準備完了
+	m_currentReadyP1Handle = m_gettingReadyHandle;//準備完了かどうかを表示
+	m_currentReadyP2Handle = m_gettingReadyHandle;
+
+	//フェードインするときに使う
+	m_fadeManager = std::make_shared<FadeManager>();
+	//ローディング画面
+	m_loadingHandle = LoadGraph("./img/Loading/NowLoading.png");
+}
+
+void CharacterselectScene::Update(Input& input, Input& input2)
+{
+	//ちかちかに使う
+	m_countFrame++;
+	//このシーンでやりたいこと
+	//キャラクターを決定したらそのキャラクターの
+	//ポインタを次のシーンに渡したい
+	//P1のセレクト
+	SelectP1(input);
+	//P2のセレクト
+	SelectP2(input2);
+	//2人が準備完了したらゲームシーンへ
+	if (m_isReadyP1 && m_isReadyP2)
+	{
+		m_isFadeIn = true;
+		//フェードインしてからシーン移動
+		if (m_fadeManager->IsFinishFadeIn())
+		{
+			//選んだコマンド技のインデックスを次のシーンに渡すために保存
+			m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
+
+			//押されたら次の状態に繊維
+			//次の状態はこのクラスが覚えておく
+			m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
+			return;//忘れずreturn
+		}
+	}
+#if _DEBUG
+	//デバッグ用
+	if (input.IsTrigger("Select"))
+	{
+		////BGMを止める
+		//soundManager.StopBGM();
+
+		for (int i = 0;i < 3;++i)
+		{
+			//空ならインデックスを入れる
+			if (m_selectCommandIndexP1[i] == 0)
+			{
+				m_selectCommandIndexP1[i] = i + 1;
+			}
+			//空ならインデックスを入れる
+			if (m_selectCommandIndexP2[i] == 0)
+			{
+				m_selectCommandIndexP2[i] = i + 1;
+			}
+		}
+
+		//選んだコマンド技のインデックスを次のシーンに渡すために保存
+		m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
+		
+		//押されたら次の状態に繊維
+		//次の状態はこのクラスが覚えておく
+		m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
+		return;//忘れずreturn
+	}
+#endif
+}
+
 
 void CharacterselectScene::SelectP1(Input& input)
 {
@@ -84,7 +234,7 @@ void CharacterselectScene::SelectP1(Input& input)
 					}
 				}
 			}
-			
+
 		}
 	}
 	else
@@ -353,156 +503,6 @@ void CharacterselectScene::SelectP2(Input& input)
 	}
 }
 
-CharacterselectScene::CharacterselectScene(SceneController& controller):
-	SceneBase(controller),
-	m_currentSelectCommandIndexP1(1),
-	m_currentSelectCommandIndexP2(2),
-	m_isSelectFinishP1(false),
-	m_isSelectFinishP2(false),
-	m_isReadyP1(false),
-	m_isReadyP2(false),
-	m_selectCommandIndexP1{0,0,0},
-	m_selectCommandIndexP2{0,0,0},
-	m_isFadeIn(false),
-	m_countFrame(0)
-	
-{
-	//イメージ画像(立ち絵)
-	m_imageChara1Handle = LoadGraph("img/CharacterSelect/FighterImage/Chara1Image.png");
-
-	//カーソル
-	m_cursorP1Handle = LoadGraph("img/CharacterSelect/Icon/SelectFrameP1.png");
-	m_cursorP2Handle = LoadGraph("img/CharacterSelect/Icon/SelectFrameP2.png");
-
-	//BGM
-	m_bgm = std::make_shared<BGM>();
-	int bgmhandle = LoadSoundMem("./BGM/BGM_SelectScene.mp3");
-	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(100);
-	m_bgm->PlayLoop();
-	//SE
-	m_seP1 = std::make_shared<SE>();
-	m_seP2 = std::make_shared<SE>();
-	m_selectSehandle = LoadSoundMem("./SE/Select/SelectSE.mp3");
-	m_cursorMoveSehandle = LoadSoundMem("./SE/Select/CursorMoveSE.mp3");
-	m_cancelSehandle = LoadSoundMem("./SE/Select/CancelSE.mp3");
-	//背景
-	m_backHandle = LoadGraph("img/CharacterSelect/SelectBack.png");
-	//テキスト
-	m_selectTextHandle = LoadGraph("img/CharacterSelect/SelectText.png");
-
-	//アイコン
-	for (int i = 0; i < kCommandNum; ++i)
-	{
-		switch (i)
-		{
-		case 0:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command1.png");
-			break;
-		case 1:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command2.png");
-			break;
-		case 2:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command3.png");
-			break;
-		case 3:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command4.png");
-			break;
-		case 4:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command5.png");
-			break;
-		case 5:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command6.png");
-			break;
-		case 6:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command7.png");
-			break;
-		case 7:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command8.png");
-			break;
-		case 8:
-			m_commandIconHandle[i] = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/Command9.png");
-			break;
-		default:
-			break;
-		}
-	}
-	//空であることを表示
-	m_nullCommandIconHandle = LoadGraph("./img/CharacterSelect/Icon/CommandIcon/SelectNull.png");
-	for (int i = 0; i < kSelectCommandNum; ++i)
-	{
-		m_selectCommandIconP1Handle[i] = m_nullCommandIconHandle;
-		m_selectCommandIconP2Handle[i] = m_nullCommandIconHandle;
-	}
-	m_gettingReadyHandle = LoadGraph("./img/CharacterSelect/Ready_Off.png");//準備中
-	m_readyHandle = LoadGraph("./img/CharacterSelect/Ready_On.png");//準備完了
-	m_currentReadyP1Handle = m_gettingReadyHandle;//準備完了かどうかを表示
-	m_currentReadyP2Handle = m_gettingReadyHandle;
-
-	//フェードインするときに使う
-	m_fadeManager = std::make_shared<FadeManager>();
-	//ローディング画面
-	m_loadingHandle = LoadGraph("./img/Loading/NowLoading.png");
-}
-
-void CharacterselectScene::Update(Input& input, Input& input2)
-{
-	//ちかちかに使う
-	m_countFrame++;
-	//このシーンでやりたいこと
-	//キャラクターを決定したらそのキャラクターの
-	//ポインタを次のシーンに渡したい
-	//P1のセレクト
-	SelectP1(input);
-	//P2のセレクト
-	SelectP2(input2);
-	//2人が準備完了したらゲームシーンへ
-	if (m_isReadyP1 && m_isReadyP2)
-	{
-		m_isFadeIn = true;
-		//フェードインしてからシーン移動
-		if (m_fadeManager->IsFinishFadeIn())
-		{
-			//選んだコマンド技のインデックスを次のシーンに渡すために保存
-			m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
-
-			//押されたら次の状態に繊維
-			//次の状態はこのクラスが覚えておく
-			m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
-			return;//忘れずreturn
-		}
-	}
-#if _DEBUG
-	//デバッグ用
-	if (input.IsTrigger("Select"))
-	{
-		////BGMを止める
-		//soundManager.StopBGM();
-
-		for (int i = 0;i < 3;++i)
-		{
-			//空ならインデックスを入れる
-			if (m_selectCommandIndexP1[i] == 0)
-			{
-				m_selectCommandIndexP1[i] = i + 1;
-			}
-			//空ならインデックスを入れる
-			if (m_selectCommandIndexP2[i] == 0)
-			{
-				m_selectCommandIndexP2[i] = i + 1;
-			}
-		}
-
-		//選んだコマンド技のインデックスを次のシーンに渡すために保存
-		m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
-		
-		//押されたら次の状態に繊維
-		//次の状態はこのクラスが覚えておく
-		m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
-		return;//忘れずreturn
-	}
-#endif
-}
 
 void CharacterselectScene::Draw()
 {

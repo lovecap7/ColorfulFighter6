@@ -1,6 +1,1 @@
-﻿  TitleScene.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CharacterselectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
-  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
-  
-  LINK : 前回のインクリメンタル リンクで C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
-  ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
+﻿  ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
