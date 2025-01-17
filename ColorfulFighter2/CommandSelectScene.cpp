@@ -68,7 +68,9 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	//背景
 	m_backHandle(LoadGraph("img/CharacterSelect/SelectBack.png")),
 	//テキスト
-	m_selectTextHandle(LoadGraph("img/CharacterSelect/SelectText.png"))
+	m_selectTextHandle(LoadGraph("img/CharacterSelect/SelectText.png")),
+	//ローディング画面
+	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png"))
 
 	
 {
@@ -131,8 +133,6 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 
 	//フェードインするときに使う
 	m_fadeManager = std::make_shared<FadeManager>();
-	//ローディング画面
-	m_loadingHandle = LoadGraph("./img/Loading/NowLoading.png");
 }
 
 void CommandSelectScene::Update(Input& input, Input& input2)

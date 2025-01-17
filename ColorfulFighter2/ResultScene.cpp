@@ -2,6 +2,8 @@
 #include "SceneController.h"
 #include "Input.h"
 #include "CommandSelectScene.h"
+#include "GameScene.h"
+#include "FadeManager.h"
 #include <DxLib.h>
 #include "game.h"
 #include "BGM.h"
@@ -12,10 +14,27 @@ namespace
 }
 
 
+void ResultScene::Rematch()
+{
+	//押されたら次の状態に繊維
+	//次の状態はこのクラスが覚えておく
+	m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
+}
+
+void ResultScene::Reselect()
+{
+	//押されたら次の状態に繊維
+	//次の状態はこのクラスが覚えておく
+	m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
+}
+
 ResultScene::ResultScene(SceneController& controller):
 	SceneBase(controller),
 	m_p1Handle(-1),
-	m_p2Handle(-1)
+	m_p2Handle(-1),
+	m_isFadeIn(false),
+	//ローディング画面
+	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png"))
 {
 	//1Pが勝ったなら
 	if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player1)
@@ -34,18 +53,22 @@ ResultScene::ResultScene(SceneController& controller):
 	m_bgm->SetBGM(bgmhandle);
 	m_bgm->Volume(100);
 	m_bgm->PlayOnce();
+
+	//フェードインするときに使う
+	m_fadeManager = std::make_shared<FadeManager>();
 }
 
 void ResultScene::Update(Input& input, Input& input2)
 {
-
 	//BGMの再生が終わったら切り替え
 	if (m_bgm->CheckEndBGM())
 	{
-		//押されたら次の状態に繊維
-		//次の状態はこのクラスが覚えておく
-		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
-		return;//忘れずreturn
+		m_isFadeIn = true;
+		if (m_fadeManager->IsFinishFadeIn())
+		{
+			Rematch();//再戦
+			return;//忘れずreturn
+		}
 	}
 }
 
@@ -57,7 +80,12 @@ void ResultScene::Draw()
 	//リザルトの画像
 	DxLib::DrawGraph(100, (Game::kScreenHeight / 2) - 400, m_p1Handle, true);
 	DxLib::DrawTurnGraph(Game::kScreenWidth - 600, (Game::kScreenHeight / 2) - 400, m_p2Handle, true);
-
+	m_fadeManager->FadeDraw(m_isFadeIn);
+	//なうろーでぃんぐ
+	if (m_fadeManager->IsFinishFadeIn())
+	{
+		DxLib::DrawGraph(0, 0, m_loadingHandle, true);
+	}
 }
 
 void ResultScene::RecordResult()

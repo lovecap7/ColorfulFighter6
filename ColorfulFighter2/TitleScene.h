@@ -7,6 +7,7 @@ class TitleScene :
 {
 private:
     int m_titleHandle;
+    int m_textHandle;
     std::shared_ptr<BGM> m_bgm;
 
     //テキストが出たり消えたりする

@@ -9,19 +9,18 @@
 
 namespace
 {
-	constexpr int kPosXOffset = 100;
-	constexpr int kPosY1Offset = -100;
-	constexpr int kPosY2Offset = -200;
 	constexpr int kTextHiddenFrame = 60;
 	constexpr int kFrameReset = kTextHiddenFrame * 2;
-
+	constexpr int kTextWidth = 500;
+	constexpr int kTextPosX = (Game::kScreenWidth / 2) - (kTextWidth / 2);
+	constexpr int kTextPosY = 600;
 }
 
 void TitleScene::BlinkingTextDraw()
 {
 	if (m_countFrame < kTextHiddenFrame)
 	{
-		DrawString((Game::kScreenWidth / 2) - 100, 700, "< PUSH A BUTON >", 0xffffff);
+		DrawGraph(kTextPosX, kTextPosY, m_textHandle, true);
 	}
 	if (kFrameReset < m_countFrame)
 	{
@@ -31,7 +30,8 @@ void TitleScene::BlinkingTextDraw()
 
 TitleScene::TitleScene(SceneController& contoller) :
 	SceneBase(contoller),
-	m_titleHandle(LoadGraph("./img/title/ColorfulFighter_2.png")),
+	m_titleHandle(LoadGraph("./img/title/Title.png")),
+	m_textHandle(LoadGraph("./img/title/PressAnyButton.png")),
 	m_countFrame(0)
 {
 	m_bgm = std::make_shared<BGM>();
@@ -44,7 +44,14 @@ TitleScene::TitleScene(SceneController& contoller) :
 void TitleScene::Update(Input& input, Input& input2)
 {
 	m_countFrame++;
-	if (input.IsTrigger("A"))
+	if (input.IsTrigger("A") ||
+		input.IsTrigger("B") ||
+		input.IsTrigger("X") ||
+		input.IsTrigger("Y") || 
+		input2.IsTrigger("A") ||
+		input2.IsTrigger("B") ||
+		input2.IsTrigger("X") ||
+		input2.IsTrigger("Y") )
 	{
 		//‰Ÿ‚³‚ê‚½‚çŸ‚Ìó‘Ô‚É‘@ˆÛ
 		//Ÿ‚Ìó‘Ô‚Í‚±‚ÌƒNƒ‰ƒX‚ªŠo‚¦‚Ä‚¨‚­
@@ -59,7 +66,6 @@ void TitleScene::Draw()
 	DrawString(10, 10, "Title Scene", 0xffffff);
 #endif
 	
-	DrawExtendGraph(kPosXOffset, kPosY1Offset, Game::kScreenWidth - kPosXOffset, Game::kScreenHeight + kPosY2Offset,
-		m_titleHandle, true);
+	DrawGraph(0, 0, m_titleHandle, true);
 	BlinkingTextDraw();
 }
