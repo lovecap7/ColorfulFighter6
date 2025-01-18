@@ -40,10 +40,12 @@ namespace
 }
 
 UI::UI(int* selectCommandIndexP1, int* selectCommandIndexP2):
-	m_hpbarP1(0),
-	m_hpbarMaxP1(0),
-	m_hpbarP2(0),
-	m_hpbarMaxP2(0),
+	m_hpbarP1(0.0f),
+	m_hpbarMaxP1(0.0f),
+	m_hpbarP2(0.0f),
+	m_hpbarMaxP2(0.0f),
+	m_damagebarP1(0.0f),
+	m_damagebarP2(0.0f),
 	m_isTimeupOrKo(false),
 	m_isResult(false),
 	m_resultUiPos(kCenterPosX,kCenterPosY - 200,0),
@@ -251,50 +253,45 @@ void UI::Update(float p1Hp, float p2Hp,GameManager& gameManager)
 	m_hpbarP2 = p2Hp;
 	DamageUI();
 	
-	////ヒットストップの処理が終わってから
-	//if (!gameManager.GetIsHitStop())
+	//どちらかが死んだらKOの表示で時間切れならTimeUpの表示
+	if (((m_hpbarP1 <= 0 || m_hpbarP2 <= 0) || gameManager.GetTimer() <= 0) && m_frameCount < kKoFrame)
 	{
-		//どちらかが死んだらKOの表示で時間切れならTimeUpの表示
-		if (((m_hpbarP1 <= 0 || m_hpbarP2 <= 0) || gameManager.GetTimer() <= 0) && m_frameCount < kKoFrame)
+		m_finishRoundHandle = m_koHandle;
+		if (gameManager.GetTimer() <= 0)
 		{
-			m_finishRoundHandle = m_koHandle;
-			if (gameManager.GetTimer() <= 0)
-			{
-				m_finishRoundHandle = m_timeupHandle;
-			}
-			m_isTimeupOrKo = true;
-			m_frameCount++;
+			m_finishRoundHandle = m_timeupHandle;
 		}
-		else
+		m_isTimeupOrKo = true;
+		m_frameCount++;
+	}
+	else
+	{
+		m_isTimeupOrKo = false;
+	}
+	//勝ったほうにWinnerの文字
+	if (((m_hpbarP1 <= 0 || m_hpbarP2 <= 0) || gameManager.GetTimer() <= 0) && !m_isTimeupOrKo)
+	{
+		if (m_hpbarP1 == m_hpbarP2)
 		{
-			m_isTimeupOrKo = false;
+			//引き分け
+			m_resultUiPos.x = kCenterPosX;
+			m_resultHandle = m_drawHandle;
+			m_isResult = true;
 		}
-		//勝ったほうにWinnerの文字
-		if (((m_hpbarP1 <= 0 || m_hpbarP2 <= 0) || gameManager.GetTimer() <= 0) && !m_isTimeupOrKo)
+		else if (m_hpbarP1 > m_hpbarP2)
 		{
-			if (m_hpbarP1 == m_hpbarP2)
-			{
-				//引き分け
-				m_resultUiPos.x = kCenterPosX;
-				m_resultHandle = m_drawHandle;
-				m_isResult = true;
-			}
-			else if (m_hpbarP1 > m_hpbarP2)
-			{
-				//P1win
-				m_resultHandle = m_winnerHandle;
-				m_resultUiPos.x = kCenterPosX - 500;
-				m_isResult = true;
-			}
-			else if (m_hpbarP1 < m_hpbarP2)
-			{
-				//P2win
-				m_resultHandle = m_winnerHandle;
-				m_resultUiPos.x = kCenterPosX + 500;
-				m_isResult = true;
-			}
+			//P1win
+			m_resultHandle = m_winnerHandle;
+			m_resultUiPos.x = kCenterPosX - 500;
+			m_isResult = true;
 		}
-
+		else if (m_hpbarP1 < m_hpbarP2)
+		{
+			//P2win
+			m_resultHandle = m_winnerHandle;
+			m_resultUiPos.x = kCenterPosX + 500;
+			m_isResult = true;
+		}
 	}
 	
 
@@ -340,17 +337,23 @@ void UI::DamageUI()
 
 	//0になるまでカウントを減らす
 	//0になったら現在のHPバーに合わせる
-	m_damageDisplayCountFrameP1--;
 	if (m_damageDisplayCountFrameP1 <= 0)
 	{
 		m_damagebarP1 = m_hpbarP1;
 		m_damageDisplayCountFrameP1 = 0;
 	}
-	m_damageDisplayCountFrameP2--;
+	else
+	{
+		m_damageDisplayCountFrameP1--;
+	}
 	if (m_damageDisplayCountFrameP2 <= 0)
 	{
 		m_damagebarP2 = m_hpbarP2;
 		m_damageDisplayCountFrameP2 = 0;
+	}
+	else
+	{
+		m_damageDisplayCountFrameP2--;
 	}
 }
 

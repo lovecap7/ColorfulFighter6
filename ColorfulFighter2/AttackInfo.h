@@ -17,6 +17,6 @@ enum class AttackAttributes
 	Null,	//何もない
 	Upper,	//上段
 	Lower,	//下段
-	middle  //中段
+	Middle  //中段
 };
 

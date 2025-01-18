@@ -78,8 +78,8 @@ private:
 	float m_damagebarP1;
 	float m_damagebarP2;
 	//1フレーム前のHPの値を保持
-	int m_beforeHpP1;
-	int m_beforeHpP2;
+	float m_beforeHpP1;
+	float m_beforeHpP2;
 
 public:
 	UI(int* selectCommandIndexP1, int* selectCommandIndexP2);

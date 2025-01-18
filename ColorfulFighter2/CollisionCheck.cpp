@@ -973,7 +973,7 @@ bool CollisionCheck::CheckSuccessAttack(Player& attacker, Player& defender)
 		}
 	}
 	//中段段攻撃をしたとき
-	else if (currentAttributes == AttackAttributes::middle)
+	else if (currentAttributes == AttackAttributes::Middle)
 	{
 		//立ちガードをしていたら
 		if (defender.GetIsGuard() && !defender.GetIsSquat())

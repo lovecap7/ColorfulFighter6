@@ -150,6 +150,13 @@ void GameScene::Update(Input& input, Input& input2)
 		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
 		return;//忘れずreturn
 	}
+	if (input.IsTrigger("Start"))
+	{
+		//勝ったプレイヤーのインデックスをセット
+		m_controller.SetWinPlayerIndex(PlayerIndex::Player1);
+		m_controller.ChangeScene(std::make_shared<ResultScene>(m_controller));
+		return;//忘れずreturn
+	}
 #endif
 	m_camera->Update(*m_player1, *m_player2, *m_gameManager);
 	//戦闘前はUpdateを止める
@@ -162,8 +169,8 @@ void GameScene::Update(Input& input, Input& input2)
 		m_bullet2->Update(*m_player1, *m_bullet1, *m_camera);
 		m_gameManager->Update(*m_player1, *m_player2, *m_bullet1, *m_bullet2,
 			*m_camera, *m_ui);
+		
 	}
-
 	m_gameManager->NoStopUpdate(*m_player1, *m_player2);
 	m_ui->Update(m_player1->GetHp(), m_player2->GetHp(), *m_gameManager);
 

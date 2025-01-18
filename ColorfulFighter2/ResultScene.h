@@ -18,7 +18,9 @@ private:
     std::shared_ptr<BGM> m_bgm;
 
     //メニュー
+    bool m_isSelecting;//trueなら現在メニューを選んでいる
     int m_selectMenuIndex;
+    void SelectMenu(Input& input);
     void Rematch();//再戦
     void Reselect();//コマンドの選び直し
 

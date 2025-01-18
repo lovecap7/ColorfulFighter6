@@ -51,7 +51,7 @@ namespace
 	constexpr int kAllFrameCommand4High = 49;
 	constexpr int kStartFrameCommand4High = 15;
 	constexpr float kCommand4VeloX = 30.0f;
-	constexpr float kCommand4VeloY = -10.0f;
+	constexpr float kCommand4VeloY = -6.0f;
 
 
 	//ソニックブーム
@@ -1359,7 +1359,7 @@ void Chara::GetGiveEffectPunchLightAerial(Player& player)
 	m_giveDamage = 3.0f;
 	m_giveNoActFrame = 13;
 	m_giveGuardFrame = 9;
-	m_attackAttributes = AttackAttributes::middle;//中段
+	m_attackAttributes = AttackAttributes::Middle;//中段
 	player.SetGiveDamage(m_giveDamage);
 	player.SetGiveNoActFrame(m_giveNoActFrame);
 	player.SetGiveGuardFrame(m_giveGuardFrame);
@@ -1431,7 +1431,7 @@ void Chara::GetGiveEffectPunchHighAerial(Player& player)
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = 19;
 	m_giveGuardFrame = 15;
-	m_attackAttributes = AttackAttributes::middle;//中段
+	m_attackAttributes = AttackAttributes::Middle;//中段
 	player.SetGiveDamage(m_giveDamage);
 	player.SetGiveNoActFrame(m_giveNoActFrame);
 	player.SetGiveGuardFrame(m_giveGuardFrame);
@@ -1504,7 +1504,7 @@ void Chara::GetGiveEffectKickLightAerial(Player& player)
 	m_giveDamage = 2.0f;
 	m_giveNoActFrame = 14;
 	m_giveGuardFrame = 10;
-	m_attackAttributes = AttackAttributes::middle;//中段
+	m_attackAttributes = AttackAttributes::Middle;//中段
 	player.SetGiveDamage(m_giveDamage);
 	player.SetGiveNoActFrame(m_giveNoActFrame);
 	player.SetGiveGuardFrame(m_giveGuardFrame);
@@ -1578,7 +1578,7 @@ void Chara::GetGiveEffectKickHighAerial(Player& player)
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = 19;
 	m_giveGuardFrame = 15;
-	m_attackAttributes = AttackAttributes::middle;//中段
+	m_attackAttributes = AttackAttributes::Middle;//中段
 	player.SetGiveDamage(m_giveDamage);
 	player.SetGiveNoActFrame(m_giveNoActFrame);
 	player.SetGiveGuardFrame(m_giveGuardFrame);
@@ -2467,7 +2467,7 @@ void Chara::GetGiveEffectCommand4(Player& player)
 		player.SetGiveDamage(8.0f);
 		player.SetGiveNoActFrame(kDown);
 		player.SetGiveGuardFrame(kAllFrameCommand4High - kStartFrameCommand4High - 12);
-		player.SetAttackAttributes(AttackAttributes::Upper);//上段
+		player.SetAttackAttributes(AttackAttributes::Middle);//中段
 		m_giveAttackVelo.x = 10.0f;
 		m_giveAttackVelo.y = -10.0f;
 		player.SetGiveAttackVelo(m_giveAttackVelo);
