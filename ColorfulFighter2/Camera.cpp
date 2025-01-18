@@ -82,7 +82,7 @@ float Camera::GetCameraRightWallPos()
 void Camera::ShakeCamera(Player& p1, Player& p2, GameManager& gameManager)
 {
 	//ヒットストップ中に揺れる
-	if (gameManager.GetIsHitStop())
+	if (gameManager.IsCameraShake())
 	{
 		//一度だけ初期化する
 		if (!m_isInitShakeVelo)

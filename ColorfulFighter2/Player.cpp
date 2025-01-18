@@ -2581,6 +2581,8 @@ void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::sh
 	{
 		//ヒットストップ
 		gameManager.OnIsHitStop();
+		//カメラを揺らす
+		gameManager.OnIsCameraShake();
 		//ガードできない
 		m_isGround = false;
 		//ふっとばされる

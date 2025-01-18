@@ -56,6 +56,7 @@ GameManager::GameManager():
 	m_time(kRoundTime),
 	m_countFrame(0),
 	m_isDrawFrontP1(false),
+	m_isCameraShake(false),
 	//ヒットエフェクト
 	//P1
 	m_hitEffectPosP1(),
@@ -98,6 +99,7 @@ void GameManager::Init()
 	m_isChangeRound = false;
 	m_isTimeUpOrKo = false;
 	m_isStartRound = false;
+	m_isCameraShake = false;
 	//フェードアウト
 	m_isFadeIn = false;
 	//タイマー
@@ -109,7 +111,11 @@ void GameManager::Update(Player& p1, Player& p2, Bullet& bulletP1, Bullet& bulle
 	Camera& camera, UI& ui)
 {
 	m_collcheck->Update(p1, p2,bulletP1,bulletP2, camera,*this);
-
+	//ヒットストップがかかっていないときはfalse
+	if (!m_isHitStop)
+	{
+		m_isCameraShake = false;
+	}
 #if _DEBUG
 	DrawFormatString(0, 400, 0xffffff, "p1(%2.0f,%2.0f) p2(%2.0f,%2.0f)", p1.GetPos().x, p1.GetPos().y, p2.GetPos().x, p2.GetPos().y);
 #endif
@@ -218,6 +224,8 @@ void GameManager::FadeDraw()
 
 void GameManager::HitEffectDraw(Camera& camera)
 {
+	
+	SetDrawBlendMode(DX_BLENDMODE_PMA_INVSRC, 255);
 	//描画
 	//P1
 	//切り取るを計算する
@@ -231,11 +239,7 @@ void GameManager::HitEffectDraw(Camera& camera)
 		32 * cutX,
 		32 * cutY,
 		32, 32,
-		5.0f, 0.0f, m_hitEffectHandleP1, true, false);
-#if _DEBUG
-	DrawFormatString(0, 700, 0xffff00, "P1のヒットエフェクト(%2.0f,%2.0f)", m_hitEffectPosP1.x, m_hitEffectPosP1.y);
-#endif
-	
+		5.0f, 1.0f, m_hitEffectHandleP1, true, false);
 	//P2
 	//切り取るを計算する
 	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
@@ -246,8 +250,33 @@ void GameManager::HitEffectDraw(Camera& camera)
 		32 * cutX,
 		32 * cutY,
 		32, 32,
+		5.0f, 1.0f, m_hitEffectHandleP2, true, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	//P1
+	GetGraphSize(m_hitEffectHandleP1, &sizeX, &sizeY);//画像サイズ
+	cutX = m_hitAnimIndexP1 % (sizeX / 32);//横
+	cutY = m_hitAnimIndexP1 / (sizeX / 32);//縦
+	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP1.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_hitEffectPosP1.y) + static_cast<int>(camera.m_drawOffset.y),
+		32 * cutX,
+		32 * cutY,
+		32, 32,
+		5.0f, 0.0f, m_hitEffectHandleP1, true, false);
+	//P2
+	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
+	cutX = m_hitAnimIndexP2 % (sizeX / 32);//横
+	cutY = m_hitAnimIndexP2 / (sizeX / 32);//縦
+	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP2.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_hitEffectPosP2.y) + static_cast<int>(camera.m_drawOffset.y),
+		32 * cutX,
+		32 * cutY,
+		32, 32,
 		5.0f, 0.0f, m_hitEffectHandleP2, true, true);
+
+
+
 #if _DEBUG
+	DrawFormatString(0, 700, 0xffff00, "P1のヒットエフェクト(%2.0f,%2.0f)", m_hitEffectPosP1.x, m_hitEffectPosP1.y);
 	DrawFormatString(0, 720, 0xffff00, "P2のヒットエフェクト(%2.0f,%2.0f)", m_hitEffectPosP2.x, m_hitEffectPosP2.y);
 #endif
 }

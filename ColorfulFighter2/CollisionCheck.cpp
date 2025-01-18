@@ -470,6 +470,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		}
 		else
 		{
+			//ƒJƒƒ‰—h‚ç‚·
+			gameManager.OnIsCameraShake();
 			//‹ó’†‚Ì“G‚ÉUŒ‚‚ğ“–‚Ä‚½‚ç
 			if (!p2.GetIsGround())
 			{
@@ -554,7 +556,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		}
 		else
 		{
-
+			//ƒJƒƒ‰—h‚ç‚·
+			gameManager.OnIsCameraShake();
 			//‹ó’†‚Ì“G‚ÉUŒ‚‚ğ“–‚Ä‚½‚ç
 			if (!p1.GetIsGround())
 			{
@@ -601,6 +604,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 	//“¯‚É‰£‚Á‚½
 	if (p1.GetIsHitAttack() && p2.GetIsHitAttack())
 	{
+		//ƒJƒƒ‰—h‚ç‚·
+		gameManager.OnIsCameraShake();
 		//‹ó’†‚Ì“G‚ÉUŒ‚‚ğ“–‚Ä‚½‚ç
 		if (!p2.GetIsGround())
 		{
@@ -700,6 +705,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		//UŒ‚‚ª¬Œ÷‚µ‚½‚ç
 		if (CheckSuccessAttack(p1,p2))
 		{
+			//ƒJƒƒ‰—h‚ç‚·
+			gameManager.OnIsCameraShake();
 			//ƒqƒbƒgƒGƒtƒFƒNƒg
 			gameManager.LoadHitEffect(p1.GetPlayerIndex());
 
@@ -801,6 +808,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		//UŒ‚‚ª¬Œ÷‚µ‚½‚ç
 		if (CheckSuccessAttack(p2, p1))
 		{
+			//ƒJƒƒ‰—h‚ç‚·
+			gameManager.OnIsCameraShake();
 			//ƒqƒbƒgƒGƒtƒFƒNƒg
 			gameManager.LoadHitEffect(p2.GetPlayerIndex());
 			//‹ó’†‚Ì“G‚ÉUŒ‚‚ğ“–‚Ä‚½‚ç

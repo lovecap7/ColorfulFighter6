@@ -33,6 +33,8 @@ private:
 	void HitStop();
 	//ラウンドの切り替わり
 	bool m_isChangeRound;
+	//カメラ揺れる
+	bool m_isCameraShake;
 	//ゲーム終了
 	bool m_isGameset;
 	//KO
@@ -96,6 +98,8 @@ public:
 	//ヒットストップ
 	bool GetIsHitStop() { return m_isHitStop; }
 	void OnIsHitStop() { m_isHitStop = true; }
+	bool IsCameraShake() { return m_isCameraShake; }
+	void OnIsCameraShake() { m_isCameraShake = true; }
 	//ラウンドの切り替わり
 	bool GetIsChangeRound() { return m_isChangeRound; }
 	void OffIsChangeRound() { m_isChangeRound = false; }
