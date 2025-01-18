@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Player.h"
 #include "Bullet.h"
+#include "SE.h"
 #include <cassert>
 namespace
 {
@@ -138,9 +139,18 @@ Chara::Chara(int* index) :
 	m_commandHandle7(LoadGraph("./img/waza/rolling.png")),//コマンド技
 	m_commandHandle8(LoadGraph("./img/waza/tatumaki.png")),//コマンド技
 	m_commandHandle9(LoadGraph("./img/waza/wildhant.png")),//コマンド技
-
-
-	m_winPoseHandle(LoadGraph("./img/playerbase/win_001.png"))//勝利ポーズ
+	m_winPoseHandle(LoadGraph("./img/playerbase/win_001.png")),//勝利ポーズ
+	m_commandSe{
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+		LoadGraph("./img/waza/hadou_001.png"),
+	}
 {
 	for (int i = 0; i < 3;++i)
 	{

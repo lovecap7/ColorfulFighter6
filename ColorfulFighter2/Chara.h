@@ -13,8 +13,9 @@ class SE;
 class Chara
 {	
 private:
-	////SE
-	//std::shared_ptr<SE> m_se;
+	//SE
+	std::shared_ptr<SE> m_se;
+	int m_commandSe[9];
 	//選んだ技のインデックス
 	int m_selectCommandIndex[3];
 	bool CheckMyCommand();
