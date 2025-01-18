@@ -256,12 +256,14 @@ private:
 	int m_jumpedSeHandle;//’…’n‚µ‚½‚Æ‚«‚Ì‰¹
 	int m_graspSeHandle;//‚Â‚©‚Ş‰¹
 	int m_throwSeHandle;//“Š‚°‚é
+	int m_loseSeHandle;//‚¤[‚í
 	void JumpSE();
 	void JumpedSE();
 	void AttackSE();//UŒ‚‚É‚æ‚Á‚Ä•—‚ğØ‚é‰¹
 	void DownSE();
 	void GraspSE();
 	void ThrowSE();
+	void LoseSE();
 
 	//‰e
 	void DrawShadow(const Camera& camera);

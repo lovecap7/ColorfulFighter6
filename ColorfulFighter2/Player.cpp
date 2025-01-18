@@ -134,6 +134,7 @@ Player::Player(PlayerIndex playerIndex, int* selectCommandIndex):
 	m_jumpedSeHandle = LoadSoundMem("./SE/PlayerBase/Jumped.mp3");//着地したときの音
 	m_graspSeHandle = LoadSoundMem("./SE/PlayerBase/Grasp.mp3");//つかむ音
 	m_throwSeHandle = LoadSoundMem("./SE/PlayerBase/Throw.mp3");//投げる
+	m_loseSeHandle = LoadSoundMem("./SE/uwauwa/uwauwa.mp3");//投げる
 	m_chara->GetAnimIdleStand(*this);//待機モーション
 	assert(m_handle != -1);
 	m_chara->GetHitBoxIdleStand(*this);//待機モーションの当たり判定を取得
@@ -307,6 +308,14 @@ void Player::ThrowSE()
 {
 	//投げる音
 	m_se->SetSE(m_throwSeHandle);
+	m_se->Volume(kSeVolume);
+	m_se->PlayOnce();
+}
+
+void Player::LoseSE()
+{
+	//うーわ
+	m_se->SetSE(m_loseSeHandle);
 	m_se->Volume(kSeVolume);
 	m_se->PlayOnce();
 }
@@ -881,6 +890,8 @@ bool Player::CheckDead()
 	//体力がなくなったら
 	if (m_hp <= 0)
 	{
+		//うーわ
+		LoseSE();
 		//吹っ飛んでほしい
 		//押し合い判定を消す(画面外に行くために)
 		ResetPushBox();

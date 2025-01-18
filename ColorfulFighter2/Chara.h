@@ -9,10 +9,12 @@
 class Input;
 class Player;
 class Bullet;
+class SE;
 class Chara
 {	
 private:
-
+	////SE
+	//std::shared_ptr<SE> m_se;
 	//選んだ技のインデックス
 	int m_selectCommandIndex[3];
 	bool CheckMyCommand();

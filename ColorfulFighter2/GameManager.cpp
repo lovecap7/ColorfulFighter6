@@ -83,7 +83,7 @@ GameManager::GameManager():
 	m_round3SeHandle = LoadSoundMem("./SE/Round/Round3.mp3");
 	m_roundOverSeHandle = LoadSoundMem("./SE/Round/RoundOver.mp3");
 	m_fightSeHandle = LoadSoundMem("./SE/Round/Fight.mp3");
-	m_koSeHandle = LoadSoundMem("./SE/uwauwa/uwauwa.mp3");
+	m_koSeHandle = LoadSoundMem("./SE/Round/Ko.mp3");
 }
 
 GameManager::~GameManager()
