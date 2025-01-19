@@ -14,6 +14,10 @@ namespace
 	constexpr int kTextWidth = 500;
 	constexpr int kTextPosX = (Game::kScreenWidth / 2) - (kTextWidth / 2);
 	constexpr int kTextPosY = 600;
+	//BGMボリューム
+	constexpr int kBgmVolume = 120;
+	//SEボリューム
+	constexpr int kSeVolume = 150;
 }
 
 void TitleScene::BlinkingTextDraw()
@@ -37,7 +41,7 @@ TitleScene::TitleScene(SceneController& contoller) :
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
 	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(100);
+	m_bgm->Volume(kBgmVolume);
 	m_bgm->PlayLoop();
 }
 

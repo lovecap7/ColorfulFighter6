@@ -39,7 +39,7 @@ private:
 	//SE
 	std::shared_ptr<SE> m_seP1;
 	std::shared_ptr<SE> m_seP2;
-	int m_hit1SeHandle;
+	int m_hitSeHandle;
 	int m_guardSeHandle;
 
 public:

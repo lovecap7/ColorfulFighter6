@@ -9,7 +9,7 @@ namespace
 	//硬直フレームが0の技はDownにする
 	constexpr int kDown = 0;
 	//SEのボリューム
-	constexpr int kSeVolume = 160;
+	constexpr int kSeVolume = 150;
 
 	//全体フレーム
 	constexpr int kAllFramePunchLight = 14;//弱パンチ
@@ -152,9 +152,17 @@ Chara::Chara(int* index) :
 		LoadSoundMem("./SE/waza/rollingSe.mp3"),
 		LoadSoundMem("./SE/waza/tatumakiSe.mp3"),
 		LoadSoundMem("./SE/waza/wildSe.mp3")
-	}
+	},
+	m_attack1SeHandle(LoadSoundMem("./SE/PlayerBase/voice/Attack1.mp3")),
+	m_attack2SeHandle(LoadSoundMem("./SE/PlayerBase/voice/Attack2.mp3")),
+	m_attack3SeHandle(LoadSoundMem("./SE/PlayerBase/voice/Attack3.mp3")),
+	m_damage1SeHandle(LoadSoundMem("./SE/PlayerBase/voice/Damage1.mp3")),
+	m_damage2SeHandle(LoadSoundMem("./SE/PlayerBase/voice/Damage2.mp3")),
+	m_standUp1SeHandle(LoadSoundMem("./SE/PlayerBase/voice/StandUp1.mp3")),
+	m_standUp2SeHandle(LoadSoundMem("./SE/PlayerBase/voice/StandUp2.mp3"))
 {
 	m_se = std::make_shared<SE>();//SEを確保
+	m_voice = std::make_shared<SE>();//ボイスを確保
 	for (int i = 0; i < 3;++i)
 	{
 		m_selectCommandIndex[i] = index[i];
@@ -163,6 +171,18 @@ Chara::Chara(int* index) :
 
 Chara::~Chara()
 {
+}
+
+//ボイス
+void Chara::VoiceSe(int voiceHandle)
+{
+	if (m_voice->CheckEndSE())
+	{
+		m_voice->Stop();
+	}
+	m_voice->SetSE(voiceHandle);
+	m_voice->Volume(kSeVolume);
+	m_voice->PlayOnce();
 }
 
 bool Chara::CheckMyCommand()
@@ -796,6 +816,8 @@ void Chara::GetHitBoxPunchLight(Player& player)
 }
 void Chara::GetGiveEffectPunchLight(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 3.0f;
 	m_giveNoActFrame = kAllFramePunchLight - kStartFramePunchLight + 4;
 	m_giveGuardFrame = kAllFramePunchLight - kStartFramePunchLight - 1;
@@ -867,6 +889,8 @@ void Chara::GetHitBoxPunchHigh(Player& player)
 }
 void Chara::GetGiveEffectPunchHigh(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack2SeHandle);
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = kAllFramePunchHigh - kStartFramePunchHigh + 4;
 	m_giveGuardFrame = kAllFramePunchHigh - kStartFramePunchHigh - 2;
@@ -939,6 +963,8 @@ void Chara::GetHitBoxKickLight(Player& player)
 }
 void Chara::GetGiveEffectKickLight(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 3.0f;
 	m_giveNoActFrame = kAllFrameKickLight - kStartFrameKickLight + 2;
 	m_giveGuardFrame = kAllFrameKickLight - kStartFrameKickLight - 4;
@@ -1013,6 +1039,8 @@ void Chara::GetHitBoxKickHigh(Player& player)
 }
 void Chara::GetGiveEffectKickHigh(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack3SeHandle);
 	m_giveDamage = 9.0f;
 	m_giveNoActFrame = kAllFrameKickHigh - kStartFrameKickHigh + 9;
 	m_giveGuardFrame = kAllFrameKickHigh - kStartFrameKickHigh + 1;
@@ -1084,6 +1112,8 @@ void Chara::GetHitBoxPunchLightSquat(Player& player)
 }
 void Chara::GetGiveEffectPunchLightSquat(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 2.0f;
 	m_giveNoActFrame = kAllFramePunchLightSquat - kStartFramePunchLightSquat + 4;
 	m_giveGuardFrame = kAllFramePunchLightSquat - kStartFramePunchLightSquat - 1;
@@ -1155,6 +1185,8 @@ void Chara::GetHitBoxPunchHighSquat(Player& player)
 }
 void Chara::GetGiveEffectPunchHighSquat(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = kAllFramePunchHighSquat - kStartFramePunchHighSquat + 1;
 	m_giveGuardFrame = kAllFramePunchHighSquat - kStartFramePunchHighSquat - 7;
@@ -1226,6 +1258,8 @@ void Chara::GetHitBoxKickLightSquat(Player& player)
 }
 void Chara::GetGiveEffectKickLightSquat(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 2.0f;
 	m_giveNoActFrame = kAllFrameKickLightSquat - kStartFrameKickLightSquat + 3;
 	m_giveGuardFrame = kAllFrameKickLightSquat - kStartFrameKickLightSquat - 3;
@@ -1298,6 +1332,8 @@ void Chara::GetHitBoxKickHighSquat(Player& player)
 }
 void Chara::GetGiveEffectKickHighSquat(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack3SeHandle);
 	m_giveDamage = 2.0f;
 	m_giveNoActFrame = kDown;
 	m_giveGuardFrame = kAllFrameKickHighSquat - kStartFrameKickHighSquat - 12;
@@ -1369,6 +1405,8 @@ void Chara::GetHitBoxPunchLightAerial(Player& player)
 }
 void Chara::GetGiveEffectPunchLightAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 3.0f;
 	m_giveNoActFrame = 13;
 	m_giveGuardFrame = 9;
@@ -1441,6 +1479,8 @@ void Chara::GetHitBoxPunchHighAerial(Player& player)
 }
 void Chara::GetGiveEffectPunchHighAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack2SeHandle);
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = 19;
 	m_giveGuardFrame = 15;
@@ -1514,6 +1554,8 @@ void Chara::GetHitBoxKickLightAerial(Player& player)
 
 void Chara::GetGiveEffectKickLightAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack1SeHandle);
 	m_giveDamage = 2.0f;
 	m_giveNoActFrame = 14;
 	m_giveGuardFrame = 10;
@@ -1588,6 +1630,8 @@ void Chara::GetHitBoxKickHighAerial(Player& player)
 
 void Chara::GetGiveEffectKickHighAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_attack3SeHandle);
 	m_giveDamage = 8.0f;
 	m_giveNoActFrame = 19;
 	m_giveGuardFrame = 15;
@@ -1811,6 +1855,8 @@ void Chara::GetHitBoxThrowBack(Player& player)
 //立ちやられ
 void Chara::GetAnimHitStand(Player& player)
 {
+	//ボイス
+	VoiceSe(m_damage1SeHandle);
 	m_handle = m_damageStandHandle;//やられ
 	m_animNum = 5;
 	m_oneAnimFrame = 5;
@@ -1821,6 +1867,8 @@ void Chara::GetAnimHitStand(Player& player)
 //空中やられ
 void Chara::GetAnimHitAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_damage1SeHandle);
 	m_handle = m_damageAerialHandle;//やられ
 	m_animNum = 7;
 	m_oneAnimFrame = 4;
@@ -1922,6 +1970,8 @@ void Chara::GetHitBoxDown(Player& player)
 }
 void Chara::GetAnimDownAerial(Player& player)
 {
+	//ボイス
+	VoiceSe(m_damage2SeHandle);
 	m_handle = m_downAerialHandle;
 	m_animNum = 8;
 	m_oneAnimFrame = 3;
@@ -1973,6 +2023,16 @@ void Chara::GetHitBoxDownAerial(Player& player)
 //起き上がり
 void Chara::GetAnimStandUp(Player& player)
 {
+	if (GetRand(1) != 0)
+	{
+		//ボイス
+		VoiceSe(m_standUp1SeHandle);
+	}
+	else
+	{
+		//ボイス
+		VoiceSe(m_standUp2SeHandle);
+	}
 	m_handle = m_standUpHandle;
 	m_animNum = 5;
 	m_oneAnimFrame = 3;

@@ -36,7 +36,7 @@ namespace
 	constexpr int kGuardAnimFinishIndex = 210;
 	
 	//seボリューム
-	constexpr int kSeVolume = 120;
+	constexpr int kSeVolume = 150;
 }
 
 GameManager::GameManager():
@@ -353,37 +353,6 @@ void GameManager::Timer()
 
 void GameManager::CheckKO(Player& p1, Player& p2)
 {
-	//どちらかのHPが尽きたらまたは時間が0になったら
-	if (p1.GetHp() <= 0 || p2.GetHp() <= 0 || m_time <= 0)
-	{
-		//次のラウンドに切り替えるまでのフレームを数える
-		m_changeRoundFrameCount++;
-		//長めにヒットストップをかける
-		m_hitStopFinishFrame = kKoStopFinishFrame;
-		//Fight!
-		m_se->SetSE(m_koSeHandle);
-		m_se->Volume(kSeVolume);
-		m_se->PlayOnce();
-		//相打ち
-		if ((p1.GetHp() <= 0 && p2.GetHp() <= 0) || (p1.GetHp() == p2.GetHp() && m_time <= 0))
-		{
-			//引き分けはそのままラウンドチェンジ
-			return;
-		}
-		//P1の勝ち
-		else if (((p1.GetHp() > 0 && p2.GetHp() <= 0) || (p1.GetHp() > p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
-		{
-			m_isTimeUpOrKo = true;
-			m_winNumP1++;
-		}
-		//P2の勝ち
-		else if (((p1.GetHp() <= 0 && p2.GetHp() > 0) || (p1.GetHp() < p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
-		{
-			m_isTimeUpOrKo = true;
-			m_winNumP2++;
-		}
-	}
-
 	//ラウンドをゲームシーンで切り替え
 	if (m_changeRoundFrameCount > kChangeRoundFrame && !m_isGameset)
 	{
@@ -409,6 +378,37 @@ void GameManager::CheckKO(Player& p1, Player& p2)
 			m_startRoundCount = 0;
 			m_roundNumber++;
 			return;
+		}
+	}
+	//どちらかのHPが尽きたらまたは時間が0になったら
+	if (p1.GetHp() <= 0 || p2.GetHp() <= 0 || m_time <= 0)
+	{
+		//次のラウンドに切り替えるまでのフレームを数える
+		m_changeRoundFrameCount++;
+		//長めにヒットストップをかける
+		m_hitStopFinishFrame = kKoStopFinishFrame;
+		//Fight!
+		m_se->SetSE(m_koSeHandle);
+		m_se->Volume(kSeVolume);
+		m_se->PlayOnce();
+		//相打ち
+		if ((p1.GetHp() <= 0 && p2.GetHp() <= 0) || (p1.GetHp() == p2.GetHp() && m_time <= 0))
+		{
+			//引き分けはそのままラウンドチェンジ
+			m_isTimeUpOrKo = true;
+			return;
+		}
+		//P1の勝ち
+		else if (((p1.GetHp() > 0 && p2.GetHp() <= 0) || (p1.GetHp() > p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
+		{
+			m_isTimeUpOrKo = true;
+			m_winNumP1++;
+		}
+		//P2の勝ち
+		else if (((p1.GetHp() <= 0 && p2.GetHp() > 0) || (p1.GetHp() < p2.GetHp() && m_time <= 0)) && !m_isTimeUpOrKo)
+		{
+			m_isTimeUpOrKo = true;
+			m_winNumP2++;
 		}
 	}
 }

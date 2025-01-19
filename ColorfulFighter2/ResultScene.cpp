@@ -11,6 +11,10 @@
 namespace
 {
 	constexpr int kMenuNum = 2;
+	//BGMボリューム
+	constexpr int kBgmVolume = 120;
+	//SEボリューム
+	constexpr int kSeVolume = 150;
 }
 
 ResultScene::ResultScene(SceneController& controller):
@@ -38,7 +42,7 @@ ResultScene::ResultScene(SceneController& controller):
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Result.mp3");
 	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(100);
+	m_bgm->Volume(kBgmVolume);
 	m_bgm->PlayOnce();
 
 	//フェードインするときに使う

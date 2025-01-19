@@ -68,7 +68,7 @@ namespace
 	constexpr int kCanselGraceFrame = 20;
 
 	//SEの音量
-	constexpr int kSeVolume = 120;
+	constexpr int kSeVolume = 150;
 
 	//勝利ポーズをするまでにかかる時間
 	constexpr int kChangeWinPoseFrame = 120;
@@ -115,7 +115,18 @@ Player::Player(PlayerIndex playerIndex, int* selectCommandIndex):
 	m_attackAttributes(AttackAttributes::Null),
 	m_attackType(AttackTypes::Null),
 	m_update(&Player::IdleSquatUpdate),
-	m_draw(&Player::IdleSquatDraw)
+	m_draw(&Player::IdleSquatDraw),
+	m_lightPunchSeHandle(LoadSoundMem("./SE/PlayerBase/LightPunch.mp3")),
+	m_lightKickSeHandle(LoadSoundMem("./SE/PlayerBase/LightKick.mp3")),
+	m_highPunchSeHandle(LoadSoundMem("./SE/PlayerBase/HighPunch.mp3")),
+	m_highKickSeHandle(LoadSoundMem("./SE/PlayerBase/HighKick.mp3")),
+	m_downSeHandle(LoadSoundMem("./SE/PlayerBase/Down.mp3")),//倒れる音
+	m_jumpSeHandle(LoadSoundMem("./SE/PlayerBase/Jumped.mp3")),//ジャンプの音
+	m_jumpedSeHandle(LoadSoundMem("./SE/PlayerBase/Jumped.mp3")),//着地したときの音
+	m_graspSeHandle(LoadSoundMem("./SE/PlayerBase/Grasp.mp3")),//つかむ音
+	m_throwSeHandle(LoadSoundMem("./SE/PlayerBase/Throw.mp3")),//投げる
+	m_loseSeHandle(LoadSoundMem("./SE/PlayerBase/voice/Lose.mp3")),//負け
+	m_winSeHandle(LoadSoundMem("./SE/PlayerBase/voice/Win.mp3"))//勝ち
 	
 {
 	for (int i = 0;i < 3;++i)
@@ -125,16 +136,6 @@ Player::Player(PlayerIndex playerIndex, int* selectCommandIndex):
 	
 	m_chara = std::make_shared<Chara>(m_selectCommandIndex);//キャラクターを確保
 	m_se = std::make_shared<SE>();//SEを確保
-	m_lightPunchSeHandle = LoadSoundMem("./SE/PlayerBase/LightPunch.mp3");
-	m_lightKickSeHandle = LoadSoundMem("./SE/PlayerBase/LightKick.mp3");
-	m_highPunchSeHandle = LoadSoundMem("./SE/PlayerBase/HighPunch.mp3");
-	m_highKickSeHandle = LoadSoundMem("./SE/PlayerBase/HighKick.mp3");
-	m_downSeHandle = LoadSoundMem("./SE/PlayerBase/Down.mp3");//倒れる音
-	m_jumpSeHandle = LoadSoundMem("./SE/PlayerBase/Jumped.mp3");//ジャンプの音
-	m_jumpedSeHandle = LoadSoundMem("./SE/PlayerBase/Jumped.mp3");//着地したときの音
-	m_graspSeHandle = LoadSoundMem("./SE/PlayerBase/Grasp.mp3");//つかむ音
-	m_throwSeHandle = LoadSoundMem("./SE/PlayerBase/Throw.mp3");//投げる
-	m_loseSeHandle = LoadSoundMem("./SE/uwauwa/uwauwa.mp3");//投げる
 	m_chara->GetAnimIdleStand(*this);//待機モーション
 	assert(m_handle != -1);
 	m_chara->GetHitBoxIdleStand(*this);//待機モーションの当たり判定を取得
@@ -319,6 +320,15 @@ void Player::LoseSE()
 	m_se->Volume(kSeVolume);
 	m_se->PlayOnce();
 }
+
+void Player::WinSE()
+{
+	//やった！
+	m_se->SetSE(m_winSeHandle);
+	m_se->Volume(kSeVolume);
+	m_se->PlayOnce();
+}
+
 
 //影
 void Player::DrawShadow(const Camera& camera)
@@ -3013,6 +3023,7 @@ void Player::ResultUpdate(Input& input, std::shared_ptr<Player> enemy, std::shar
 			//アニメーションの数が最大まで行ったとき
 			if ((m_animIndex > animMaxNum))
 			{
+				WinSE();
 				m_animIndex = animMaxNum;
 			}
 		}

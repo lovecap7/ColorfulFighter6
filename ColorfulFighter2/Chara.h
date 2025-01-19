@@ -16,7 +16,17 @@ class Chara
 private:
 	//SE
 	std::shared_ptr<SE> m_se;
+	std::shared_ptr<SE> m_voice;
 	int m_commandSeHandle[9];
+	void CommandSe(int commandIndex);
+	int m_attack1SeHandle;
+	int m_attack2SeHandle;
+	int m_attack3SeHandle;
+	int m_damage1SeHandle;
+	int m_damage2SeHandle;
+	int m_standUp1SeHandle;
+	int m_standUp2SeHandle;
+	void VoiceSe(int voiceHandle);
 	//選んだ技のインデックス
 	int m_selectCommandIndex[3];
 	bool CheckMyCommand();
@@ -36,8 +46,7 @@ private:
 	};
 	int m_commandIndex;//何のコマンドを呼ぶのかを記録
 
-	//SE
-	void CommandSe(int commandIndex);
+
 	//波動拳
 	//コマンド技モーション取得
 	void GetAnimCommand1(Player& player);

@@ -257,6 +257,7 @@ private:
 	int m_graspSeHandle;//‚Â‚©‚Ş‰¹
 	int m_throwSeHandle;//“Š‚°‚é
 	int m_loseSeHandle;//‚¤[‚í
+	int m_winSeHandle;//‚â‚Á‚½I
 	void JumpSE();
 	void JumpedSE();
 	void AttackSE();//UŒ‚‚É‚æ‚Á‚Ä•—‚ğØ‚é‰¹
@@ -264,7 +265,7 @@ private:
 	void GraspSE();
 	void ThrowSE();
 	void LoseSE();
-
+	void WinSE();
 	//‰e
 	void DrawShadow(const Camera& camera);
 

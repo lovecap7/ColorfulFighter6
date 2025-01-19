@@ -90,7 +90,7 @@ CollisionCheck::CollisionCheck():
 	//SE
 	m_seP1 = std::make_shared<SE>();
 	m_seP2 = std::make_shared<SE>();
-	m_hit1SeHandle = LoadSoundMem("./SE/Hit/Hit1.mp3");
+	m_hitSeHandle = LoadSoundMem("./SE/Hit/Hit1.mp3");
 	m_guardSeHandle = LoadSoundMem("./SE/Hit/Guard.mp3");
 	
 }
@@ -502,7 +502,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 
 			//ヒットの音
 			m_seP1->Stop();
-			m_seP1->SetSE(m_hit1SeHandle);
+			m_seP1->SetSE(m_hitSeHandle);
 			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 			
@@ -588,7 +588,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 
 			//ヒットの音
 			m_seP2->Stop();
-			m_seP2->SetSE(m_hit1SeHandle);
+			m_seP2->SetSE(m_hitSeHandle);
 			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 		}
@@ -690,12 +690,12 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 
 		//ヒットの音
 		m_seP1->Stop();
-		m_seP1->SetSE(m_hit1SeHandle);
+		m_seP1->SetSE(m_hitSeHandle);
 		m_seP1->Volume(kSeVolume);
 		m_seP1->PlayOnce();
 		//ヒットの音
 		m_seP2->Stop();
-		m_seP2->SetSE(m_hit1SeHandle);
+		m_seP2->SetSE(m_hitSeHandle);
 		m_seP2->Volume(kSeVolume);
 		m_seP2->PlayOnce();
 	}
@@ -745,7 +745,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 
 			//ヒットの音
 			m_seP2->Stop();
-			m_seP2->SetSE(m_hit1SeHandle);
+			m_seP2->SetSE(m_hitSeHandle);
 			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 		}
@@ -848,7 +848,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 
 			//ヒットの音
 			m_seP1->Stop();
-			m_seP1->SetSE(m_hit1SeHandle);
+			m_seP1->SetSE(m_hitSeHandle);
 			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 		
@@ -948,11 +948,27 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 	//プレイヤーのHPが0より小さくなった場合
 	if (p1.GetHp() < 0)
 	{
+		//カメラ揺らす
+		gameManager.OnIsCameraShake();
 		p1.SetHp(0);
+		p1.LoadStateHit();//ヒットモーション
+		//ヒットの音
+		m_seP1->Stop();
+		m_seP1->SetSE(m_hitSeHandle);
+		m_seP1->Volume(kSeVolume);
+		m_seP1->PlayOnce();
 	}
 	if (p2.GetHp() < 0)
 	{
+		//カメラ揺らす
+		gameManager.OnIsCameraShake();
 		p2.SetHp(0);
+		p2.LoadStateHit();//ヒットモーション
+		//ヒットの音
+		m_seP2->Stop();
+		m_seP2->SetSE(m_hitSeHandle);
+		m_seP2->Volume(kSeVolume);
+		m_seP2->PlayOnce();
 	}
 	
 }

@@ -19,6 +19,10 @@ namespace
 	constexpr int kColorChangeFrame = 60;
 	constexpr int kColorNum = 8;
 
+	//BGMボリューム
+	constexpr int kBgmVolume = 120;
+	//SEボリューム
+	constexpr int kSeVolume = 150;
 	//ステージ
 	constexpr float kStageBackPosX = 0.0f;
 	constexpr float kStageBackPosY = 750.0f;
@@ -133,7 +137,7 @@ GameScene::GameScene(SceneController& controller):
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Stage2.mp3");
 	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(100);
+	m_bgm->Volume(kBgmVolume);
 	m_bgm->PlayLoop();
 
 	//初期化

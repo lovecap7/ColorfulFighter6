@@ -42,6 +42,12 @@ namespace
 	constexpr int kReadyPosXP1 = 50;
 	constexpr int kReadyPosXP2 = Game::kScreenWidth - 350;
 	constexpr int kReadyPosY = 650;
+
+	//BGMボリューム
+	constexpr int kBgmVolume = 120;
+	//SEボリューム
+	constexpr int kSeVolume = 150;
+	constexpr int kOkSeVolume = 180;
 }
 
 CommandSelectScene::CommandSelectScene(SceneController& controller) :
@@ -78,7 +84,7 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_SelectScene.mp3");
 	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(100);
+	m_bgm->Volume(kBgmVolume);
 	m_bgm->PlayLoop();
 	//SE
 	m_seP1 = std::make_shared<SE>();
@@ -201,6 +207,11 @@ void CommandSelectScene::SelectP1(Input& input)
 	{
 		if (input.IsTrigger("A"))
 		{
+			//決定の音
+			m_seP1->Stop();
+			m_seP1->SetSE(m_selectSehandle);
+			m_seP1->Volume(kOkSeVolume);
+			m_seP1->PlayOnce();
 			//準備完了
 			m_currentReadyP1Handle = m_readyHandle;
 			m_isReadyP1 = true;
@@ -211,6 +222,11 @@ void CommandSelectScene::SelectP1(Input& input)
 			//取り消す
 			if (m_isReadyP1)
 			{
+				//キャンセルの音
+				m_seP1->Stop();
+				m_seP1->SetSE(m_cancelSehandle);
+				m_seP1->Volume(kSeVolume);
+				m_seP1->PlayOnce();
 				//確認に変換
 				m_currentReadyP1Handle = m_gettingReadyHandle;
 				m_isReadyP1 = false;
@@ -220,7 +236,7 @@ void CommandSelectScene::SelectP1(Input& input)
 				//キャンセルの音
 				m_seP1->Stop();
 				m_seP1->SetSE(m_cancelSehandle);
-				m_seP1->Volume(150);
+				m_seP1->Volume(kSeVolume);
 				m_seP1->PlayOnce();
 				m_isSelectFinishP1 = false;
 				for (int i = 0; i < 3; ++i)
@@ -245,7 +261,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//カーソル移動の音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
+			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 
 			m_currentSelectCommandIndexP1--;
@@ -259,7 +275,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//カーソル移動の音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
+			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 
 			m_currentSelectCommandIndexP1++;
@@ -273,7 +289,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//カーソル移動の音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
+			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 
 			m_currentSelectCommandIndexP1 -= kOneColumnCommandNum;
@@ -287,7 +303,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//カーソル移動の音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_cursorMoveSehandle);
-			m_seP1->Volume(100);
+			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 
 			m_currentSelectCommandIndexP1 += kOneColumnCommandNum;
@@ -302,7 +318,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//決定の音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_selectSehandle);
-			m_seP1->Volume(150);
+			m_seP1->Volume(kOkSeVolume);
 			m_seP1->PlayOnce();
 			for (int i = 0; i < 3; ++i)
 			{
@@ -331,7 +347,7 @@ void CommandSelectScene::SelectP1(Input& input)
 			//キャンセルの音
 			m_seP1->Stop();
 			m_seP1->SetSE(m_cancelSehandle);
-			m_seP1->Volume(150);
+			m_seP1->Volume(kSeVolume);
 			m_seP1->PlayOnce();
 			m_isSelectFinishP1 = false;
 			for (int i = 0; i < 3; ++i)
@@ -357,6 +373,11 @@ void CommandSelectScene::SelectP2(Input& input)
 	{
 		if (input.IsTrigger("A"))
 		{
+			//決定の音
+			m_seP2->Stop();
+			m_seP2->SetSE(m_selectSehandle);
+			m_seP2->Volume(kOkSeVolume);
+			m_seP2->PlayOnce();
 			//準備完了
 			m_currentReadyP2Handle = m_readyHandle;
 			m_isReadyP2 = true;
@@ -366,6 +387,11 @@ void CommandSelectScene::SelectP2(Input& input)
 		{
 			if (m_isReadyP2)
 			{
+				//キャンセルの音
+				m_seP2->Stop();
+				m_seP2->SetSE(m_cancelSehandle);
+				m_seP2->Volume(kSeVolume);
+				m_seP2->PlayOnce();
 				//確認に変換
 				m_currentReadyP2Handle = m_gettingReadyHandle;
 				m_isReadyP2 = false;
@@ -375,7 +401,7 @@ void CommandSelectScene::SelectP2(Input& input)
 				//キャンセルの音
 				m_seP2->Stop();
 				m_seP2->SetSE(m_cancelSehandle);
-				m_seP2->Volume(150);
+				m_seP2->Volume(kSeVolume);
 				m_seP2->PlayOnce();
 				m_isSelectFinishP2 = false;
 				//最後に選んだ順に消す
@@ -398,7 +424,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//カーソル移動の音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
+			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 
 			m_currentSelectCommandIndexP2--;
@@ -412,7 +438,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//カーソル移動の音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
+			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 
 			m_currentSelectCommandIndexP2++;
@@ -426,7 +452,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//カーソル移動の音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
+			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 
 			m_currentSelectCommandIndexP2 -= kOneColumnCommandNum;
@@ -440,7 +466,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//カーソル移動の音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_cursorMoveSehandle);
-			m_seP2->Volume(100);
+			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 
 			m_currentSelectCommandIndexP2 += kOneColumnCommandNum;
@@ -456,7 +482,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//決定の音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_selectSehandle);
-			m_seP2->Volume(100);
+			m_seP2->Volume(kOkSeVolume);
 			m_seP2->PlayOnce();
 			for (int i = 0; i < 3; ++i)
 			{
@@ -484,7 +510,7 @@ void CommandSelectScene::SelectP2(Input& input)
 			//キャンセルの音
 			m_seP2->Stop();
 			m_seP2->SetSE(m_cancelSehandle);
-			m_seP2->Volume(150);
+			m_seP2->Volume(kSeVolume);
 			m_seP2->PlayOnce();
 			m_isSelectFinishP2 = false;
 			//最後に選んだ順に消す
