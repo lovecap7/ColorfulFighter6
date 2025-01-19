@@ -141,15 +141,15 @@ Chara::Chara(int* index) :
 	m_commandHandle9(LoadGraph("./img/waza/wildhant.png")),//コマンド技
 	m_winPoseHandle(LoadGraph("./img/playerbase/win_001.png")),//勝利ポーズ
 	m_commandSe{
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
-		LoadGraph("./img/waza/hadou_001.png"),
+		LoadSoundMem("./SE/waza/hadouSe.mp3"),
+		LoadSoundMem("./SE/waza/shouryuuSe.mp3"),
+		LoadSoundMem("./SE/waza/sukuryuuSe.mp3"),
+		LoadSoundMem("./SE/waza/supairaruSe.mp3"),
+		LoadSoundMem("./SE/waza/sonicSe.mp3"),
+		LoadSoundMem("./SE/waza/waveSe.mp3"),
+		LoadSoundMem("./SE/waza/rollingSe.mp3"),
+		LoadSoundMem("./SE/waza/tatumakiSe.mp3"),
+		LoadSoundMem("./SE/waza/wildSe.mp3")
 	}
 {
 	for (int i = 0; i < 3;++i)
