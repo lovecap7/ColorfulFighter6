@@ -76,6 +76,7 @@ private:
 	int m_roundOverSeHandle;
 	int m_fightSeHandle;
 	int m_koSeHandle;
+	int m_timeUpSeHandle;
 
 	//プレイヤー1が攻撃を当てた場合プレイヤー1を前に描画(true)
 	//プレイヤー2が攻撃を当てた場合プレイヤー1を後ろに描画(false)

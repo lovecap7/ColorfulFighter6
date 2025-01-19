@@ -67,23 +67,24 @@ GameManager::GameManager():
 	m_hitEffectPosP2(),
 	m_hitAnimCountFrameP2(0),
 	m_hitAnimIndexP2(kHitAnimFinishIndex),
-	m_hitAnimFinishIndexP2(kHitAnimFinishIndex)
+	m_hitAnimFinishIndexP2(kHitAnimFinishIndex),
+	//エフェクト
+	m_hitHandle(LoadGraph("./img/Bullet/YellowBullet32x32.png")),
+	m_guardHandle(LoadGraph("./img/Bullet/BlueBullet32x32.png")),
+	m_hitEffectHandleP1(m_hitHandle),
+	m_hitEffectHandleP2(m_hitHandle),
+	//SE
+	m_round1SeHandle(LoadSoundMem("./SE/Round/Round1.mp3")),
+	m_round2SeHandle(LoadSoundMem("./SE/Round/Round2.mp3")),
+	m_round3SeHandle(LoadSoundMem("./SE/Round/Round3.mp3")),
+	m_roundOverSeHandle(LoadSoundMem("./SE/Round/RoundOver.mp3")),
+	m_fightSeHandle(LoadSoundMem("./SE/Round/Fight.mp3")),
+	m_koSeHandle(LoadSoundMem("./SE/Round/Ko.mp3")),
+	m_timeUpSeHandle(LoadSoundMem("./SE/Round/TimeUp.mp3"))
 {
 	m_collcheck = std::make_shared< CollisionCheck>();
 	m_fadeManager = std::make_shared<FadeManager>();
-	//エフェクト
-	m_hitHandle = LoadGraph("./img/Bullet/YellowBullet32x32.png");
-	m_guardHandle = LoadGraph("./img/Bullet/BlueBullet32x32.png");
-	m_hitEffectHandleP1 = m_hitHandle;
-	m_hitEffectHandleP2 = m_hitHandle;
-	//SE
 	m_se = std::make_shared<SE>();
-	m_round1SeHandle = LoadSoundMem("./SE/Round/Round1.mp3");
-	m_round2SeHandle = LoadSoundMem("./SE/Round/Round2.mp3");
-	m_round3SeHandle = LoadSoundMem("./SE/Round/Round3.mp3");
-	m_roundOverSeHandle = LoadSoundMem("./SE/Round/RoundOver.mp3");
-	m_fightSeHandle = LoadSoundMem("./SE/Round/Fight.mp3");
-	m_koSeHandle = LoadSoundMem("./SE/Round/Ko.mp3");
 }
 
 GameManager::~GameManager()
@@ -387,8 +388,15 @@ void GameManager::CheckKO(Player& p1, Player& p2)
 		m_changeRoundFrameCount++;
 		//長めにヒットストップをかける
 		m_hitStopFinishFrame = kKoStopFinishFrame;
-		//Fight!
-		m_se->SetSE(m_koSeHandle);
+		//KOかTimeup
+		if (m_time <= 0)
+		{
+			m_se->SetSE(m_timeUpSeHandle);
+		}
+		else
+		{
+			m_se->SetSE(m_koSeHandle);
+		}
 		m_se->Volume(kSeVolume);
 		m_se->PlayOnce();
 		//相打ち

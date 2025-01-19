@@ -2,5 +2,5 @@
 C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Player.h(67,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
   (ソース ファイル 'GameManager.cpp' をコンパイルしています)
   
-C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\GameManager.cpp(334,1): warning C4715: 'GameManager::ResultWinPlayerIndex': 値を返さないコントロール パスがあります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\GameManager.cpp(335,1): warning C4715: 'GameManager::ResultWinPlayerIndex': 値を返さないコントロール パスがあります。
   ColorfulFighter2.vcxproj -> C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
