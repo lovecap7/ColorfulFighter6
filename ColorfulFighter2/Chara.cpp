@@ -8,6 +8,8 @@ namespace
 {
 	//硬直フレームが0の技はDownにする
 	constexpr int kDown = 0;
+	//SEのボリューム
+	constexpr int kSeVolume = 160;
 
 	//全体フレーム
 	constexpr int kAllFramePunchLight = 14;//弱パンチ
@@ -140,7 +142,7 @@ Chara::Chara(int* index) :
 	m_commandHandle8(LoadGraph("./img/waza/tatumaki.png")),//コマンド技
 	m_commandHandle9(LoadGraph("./img/waza/wildhant.png")),//コマンド技
 	m_winPoseHandle(LoadGraph("./img/playerbase/win_001.png")),//勝利ポーズ
-	m_commandSe{
+	m_commandSeHandle{
 		LoadSoundMem("./SE/waza/hadouSe.mp3"),
 		LoadSoundMem("./SE/waza/shouryuuSe.mp3"),
 		LoadSoundMem("./SE/waza/sukuryuuSe.mp3"),
@@ -152,6 +154,7 @@ Chara::Chara(int* index) :
 		LoadSoundMem("./SE/waza/wildSe.mp3")
 	}
 {
+	m_se = std::make_shared<SE>();//SEを確保
 	for (int i = 0; i < 3;++i)
 	{
 		m_selectCommandIndex[i] = index[i];
@@ -1990,6 +1993,13 @@ void Chara::GetAnimWinPose(Player& player)
 }
 
 
+//コマンド技のSEの再生
+void Chara::CommandSe(int commandIndex)
+{
+	m_se->SetSE(m_commandSeHandle[commandIndex - 1]);
+	m_se->Volume(kSeVolume);
+	m_se->PlayOnce();
+}
 
 //波動拳モーション
 void Chara::GetAnimCommand1(Player& player)
@@ -2067,17 +2077,20 @@ void Chara::GetHitBoxCommand1(Player& player)
 
 void Chara::GetGiveEffectCommand1(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	return;
 }
 
 void Chara::MovementCommand1(Player& player,Bullet& bullet, Player& enemy)
 {
-
 	if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
 	{
 		//強は発生12フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1High)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Hadouken));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kHadouSpeedHigh);
 			bullet.SetShotEffect(6.0f,		//ダメージ
@@ -2092,6 +2105,8 @@ void Chara::MovementCommand1(Player& player,Bullet& bullet, Player& enemy)
 		//弱は発生16フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1Light)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Hadouken));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kHadouSpeedLight);
 			bullet.SetShotEffect(6.0f,
@@ -2181,6 +2196,8 @@ void Chara::GetHitBoxCommand2(Player& player)
 }
 void Chara::GetGiveEffectCommand2(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
 	{
@@ -2212,6 +2229,8 @@ void Chara::GetGiveEffectCommand2(Player& player)
 }
 void Chara::MovementCommand2(Player& player, Bullet& bullet, Player& enemy)
 {
+	//再生
+	CommandSe(static_cast<int>(Command::Shouryuken));
 	//だんだん上昇していく
 	m_velocity.y -= 0.2f;
 	//昇竜拳の動き
@@ -2308,6 +2327,8 @@ void Chara::GetHitBoxCommand3(Player& player)
 
 void Chara::GetGiveEffectCommand3(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	m_velocity.x = 0.0f;
 	m_velocity.y = -30.0f;
 	//強版
@@ -2355,7 +2376,8 @@ void Chara::MovementCommand3(Player& player, Bullet& bullet, Player& enemy)
 			}
 			else	//地面についたら
 			{
-
+				//再生
+				CommandSe(static_cast<int>(Command::Sukuryuu));
 				//投げる
 				//相手をふっとばす方向
 				Vector3 throwVelo;
@@ -2463,6 +2485,8 @@ void Chara::GetHitBoxCommand4(Player& player)
 
 void Chara::GetGiveEffectCommand4(Player& player)
 {	
+	//一旦再生を止める
+	m_se->Stop();
 	//移動量
 	m_velocity.y = 0.0f;
 	//強版
@@ -2503,6 +2527,8 @@ void Chara::GetGiveEffectCommand4(Player& player)
 
 void Chara::MovementCommand4(Player& player, Bullet& bullet, Player& enemy)
 {
+	//再生
+	CommandSe(static_cast<int>(Command::Supairaru));
 	//攻撃判定が出る少し前から動き始める
 	if (player.GetAnimCountFrame() > (m_startAttackFrame * 0.5f))
 	{
@@ -2586,6 +2612,8 @@ void Chara::GetHitBoxCommand5(Player& player)
 
 void Chara::GetGiveEffectCommand5(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	return;
 }
 
@@ -2596,6 +2624,8 @@ void Chara::MovementCommand5(Player& player, Bullet& bullet, Player& enemy)
 		//強は発生12フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1High)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Sonic));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kSonicSpeedHigh);
 			bullet.SetShotEffect(5.5f,		//ダメージ
@@ -2610,6 +2640,8 @@ void Chara::MovementCommand5(Player& player, Bullet& bullet, Player& enemy)
 		//弱は発生16フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1Light)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Sonic));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kSonicSpeedLight);
 			bullet.SetShotEffect(5.5f,
@@ -2698,6 +2730,8 @@ void Chara::GetHitBoxCommand6(Player& player)
 
 void Chara::GetGiveEffectCommand6(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	return;
 }
 
@@ -2708,6 +2742,8 @@ void Chara::MovementCommand6(Player& player, Bullet& bullet, Player& enemy)
 		//強は発生12フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1High)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Wave));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kWaveSpeedHigh);
 			bullet.SetShotEffect(4.0f,		//ダメージ
@@ -2722,6 +2758,8 @@ void Chara::MovementCommand6(Player& player, Bullet& bullet, Player& enemy)
 		//弱は発生16フレーム
 		if (player.GetAnimCountFrame() == kStartFrameCommand1Light)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Wave));
 			//弾（波動拳を出す）
 			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kWaveSpeedLight);
 			bullet.SetShotEffect(4.0f,
@@ -2798,6 +2836,8 @@ void Chara::GetHitBoxCommand7(Player& player)
 
 void Chara::GetGiveEffectCommand7(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 	{
@@ -2836,6 +2876,8 @@ void Chara::GetGiveEffectCommand7(Player& player)
 
 void Chara::MovementCommand7(Player& player, Bullet& bullet, Player& enemy)
 {
+	//再生
+	CommandSe(static_cast<int>(Command::Rolling));
 	////攻撃持続終了まで上り続ける
 	if (player.GetAnimCountFrame() > m_finishAttackFrame)
 	{
@@ -2912,6 +2954,8 @@ void Chara::GetHitBoxCommand8(Player& player)
 
 void Chara::GetGiveEffectCommand8(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	m_velocity.y = 0.0f;
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
@@ -2955,6 +2999,8 @@ void Chara::GetGiveEffectCommand8(Player& player)
 
 void Chara::MovementCommand8(Player& player, Bullet& bullet, Player& enemy)
 {
+	//再生
+	CommandSe(static_cast<int>(Command::Tatumaki));
 	player.SetVelo(m_velocity);
 	if (player.GetAnimCountFrame() < m_allFrame)
 	{
@@ -3077,6 +3123,8 @@ void Chara::GetHitBoxCommand9(Player& player)
 
 void Chara::GetGiveEffectCommand9(Player& player)
 {
+	//一旦再生を止める
+	m_se->Stop();
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
 	{
@@ -3116,6 +3164,8 @@ void Chara::MovementCommand9(Player& player, Bullet& bullet, Player& enemy)
 		m_velocity.y = 0;
 		if (player.GetAnimIndex() > 3)
 		{
+			//再生
+			CommandSe(static_cast<int>(Command::Wildhant));
 			//投げる
 			//相手をふっとばす方向
 			Vector3 throwVelo;

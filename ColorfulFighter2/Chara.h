@@ -5,6 +5,7 @@
 #include <string>
 #include "AttackInfo.h"
 #include "game.h"
+#include <memory>
 
 class Input;
 class Player;
@@ -15,7 +16,7 @@ class Chara
 private:
 	//SE
 	std::shared_ptr<SE> m_se;
-	int m_commandSe[9];
+	int m_commandSeHandle[9];
 	//選んだ技のインデックス
 	int m_selectCommandIndex[3];
 	bool CheckMyCommand();
@@ -34,6 +35,9 @@ private:
 		Wildhant,//ワイルドハント
 	};
 	int m_commandIndex;//何のコマンドを呼ぶのかを記録
+
+	//SE
+	void CommandSe(int commandIndex);
 	//波動拳
 	//コマンド技モーション取得
 	void GetAnimCommand1(Player& player);
