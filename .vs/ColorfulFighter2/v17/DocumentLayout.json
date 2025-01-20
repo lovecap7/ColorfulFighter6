@@ -167,7 +167,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
@@ -237,9 +237,22 @@
               "RelativeDocumentMoniker": "ColorfulFighter2\\Player.cpp",
               "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.cpp",
               "RelativeToolTip": "ColorfulFighter2\\Player.cpp",
-              "ViewState": "AQIAAHQAAAAAAAAAAAAAAIIAAAABAAAA",
+              "ViewState": "AQIAAG4AAAAAAAAAAAAAAIIAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-24T03:18:11.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Chara.cpp",
+              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
+              "RelativeDocumentMoniker": "ColorfulFighter2\\Chara.cpp",
+              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
+              "RelativeToolTip": "ColorfulFighter2\\Chara.cpp",
+              "ViewState": "AQIAAI0AAAAAAAAAAAAowKIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-24T01:37:15.058Z",
               "EditorCaption": ""
             },
             {
@@ -277,19 +290,6 @@
               "ViewState": "AQIAAAMAAAAAAAAAAAAAABsAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-24T01:33:54.737Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Chara.cpp",
-              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
-              "RelativeDocumentMoniker": "ColorfulFighter2\\Chara.cpp",
-              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
-              "RelativeToolTip": "ColorfulFighter2\\Chara.cpp",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAAAGIAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-24T01:37:15.058Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Document",
