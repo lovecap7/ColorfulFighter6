@@ -221,6 +221,7 @@ void Player::Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr
 
 void Player::Draw(const Camera& camera)
 {
+	//GraphFilter(m_handle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 256, true, GetColor(0, 255, 0), 255);
 	//影
 	DrawShadow(camera);
 	//2プレイヤーの色を変える（今後削除）
