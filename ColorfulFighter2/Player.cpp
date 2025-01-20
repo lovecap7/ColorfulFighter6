@@ -19,10 +19,10 @@ namespace
 	constexpr float kGravityPower = 3.2f;
 
 	//プレイヤーの画像の大きさ
-	constexpr int kPlayerWidth = 256;
-	constexpr int kPlayerHeight = 256;
+	constexpr int kPlayerWidth = 512;
+	constexpr int kPlayerHeight = 512;
 	//画像の倍率
-	constexpr float kPlayerScale = 2.0f;
+	constexpr float kPlayerScale = 1.0f;
 
 	//移動速度
 	constexpr float kMoveSpeedFront = 6.0f * kPlayerScale;
