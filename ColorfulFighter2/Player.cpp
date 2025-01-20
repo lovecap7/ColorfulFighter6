@@ -25,8 +25,8 @@ namespace
 	constexpr float kPlayerScale = 1.0f;
 
 	//移動速度
-	constexpr float kMoveSpeedFront = 6.0f * kPlayerScale;
-	constexpr float kMoveSpeedBack = 4.5f * kPlayerScale;
+	constexpr float kMoveSpeedFront = 12.0f;
+	constexpr float kMoveSpeedBack = 9.0f;
 
 	//ジャンプ力
 	constexpr float kJumpPowerX = kMoveSpeedFront;
@@ -221,7 +221,7 @@ void Player::Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr
 
 void Player::Draw(const Camera& camera)
 {
-	//GraphFilter(m_handle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_LESS, 256, true, GetColor(0, 255, 0), 255);
+	GraphFilter(m_handle, DX_GRAPH_FILTER_BRIGHT_CLIP, DX_CMP_GREATER, 100, true, GetColor(0, 255, 0), 255);
 	//影
 	DrawShadow(camera);
 	//2プレイヤーの色を変える（今後削除）
