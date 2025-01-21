@@ -20,6 +20,8 @@ private:
     //メニュー
     bool m_isSelecting;//trueなら現在メニューを選んでいる
     int m_selectMenuIndex;
+    int m_menuP1Handle;
+    int m_menuP2Handle;
     void SelectMenu(Input& input);
     void Rematch();//再戦
     void Reselect();//コマンドの選び直し
