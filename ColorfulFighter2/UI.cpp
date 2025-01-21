@@ -382,6 +382,7 @@ void UI::DrawBack()
 		kHpPosXP2 + kHpWidth, kHpPosY + kHpHeight,
 		0x222222, true);
 
+	//DrawRectModiGraph
 	////P1ÇÃÉ_ÉÅÅ[ÉW
 	DrawBoxAA(kHpPosXP1, kHpPosY,
 		kHpPosXP1 - kHpWidth * (m_damagebarP1 / m_hpbarMaxP1), kHpPosY + kHpHeight,
