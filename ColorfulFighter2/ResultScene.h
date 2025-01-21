@@ -17,10 +17,13 @@ private:
     //BGM
     std::shared_ptr<BGM> m_bgm;
 
+    //セリフ
+    int m_serifHandle;
+
     //メニュー
     bool m_isSelecting;//trueなら現在メニューを選んでいる
     int m_selectMenuIndex;
-    int m_menuP1Handle;
+    int m_menuHandle;
     int m_menuP2Handle;
     void SelectMenu(Input& input);
     void Rematch();//再戦

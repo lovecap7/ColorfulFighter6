@@ -45,3 +45,13 @@ int* SceneController::GetSelectCommandIndex(PlayerIndex playerIndex)
 		return m_selectCommandIndexP2;
 	}
 }
+
+void SceneController::SaveCharaColorIndexP1(CharaColorIndex colorIndex)
+{
+	m_charaColorIndexP1 = colorIndex;
+}
+
+void SceneController::SaveCharaColorIndexP2(CharaColorIndex colorIndex)
+{
+	m_charaColorIndexP2 = colorIndex;
+}

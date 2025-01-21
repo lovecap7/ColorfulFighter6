@@ -81,8 +81,9 @@ namespace
 }
 
 //プレイヤーの番号と選んだキャラを渡す
-Player::Player(PlayerIndex playerIndex, int* selectCommandIndex):
+Player::Player(PlayerIndex playerIndex, int* selectCommandIndex,CharaColorIndex charaColorIndex,bool isSameColor):
 	m_playerIndex(playerIndex),//P1かP2
+	m_isSameColor(isSameColor),
 	m_pos(500, kGroundHeight, 0),
 	m_velocity(),
 	m_jumpVelo(0, kJumpPowerY,0),
@@ -134,7 +135,7 @@ Player::Player(PlayerIndex playerIndex, int* selectCommandIndex):
 		m_selectCommandIndex[i] = selectCommandIndex[i];
 	}
 	
-	m_chara = std::make_shared<Chara>(m_selectCommandIndex);//キャラクターを確保
+	m_chara = std::make_shared<Chara>(m_selectCommandIndex, charaColorIndex);//キャラクターを確保
 	m_se = std::make_shared<SE>();//SEを確保
 	m_chara->GetAnimIdleStand(*this);//待機モーション
 	assert(m_handle != -1);
@@ -225,7 +226,7 @@ void Player::Draw(const Camera& camera)
 	DrawShadow(camera);
 	(this->*m_draw)(camera);
 	//2プレイヤーの色を少し暗く
-	if (m_playerIndex == PlayerIndex::Player2)
+	if ((m_playerIndex == PlayerIndex::Player2) && m_isSameColor)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_SUB, 80);
 		(this->*m_draw)(camera);

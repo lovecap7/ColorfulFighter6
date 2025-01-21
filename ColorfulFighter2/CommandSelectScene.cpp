@@ -76,8 +76,10 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	//テキスト
 	m_selectTextHandle(LoadGraph("img/CharacterSelect/SelectText.png")),
 	//ローディング画面
-	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png"))
-
+	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png")),
+	//色
+	m_currentColorIndexP1(0),
+	m_currentColorIndexP2(0)
 	
 {
 	//BGM
@@ -148,10 +150,14 @@ void CommandSelectScene::Update(Input& input, Input& input2)
 	//このシーンでやりたいこと
 	//キャラクターを決定したらそのキャラクターの
 	//ポインタを次のシーンに渡したい
+	
 	//P1のセレクト
-	SelectP1(input);
+	SelectColorP1(input);
+	SelectCommandP1(input);
 	//P2のセレクト
-	SelectP2(input2);
+	SelectColorP2(input2);
+	SelectCommandP2(input2);
+
 	//2人が準備完了したらゲームシーンへ
 	if (m_isReadyP1 && m_isReadyP2)
 	{
@@ -191,6 +197,9 @@ void CommandSelectScene::Update(Input& input, Input& input2)
 
 		//選んだコマンド技のインデックスを次のシーンに渡すために保存
 		m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
+		//色
+		m_controller.SaveCharaColorIndexP1(static_cast<CharaColorIndex>(m_currentColorIndexP1));
+		m_controller.SaveCharaColorIndexP2(static_cast<CharaColorIndex>(m_currentColorIndexP2));
 		
 		//押されたら次の状態に繊維
 		//次の状態はこのクラスが覚えておく
@@ -201,7 +210,7 @@ void CommandSelectScene::Update(Input& input, Input& input2)
 }
 
 
-void CommandSelectScene::SelectP1(Input& input)
+void CommandSelectScene::SelectCommandP1(Input& input)
 {
 	if (m_isSelectFinishP1)
 	{
@@ -367,7 +376,7 @@ void CommandSelectScene::SelectP1(Input& input)
 	}
 }
 
-void CommandSelectScene::SelectP2(Input& input)
+void CommandSelectScene::SelectCommandP2(Input& input)
 {
 	if (m_isSelectFinishP2)
 	{
@@ -529,6 +538,46 @@ void CommandSelectScene::SelectP2(Input& input)
 	}
 }
 
+void CommandSelectScene::SelectColorP1(Input& input)
+{
+	if (input.IsTrigger("RB"))
+	{
+		m_currentColorIndexP1++;
+	}
+	if (input.IsTrigger("LB"))
+	{
+		m_currentColorIndexP1--;
+	}
+	if (m_currentColorIndexP1 < 0)
+	{
+		m_currentColorIndexP1 = 4;
+	}
+	if (m_currentColorIndexP1 > 4)
+	{
+		m_currentColorIndexP1 = 0;
+	}
+}
+
+void CommandSelectScene::SelectColorP2(Input& input)
+{
+	if (input.IsTrigger("RB"))
+	{
+		m_currentColorIndexP2++;
+	}
+	if (input.IsTrigger("LB"))
+	{
+		m_currentColorIndexP2--;
+	}
+	if (m_currentColorIndexP2 < 0)
+	{
+		m_currentColorIndexP2 = 4;
+	}
+	if (m_currentColorIndexP2 > 4)
+	{
+		m_currentColorIndexP2 = 0;
+	}
+}
+
 
 void CommandSelectScene::Draw()
 {
@@ -572,6 +621,8 @@ void CommandSelectScene::Draw()
 	{
 		DrawFormatString(400, 800 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
 		DrawFormatString(1000, 800 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
+		DrawFormatString(400, 700, 0xff3333, "currentColorIndexP1 = %d", m_currentColorIndexP1);
+		DrawFormatString(1000, 700, 0x0000ff, "currentColorIndexP2 = %d", m_currentColorIndexP2);
 	}
 #endif
 	

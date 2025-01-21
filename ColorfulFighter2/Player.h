@@ -14,7 +14,7 @@ class SE;
 class Player
 {
 public:
-	Player(PlayerIndex playeIndex, int* selectCommandIndex);
+	Player(PlayerIndex playeIndex, int* selectCommandIndex,CharaColorIndex charaColorIndex,bool isSameColor);
 	~Player();
 	void Init(float X, bool isLeft);
 	void Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
@@ -167,6 +167,7 @@ private:
 	std::shared_ptr<Chara> m_chara;
 
 	//プレイヤーの状態管理
+	bool m_isSameColor;		//相手と同じ色ならtrue
 	bool m_isLeft;			//trueなら左向き
 	bool m_isGround;		//trueなら地上にいる
 	bool m_isHitAttack;			//trueなら攻撃を当てている

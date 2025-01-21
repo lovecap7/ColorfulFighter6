@@ -21,11 +21,11 @@ enum class PlayerIndex
 	Player4
 };
 
-enum class CharaIndex
+enum class CharaColorIndex
 {
-	Null,
-	Chara1,
-	Chara2,
-	Chara3,
-	Chara4
+	White,
+	Red,
+	Bule,
+	Yellow,
+	Green
 };

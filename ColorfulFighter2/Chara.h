@@ -30,6 +30,9 @@ private:
 	//選んだ技のインデックス
 	int m_selectCommandIndex[3];
 	bool CheckMyCommand();
+	//色
+	CharaColorIndex m_charaColorIndex;
+	void ColorInit(CharaColorIndex charaColorIndex);
 
 	enum class Command
 	{
@@ -206,7 +209,7 @@ private:
 	Vector3 m_giveAttackVelo;
 public:
 	
-	Chara(int* index);
+	Chara(int* index,CharaColorIndex charaColorIndex);
 	~Chara();
 	//立ちモーション取得
 	 void GetAnimIdleStand(Player& player) ;

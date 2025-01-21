@@ -66,14 +66,22 @@ private:
     //テキスト
     int m_selectTextHandle;
     //コマンド技を選ぶ処理
-    void SelectP1(Input& input);
-    void SelectP2(Input& input);
+    void SelectCommandP1(Input& input);
+    void SelectCommandP2(Input& input);
+
+    //色
+    int m_currentColorIndexP1;
+    int m_currentColorIndexP2;
+    //色を選ぶ処理
+    void SelectColorP1(Input& input);
+    void SelectColorP2(Input& input);
 
     //フェードインするために使う
     std::shared_ptr<FadeManager> m_fadeManager;
     bool m_isFadeIn;
     //Loading中の画像
     int m_loadingHandle;
+
 public:
     CommandSelectScene(SceneController& controller);
 

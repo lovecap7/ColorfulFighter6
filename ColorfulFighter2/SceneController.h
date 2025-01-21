@@ -39,6 +39,11 @@ public:
 	//選んだ技の情報
 	void SaveSelectCommandIndex(int indexP1[3], int indexP2[3]);//保存
 	int* GetSelectCommandIndex(PlayerIndex playerIndex);
+	//選んだ色
+	void SaveCharaColorIndexP1(CharaColorIndex colorIndex);
+	void SaveCharaColorIndexP2(CharaColorIndex colorIndex);
+	CharaColorIndex GetCharaColorIndexP1() { return m_charaColorIndexP1; }
+	CharaColorIndex GetCharaColorIndexP2() { return m_charaColorIndexP2; }
 
 	//勝ったプレイヤーのインデックス
 	void SetWinPlayerIndex(PlayerIndex winPlayerIndex) { m_winPlayerIndex = winPlayerIndex; }
@@ -50,6 +55,9 @@ private:
 	//選んだコマンド技のインデックスを保存
 	int m_selectCommandIndexP1[3];
 	int m_selectCommandIndexP2[3];
+	//選んだキャラクターのカラーリングの保存
+	CharaColorIndex m_charaColorIndexP1;
+	CharaColorIndex m_charaColorIndexP2;
 
 	//勝ったプレイヤーの情報
 	PlayerIndex m_winPlayerIndex;

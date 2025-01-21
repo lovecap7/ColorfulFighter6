@@ -81,7 +81,7 @@ namespace
 	
 }
 
-Chara::Chara(int* index) :
+Chara::Chara(int* index, CharaColorIndex charaColorIndex) :
 	//モーション
 	m_velocity(),
 	m_handle(-1),//画像
@@ -96,52 +96,6 @@ Chara::Chara(int* index) :
 	m_giveAttackVelo(),//攻撃によって相手に与えるVelo
 	m_commandIndex(0),
 	lastAttackType(AttackTypes::Null),
-	m_idleStandHandel(LoadGraph("./img/Chara/White/playerbase/idle_001.png")),//待機
-	m_idleSquatHandel(LoadGraph("./img/Chara/White/playerbase/idle_squat_001.png")),//しゃがみ待機
-	m_walkFrontHandel(LoadGraph("./img/Chara/White/playerbase/walk_front_001.png")),//前歩き
-	m_walkBackHandel(LoadGraph("./img/Chara/White/playerbase/walk_back_001.png")),//後ろ歩き
-	m_jumpHandel(LoadGraph("./img/Chara/White/playerbase/jump_vertical_001.png")),//ジャンプ
-	//立ち
-	m_punchLightHandle(LoadGraph("./img/Chara/White/punch/punch_stand_002.png")),//弱パンチ
-	m_punchHighHandle(LoadGraph("./img/Chara/White/punch/punch_stand_001.png")),//強パンチ
-	m_kickLightHandle(LoadGraph("./img/Chara/White/kick/kick_stand_001.png")),//弱キック
-	m_kickHighHandle(LoadGraph("./img/Chara/White/kick/kick_stand_002.png")),//強キック
-	//しゃがみ
-	m_punchLightSquatHandle(LoadGraph("./img/Chara/White/punch/punch_squat_001.png")),//しゃがみ弱パンチ
-	m_punchHighSquatHandle(LoadGraph("./img/Chara/White/punch/punch_squat_003.png")),//しゃがみ強パンチ
-	m_kickLightSquatHandle(LoadGraph("./img/Chara/White/kick/kick_squat_001.png")),//しゃがみ弱キック
-	m_kickHighSquatHandle(LoadGraph("./img/Chara/White/kick/kick_squat_003.png")),//しゃがみ強キック
-	//空中
-	m_punchLightAerialHandle(LoadGraph("./img/Chara/White/punch/punch_aerial_001.png")),//空中弱パンチ
-	m_punchHighAerialHandle(LoadGraph("./img/Chara/White/punch/punch_aerial_003.png")),//空中強パンチ
-	m_kickLightAerialHandle(LoadGraph("./img/Chara/White/kick/kick_aerial_002.png")),//空中弱キック
-	m_kickHighAerialHandle(LoadGraph("./img/Chara/White/kick/kick_aerial_001.png")),//空中強キック
-
-	m_guardStandHandle(LoadGraph("./img/Chara/White/guard/guard_stand_001.png")),//立ちガード
-	m_guardSquatHandle(LoadGraph("./img/Chara/White/guard/guard_squat_002.png")),//しゃがみガード
-
-	//投げ
-	m_graspHandle(LoadGraph("./img/Chara/White/throw/grasp_001.png")),//つかみ
-	m_throwFrontHandle(LoadGraph("./img/Chara/White/throw/throw_001.png")),//前投げ
-	m_throwBackHandle(LoadGraph("./img/Chara/White/throw/throw_002.png")),//後ろ投げ
-
-
-	m_damageStandHandle(LoadGraph("./img/Chara/White/hit/hit_stand_001.png")),//喰らい
-	m_damageAerialHandle(LoadGraph("./img/Chara/White/hit/hit_aerial_001.png")),//喰らい
-	m_downHandle(LoadGraph("./img/Chara/White/playerbase/down_001.png")),//ダウン
-	m_downAerialHandle(LoadGraph("./img/Chara/White/playerbase/down_aerial_001.png")),//空中ダウン
-	m_standUpHandle(LoadGraph("./img/Chara/White/playerbase/standUp.png")),//起き上がり
-
-	m_commandHandle1(LoadGraph("./img/Chara/White/waza/hadou_001.png")),//コマンド技
-	m_commandHandle2(LoadGraph("./img/Chara/White/waza/shouryuu.png")),//コマンド技
-	m_commandHandle3(LoadGraph("./img/Chara/White/waza/sukuryuu.png")),//コマンド技
-	m_commandHandle4(LoadGraph("./img/Chara/White/waza/spairaruaro.png")),//コマンド技
-	m_commandHandle5(LoadGraph("./img/Chara/White/waza/sonic.png")),//コマンド技
-	m_commandHandle6(LoadGraph("./img/Chara/White/waza/wave.png")),//コマンド技
-	m_commandHandle7(LoadGraph("./img/Chara/White/waza/rolling.png")),//コマンド技
-	m_commandHandle8(LoadGraph("./img/Chara/White/waza/tatumaki.png")),//コマンド技
-	m_commandHandle9(LoadGraph("./img/Chara/White/waza/wildhant.png")),//コマンド技
-	m_winPoseHandle(LoadGraph("./img/Chara/White/playerbase/win_001.png")),//勝利ポーズ
 	m_commandSeHandle{
 		LoadSoundMem("./SE/waza/hadouSe.mp3"),
 		LoadSoundMem("./SE/waza/shouryuuSe.mp3"),
@@ -161,6 +115,8 @@ Chara::Chara(int* index) :
 	m_standUp1SeHandle(LoadSoundMem("./SE/PlayerBase/voice/StandUp1.mp3")),
 	m_standUp2SeHandle(LoadSoundMem("./SE/PlayerBase/voice/StandUp2.mp3"))
 {
+	//色
+	ColorInit(charaColorIndex);
 	m_se = std::make_shared<SE>();//SEを確保
 	m_voice = std::make_shared<SE>();//ボイスを確保
 	for (int i = 0; i < 3;++i)
@@ -171,6 +127,302 @@ Chara::Chara(int* index) :
 
 Chara::~Chara()
 {
+}
+
+
+void Chara::ColorInit(CharaColorIndex charaColorIndex)
+{
+	switch (charaColorIndex)
+	{
+	case CharaColorIndex::White://白
+		m_idleStandHandel = LoadGraph("./img/Chara/White/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/White/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/White/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/White/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/White/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/White/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/White/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/White/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/White/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/White/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/White/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/White/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/White/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/White/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/White/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/White/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/White/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/White/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/White/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/White/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/White/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/White/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/White/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/White/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/White/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/White/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/White/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/White/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/White/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/White/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/White/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/White/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/White/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/White/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/White/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/White/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/White/playerbase/win_001.png");//勝利ポーズ}
+		break;
+	case CharaColorIndex::Red://赤
+		m_idleStandHandel = LoadGraph("./img/Chara/Red/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/Red/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/Red/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/Red/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/Red/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/Red/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/Red/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/Red/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/Red/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/Red/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/Red/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/Red/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/Red/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/Red/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/Red/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/Red/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/Red/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/Red/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/Red/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/Red/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/Red/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/Red/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/Red/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/Red/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/Red/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/Red/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/Red/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/Red/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/Red/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/Red/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/Red/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/Red/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/Red/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/Red/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/Red/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/Red/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/Red/playerbase/win_001.png");//勝利ポーズ
+		break;
+	case CharaColorIndex::Bule://青
+		m_idleStandHandel = LoadGraph("./img/Chara/Blue/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/Blue/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/Blue/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/Blue/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/Blue/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/Blue/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/Blue/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/Blue/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/Blue/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/Blue/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/Blue/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/Blue/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/Blue/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/Blue/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/Blue/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/Blue/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/Blue/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/Blue/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/Blue/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/Blue/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/Blue/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/Blue/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/Blue/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/Blue/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/Blue/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/Blue/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/Blue/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/Blue/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/Blue/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/Blue/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/Blue/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/Blue/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/Blue/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/Blue/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/Blue/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/Blue/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/Blue/playerbase/win_001.png");//勝利ポーズ
+		break;
+	case CharaColorIndex::Yellow://黄色
+		m_idleStandHandel = LoadGraph("./img/Chara/Yellow/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/Yellow/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/Yellow/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/Yellow/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/Yellow/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/Yellow/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/Yellow/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/Yellow/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/Yellow/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/Yellow/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/Yellow/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/Yellow/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/Yellow/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/Yellow/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/Yellow/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/Yellow/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/Yellow/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/Yellow/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/Yellow/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/Yellow/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/Yellow/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/Yellow/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/Yellow/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/Yellow/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/Yellow/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/Yellow/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/Yellow/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/Yellow/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/Yellow/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/Yellow/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/Yellow/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/Yellow/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/Yellow/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/Yellow/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/Yellow/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/Yellow/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/Yellow/playerbase/win_001.png");//勝利ポーズ
+		break;
+	case CharaColorIndex::Green://緑
+		m_idleStandHandel = LoadGraph("./img/Chara/Green/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/Green/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/Green/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/Green/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/Green/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/Green/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/Green/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/Green/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/Green/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/Green/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/Green/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/Green/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/Green/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/Green/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/Green/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/Green/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/Green/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/Green/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/Green/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/Green/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/Green/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/Green/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/Green/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/Green/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/Green/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/Green/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/Green/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/Green/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/Green/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/Green/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/Green/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/Green/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/Green/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/Green/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/Green/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/Green/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/Green/playerbase/win_001.png");//勝利ポーズ
+		break;
+	default:
+		m_idleStandHandel = LoadGraph("./img/Chara/White/playerbase/idle_001.png");//待機
+		m_idleSquatHandel = LoadGraph("./img/Chara/White/playerbase/idle_squat_001.png");//しゃがみ待機
+		m_walkFrontHandel = LoadGraph("./img/Chara/White/playerbase/walk_front_001.png");//前歩き
+		m_walkBackHandel = LoadGraph("./img/Chara/White/playerbase/walk_back_001.png");//後ろ歩き
+		m_jumpHandel = LoadGraph("./img/Chara/White/playerbase/jump_vertical_001.png");//ジャンプ
+		//立ち
+		m_punchLightHandle = LoadGraph("./img/Chara/White/punch/punch_stand_002.png");//弱パンチ
+		m_punchHighHandle = LoadGraph("./img/Chara/White/punch/punch_stand_001.png");//強パンチ
+		m_kickLightHandle = LoadGraph("./img/Chara/White/kick/kick_stand_001.png");//弱キック
+		m_kickHighHandle = LoadGraph("./img/Chara/White/kick/kick_stand_002.png");//強キック
+		//しゃがみ
+		m_punchLightSquatHandle = LoadGraph("./img/Chara/White/punch/punch_squat_001.png");//しゃがみ弱パンチ
+		m_punchHighSquatHandle = LoadGraph("./img/Chara/White/punch/punch_squat_003.png");//しゃがみ強パンチ
+		m_kickLightSquatHandle = LoadGraph("./img/Chara/White/kick/kick_squat_001.png");//しゃがみ弱キック
+		m_kickHighSquatHandle = LoadGraph("./img/Chara/White/kick/kick_squat_003.png");//しゃがみ強キック
+		//空中
+		m_punchLightAerialHandle = LoadGraph("./img/Chara/White/punch/punch_aerial_001.png");//空中弱パンチ
+		m_punchHighAerialHandle = LoadGraph("./img/Chara/White/punch/punch_aerial_003.png");//空中強パンチ
+		m_kickLightAerialHandle = LoadGraph("./img/Chara/White/kick/kick_aerial_002.png");//空中弱キック
+		m_kickHighAerialHandle = LoadGraph("./img/Chara/White/kick/kick_aerial_001.png");//空中強キック
+
+		m_guardStandHandle = LoadGraph("./img/Chara/White/guard/guard_stand_001.png");//立ちガード
+		m_guardSquatHandle = LoadGraph("./img/Chara/White/guard/guard_squat_002.png");//しゃがみガード
+
+		//投げ
+		m_graspHandle = LoadGraph("./img/Chara/White/throw/grasp_001.png");//つかみ
+		m_throwFrontHandle = LoadGraph("./img/Chara/White/throw/throw_001.png");//前投げ
+		m_throwBackHandle = LoadGraph("./img/Chara/White/throw/throw_002.png");//後ろ投げ
+
+
+		m_damageStandHandle = LoadGraph("./img/Chara/White/hit/hit_stand_001.png");//喰らい
+		m_damageAerialHandle = LoadGraph("./img/Chara/White/hit/hit_aerial_001.png");//喰らい
+		m_downHandle = LoadGraph("./img/Chara/White/playerbase/down_001.png");//ダウン
+		m_downAerialHandle = LoadGraph("./img/Chara/White/playerbase/down_aerial_001.png");//空中ダウン
+		m_standUpHandle = LoadGraph("./img/Chara/White/playerbase/standUp.png");//起き上がり
+
+		m_commandHandle1 = LoadGraph("./img/Chara/White/waza/hadou_001.png");//コマンド技
+		m_commandHandle2 = LoadGraph("./img/Chara/White/waza/shouryuu.png");//コマンド技
+		m_commandHandle3 = LoadGraph("./img/Chara/White/waza/sukuryuu.png");//コマンド技
+		m_commandHandle4 = LoadGraph("./img/Chara/White/waza/spairaruaro.png");//コマンド技
+		m_commandHandle5 = LoadGraph("./img/Chara/White/waza/sonic.png");//コマンド技
+		m_commandHandle6 = LoadGraph("./img/Chara/White/waza/wave.png");//コマンド技
+		m_commandHandle7 = LoadGraph("./img/Chara/White/waza/rolling.png");//コマンド技
+		m_commandHandle8 = LoadGraph("./img/Chara/White/waza/tatumaki.png");//コマンド技
+		m_commandHandle9 = LoadGraph("./img/Chara/White/waza/wildhant.png");//コマンド技
+		m_winPoseHandle = LoadGraph("./img/Chara/White/playerbase/win_001.png");//勝利ポーズ}
+		break;
+	}
 }
 
 //ボイス
@@ -199,6 +451,7 @@ bool Chara::CheckMyCommand()
 	m_commandIndex = 0;
 	return false;
 }
+
 
 bool Chara::SuccessCommandCheck(Input& input, Player& player)
 {

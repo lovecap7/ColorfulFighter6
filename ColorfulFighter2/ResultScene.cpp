@@ -15,7 +15,12 @@ namespace
 	constexpr int kP1ImagePosX = 100;
 	constexpr int kP2ImagePosX = Game::kScreenWidth - 600;
 	constexpr int kPlayerImagePosY = (Game::kScreenHeight / 2) - 400;
-
+	//セリフ数
+	constexpr int kSerifNum = 5;
+	constexpr int kSerifMaxIndex = kSerifNum - 1;
+	constexpr int kSerifPosX = 500;
+	constexpr int kSerifPosY = (Game::kScreenHeight / 2) + 120;
+	//メニュー数
 	constexpr int kMenuNum = 3;
 	//BGMボリューム
 	constexpr int kBgmVolume = 120;
@@ -23,7 +28,7 @@ namespace
 	constexpr int kSeVolume = 150;
 
 	//カーソル
-	constexpr int kCursorWidth = 375;
+	constexpr int kMenuWidth = 375;
 	constexpr int kCursorHeight = 100;
 	constexpr int kCursorPosY = (Game::kScreenHeight / 2) + 120;
 }
@@ -37,9 +42,31 @@ ResultScene::ResultScene(SceneController& controller):
 	m_selectMenuIndex(0),
 	//ローディング画面
 	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png")),
-	m_menuP1Handle(LoadGraph("./img/Result/ResultTextP1.png")),
-	m_menuP2Handle(LoadGraph("./img/Result/ResultTextP2.png"))
+	m_menuHandle(LoadGraph("./img/Result/ResultTextP1.png"))
 {
+	int serif;
+	switch (GetRand(kSerifMaxIndex))
+	{
+	case 0:
+		serif = LoadGraph("./img/Result/Serif/Serif1.png");
+		break;
+	case 1:
+		serif = LoadGraph("./img/Result/Serif/Serif2.png");
+		break;
+	case 2:
+		serif = LoadGraph("./img/Result/Serif/Serif3.png");
+		break;
+	case 3:
+		serif = LoadGraph("./img/Result/Serif/Serif4.png");
+		break;
+	case 4:
+		serif = LoadGraph("./img/Result/Serif/Serif5.png");
+		break;
+	default:
+		break;
+	}
+	m_serifHandle = serif;
+
 	//1Pが勝ったなら
 	if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player1)
 	{
@@ -155,27 +182,28 @@ void ResultScene::Draw()
 	//リザルトの画像
 	DxLib::DrawGraph(kP1ImagePosX, kPlayerImagePosY, m_p1Handle, true);
 	DxLib::DrawTurnGraph(kP2ImagePosX, kPlayerImagePosY, m_p2Handle, true);
+	DxLib::DrawGraph(kSerifPosX, kSerifPosY, m_serifHandle, true);
 	//メニュー
 	if (m_isSelecting)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-		DrawBox(0, kCursorPosY, kCursorWidth, kCursorPosY + (kCursorHeight * kMenuNum), 0xffffff, true);
+		DrawBox(0, kCursorPosY, kMenuWidth, kCursorPosY + (kCursorHeight * kMenuNum), 0xffffff, true);
 		switch (m_selectMenuIndex)
 		{
 		case 0:
-			DrawBox(0, kCursorPosY, kCursorWidth, kCursorPosY + kCursorHeight, 0xff5555, true);
+			DrawBox(0, kCursorPosY, kMenuWidth, kCursorPosY + kCursorHeight, 0xff5555, true);
 			break;
 		case 1:
-			DrawBox(0, kCursorPosY + kCursorHeight, kCursorWidth, kCursorPosY + (kCursorHeight * 2), 0xff5555, true);
+			DrawBox(0, kCursorPosY + kCursorHeight, kMenuWidth, kCursorPosY + (kCursorHeight * 2), 0xff5555, true);
 			break;
 		case 2:
-			DrawBox(0, kCursorPosY + (kCursorHeight * 2), kCursorWidth, kCursorPosY + (kCursorHeight * 3), 0xff5555, true);
+			DrawBox(0, kCursorPosY + (kCursorHeight * 2), kMenuWidth, kCursorPosY + (kCursorHeight * 3), 0xff5555, true);
 			break;
 		default:
 			break;
 		}
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
-		DxLib::DrawGraph(0, kCursorPosY, m_menuP1Handle, true);
+		DxLib::DrawGraph(0, kCursorPosY, m_menuHandle, true);
 	}
 
 	//フェード

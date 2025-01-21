@@ -112,10 +112,15 @@ GameScene::GameScene(SceneController& controller):
 	m_backColorHandle{},
 	m_floorColorHandle{}
 {
-
+	bool isSameColor = false;
+	//プレイヤーのカラーが同じかどうかをチェック
+	if (m_controller.GetCharaColorIndexP1() == m_controller.GetCharaColorIndexP2())
+	{
+		isSameColor = true;
+	}
 	//メモリ確保
-	m_player1 = std::make_shared<Player>(PlayerIndex::Player1, m_controller.GetSelectCommandIndex(PlayerIndex::Player1));
-	m_player2 = std::make_shared<Player>(PlayerIndex::Player2, m_controller.GetSelectCommandIndex(PlayerIndex::Player2));
+	m_player1 = std::make_shared<Player>(PlayerIndex::Player1, m_controller.GetSelectCommandIndex(PlayerIndex::Player1), m_controller.GetCharaColorIndexP1(), isSameColor);
+	m_player2 = std::make_shared<Player>(PlayerIndex::Player2, m_controller.GetSelectCommandIndex(PlayerIndex::Player2), m_controller.GetCharaColorIndexP2(), isSameColor);
 	//ゲームマネージャー
 	m_gameManager = std::make_shared<GameManager>();
 	//UI
