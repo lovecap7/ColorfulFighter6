@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|solutionrelative:ColorfulFighter2\\Chara.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|solutionrelative:ColorfulFighter2\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|solutionrelative:ColorfulFighter2\\Chara.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C355A5C2-E5C3-4229-B3DB-500A4CA4FD6A}|ColorfulFighter2\\ColorfulFighter2.vcxproj|C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -167,7 +167,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
@@ -231,25 +231,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Player.cpp",
               "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.cpp",
               "RelativeDocumentMoniker": "ColorfulFighter2\\Player.cpp",
               "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.cpp",
               "RelativeToolTip": "ColorfulFighter2\\Player.cpp",
-              "ViewState": "AQIAAG4AAAAAAAAAAAAAAIIAAAABAAAA",
+              "ViewState": "AQIAAMwAAAAAAAAAAAAAAN4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-24T03:18:11.024Z"
+              "WhenOpened": "2024-12-24T03:18:11.024Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Chara.cpp",
               "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
               "RelativeDocumentMoniker": "ColorfulFighter2\\Chara.cpp",
               "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
               "RelativeToolTip": "ColorfulFighter2\\Chara.cpp",
-              "ViewState": "AQIAAJMAAAAAAAAAAAAowKMAAAAaAAAA",
+              "ViewState": "AQIAAGMAAAAAAAAAAAAAAI8AAABJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-24T01:37:15.058Z",
               "EditorCaption": ""
