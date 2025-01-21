@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "CommandSelectScene.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 #include "FadeManager.h"
 #include <DxLib.h>
 #include "game.h"
@@ -10,11 +11,23 @@
 
 namespace
 {
-	constexpr int kMenuNum = 2;
+	//プレイヤーの画像
+	constexpr int kP1ImagePosX = 100;
+	constexpr int kP2ImagePosX = Game::kScreenWidth - 600;
+	constexpr int kPlayerImagePosY = (Game::kScreenHeight / 2) - 400;
+
+	constexpr int kMenuNum = 3;
 	//BGMボリューム
 	constexpr int kBgmVolume = 120;
 	//SEボリューム
 	constexpr int kSeVolume = 150;
+
+	//カーソル
+	constexpr int kCursorWidth = 500;
+	constexpr int kCursorHeight = 200;
+	constexpr int kCursorP1PosX = 500;
+	constexpr int kCursorP2PosX = 500;
+	constexpr int kCursorPosY = (Game::kScreenHeight / 2);
 }
 
 ResultScene::ResultScene(SceneController& controller):
@@ -25,7 +38,9 @@ ResultScene::ResultScene(SceneController& controller):
 	m_isFadeIn(false),
 	m_selectMenuIndex(0),
 	//ローディング画面
-	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png"))
+	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png")),
+	m_menuP1Handle(LoadGraph("./img/Result/ResultTextP1.png")),
+	m_menuP2Handle(LoadGraph("./img/Result/ResultTextP2.png"))
 {
 	//1Pが勝ったなら
 	if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player1)
@@ -92,8 +107,11 @@ void ResultScene::Reselect()
 	m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
 }
 
-void ResultScene::RecordResult()
+void ResultScene::GameEnd()
 {
+	//押されたら次の状態に繊維
+	//次の状態はこのクラスが覚えておく
+	m_controller.ChangeScene(std::make_shared<TitleScene>(m_controller));
 }
 
 void ResultScene::Update(Input& input, Input& input2)
@@ -113,6 +131,9 @@ void ResultScene::Update(Input& input, Input& input2)
 				break;
 			case 1:
 				Reselect();//コマンドセレクト
+				break;
+			case 2:
+				GameEnd();//タイトル画面
 				break;
 			default:
 				Rematch();//再戦
@@ -134,24 +155,27 @@ void ResultScene::Draw()
 	DrawString(10, 10, "Result Scene", 0xffffff);
 #endif
 	//リザルトの画像
-	DxLib::DrawGraph(100, (Game::kScreenHeight / 2) - 400, m_p1Handle, true);
-	DxLib::DrawTurnGraph(Game::kScreenWidth - 600, (Game::kScreenHeight / 2) - 400, m_p2Handle, true);
+	DxLib::DrawGraph(kP1ImagePosX, kPlayerImagePosY, m_p1Handle, true);
+	DxLib::DrawTurnGraph(kP2ImagePosX, kPlayerImagePosY, m_p2Handle, true);
 	//メニュー
 	if (m_isSelecting)
 	{
-		DrawString(400, 600, "再戦", 0xffffff);
-		DrawString(400, 620, "技を選びなおす", 0xffffff);
+		DrawBox(0, kCursorPosY, 500, (Game::kScreenHeight / 2) + 400, 0xffffff, true);
 		switch (m_selectMenuIndex)
 		{
 		case 0:
-			DrawString(380, 600, "⇒", 0xff0000);
+			DrawBox(0, kCursorPosY, kCursorWidth, kCursorPosY + kCursorHeight, 0xff5555, true);
 			break;
 		case 1:
-			DrawString(380, 620, "⇒", 0xff0000);
+			DrawBox(0, kCursorPosY + kCursorHeight, kCursorWidth, kCursorPosY + kCursorHeight * 2, 0xff5555, true);
+			break;
+		case 2:
+			DrawBox(0, kCursorPosY + kCursorHeight*2, kCursorWidth, kCursorPosY + kCursorHeight * 3, 0xff5555, true);
 			break;
 		default:
 			break;
 		}
+		DxLib::DrawGraph(0, kCursorPosY, m_menuP1Handle, true);
 	}
 
 	//フェード

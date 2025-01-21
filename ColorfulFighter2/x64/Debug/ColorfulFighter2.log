@@ -1,30 +1,5 @@
-﻿  Chara.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Player.h(67,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Chara.cpp' をコンパイルしています)
+﻿  ResultScene.cpp
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'ResultScene.cpp' をコンパイルしています)
   
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(821,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(894,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(968,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1044,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1117,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1190,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1263,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1337,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1410,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1484,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1559,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1635,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(1729,17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2268,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2281,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2406,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2411,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2561,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2577,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2909,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(2927,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(3032,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(3046,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(3193,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Chara.cpp(3200,24): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe

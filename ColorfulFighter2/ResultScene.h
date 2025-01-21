@@ -25,6 +25,7 @@ private:
     void SelectMenu(Input& input);
     void Rematch();//再戦
     void Reselect();//コマンドの選び直し
+    void GameEnd();//タイトル画面へ
 
     //フェードインするために使う
     std::shared_ptr<FadeManager> m_fadeManager;
@@ -37,8 +38,5 @@ public:
     virtual void Update(Input& input, Input& input2) override;
 
     virtual void Draw() override;
-
-    //勝敗の結果を記録する
-    void RecordResult();
 };
 
