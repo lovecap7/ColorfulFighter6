@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "SceneController.h"
 #include "CommandSelectScene.h"
+#include "ResultScene.h"
 #include "BGM.h"
 
 
@@ -47,6 +48,18 @@ TitleScene::TitleScene(SceneController& contoller) :
 
 void TitleScene::Update(Input& input, Input& input2)
 {
+#if _DEBUG	
+	if (input.IsTrigger("Start"))
+	{
+		//勝ったプレイヤーのインデックスをセット
+		m_controller.SetWinPlayerIndex(PlayerIndex::Player1);
+		//押されたら次の状態に繊維
+		//次の状態はこのクラスが覚えておく
+		m_controller.ChangeScene(std::make_shared<ResultScene>(m_controller));
+		return;//忘れずreturn
+	}
+#endif
+
 	m_countFrame++;
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||

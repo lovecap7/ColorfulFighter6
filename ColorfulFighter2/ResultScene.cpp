@@ -23,11 +23,9 @@ namespace
 	constexpr int kSeVolume = 150;
 
 	//カーソル
-	constexpr int kCursorWidth = 500;
-	constexpr int kCursorHeight = 200;
-	constexpr int kCursorP1PosX = 500;
-	constexpr int kCursorP2PosX = 500;
-	constexpr int kCursorPosY = (Game::kScreenHeight / 2);
+	constexpr int kCursorWidth = 375;
+	constexpr int kCursorHeight = 100;
+	constexpr int kCursorPosY = (Game::kScreenHeight / 2) + 120;
 }
 
 ResultScene::ResultScene(SceneController& controller):
@@ -160,21 +158,23 @@ void ResultScene::Draw()
 	//メニュー
 	if (m_isSelecting)
 	{
-		DrawBox(0, kCursorPosY, 500, (Game::kScreenHeight / 2) + 400, 0xffffff, true);
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
+		DrawBox(0, kCursorPosY, kCursorWidth, kCursorPosY + (kCursorHeight * kMenuNum), 0xffffff, true);
 		switch (m_selectMenuIndex)
 		{
 		case 0:
 			DrawBox(0, kCursorPosY, kCursorWidth, kCursorPosY + kCursorHeight, 0xff5555, true);
 			break;
 		case 1:
-			DrawBox(0, kCursorPosY + kCursorHeight, kCursorWidth, kCursorPosY + kCursorHeight * 2, 0xff5555, true);
+			DrawBox(0, kCursorPosY + kCursorHeight, kCursorWidth, kCursorPosY + (kCursorHeight * 2), 0xff5555, true);
 			break;
 		case 2:
-			DrawBox(0, kCursorPosY + kCursorHeight*2, kCursorWidth, kCursorPosY + kCursorHeight * 3, 0xff5555, true);
+			DrawBox(0, kCursorPosY + (kCursorHeight * 2), kCursorWidth, kCursorPosY + (kCursorHeight * 3), 0xff5555, true);
 			break;
 		default:
 			break;
 		}
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
 		DxLib::DrawGraph(0, kCursorPosY, m_menuP1Handle, true);
 	}
 
