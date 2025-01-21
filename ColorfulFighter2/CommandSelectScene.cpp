@@ -167,7 +167,9 @@ void CommandSelectScene::Update(Input& input, Input& input2)
 		{
 			//選んだコマンド技のインデックスを次のシーンに渡すために保存
 			m_controller.SaveSelectCommandIndex(m_selectCommandIndexP1, m_selectCommandIndexP2);
-
+			//色
+			m_controller.SaveCharaColorIndexP1(static_cast<CharaColorIndex>(m_currentColorIndexP1));
+			m_controller.SaveCharaColorIndexP2(static_cast<CharaColorIndex>(m_currentColorIndexP2));
 			//押されたら次の状態に繊維
 			//次の状態はこのクラスが覚えておく
 			m_controller.ChangeScene(std::make_shared<GameScene>(m_controller));
@@ -621,8 +623,8 @@ void CommandSelectScene::Draw()
 	{
 		DrawFormatString(400, 800 + (20 * i), 0xff3333, "selectNumP1 = %d", m_selectCommandIndexP1[i]);
 		DrawFormatString(1000, 800 + (20 * i), 0x0000ff, "selectNumP2 = %d", m_selectCommandIndexP2[i]);
-		DrawFormatString(400, 700, 0xff3333, "currentColorIndexP1 = %d", m_currentColorIndexP1);
-		DrawFormatString(1000, 700, 0x0000ff, "currentColorIndexP2 = %d", m_currentColorIndexP2);
+		DrawFormatString(400, 750, 0xff3333, "currentColorIndexP1 = %d", m_currentColorIndexP1);
+		DrawFormatString(1000, 750, 0x0000ff, "currentColorIndexP2 = %d", m_currentColorIndexP2);
 	}
 #endif
 	

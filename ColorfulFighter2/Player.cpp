@@ -228,7 +228,7 @@ void Player::Draw(const Camera& camera)
 	//2プレイヤーの色を少し暗く
 	if ((m_playerIndex == PlayerIndex::Player2) && m_isSameColor)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_SUB, 80);
+		SetDrawBlendMode(DX_BLENDMODE_SUB, 100);
 		(this->*m_draw)(camera);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	}
