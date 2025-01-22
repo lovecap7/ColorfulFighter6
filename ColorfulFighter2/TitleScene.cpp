@@ -44,7 +44,7 @@ TitleScene::TitleScene(SceneController& contoller) :
 	m_bgm->SetBGM(bgmhandle);
 	m_bgm->Volume(kBgmVolume);
 	m_bgm->PlayLoop();
-	m_chara = std::make_shared<Chara>();
+	//m_chara = std::make_shared<Chara>();
 }
 
 void TitleScene::Update(Input& input, Input& input2)
