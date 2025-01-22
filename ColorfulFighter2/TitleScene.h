@@ -2,6 +2,7 @@
 #include "SceneBase.h"
 #include <memory>
 class BGM;
+class Chara;
 class TitleScene :
     public SceneBase
 {
@@ -13,6 +14,8 @@ private:
     //テキストが出たり消えたりする
     int m_countFrame;
     void BlinkingTextDraw();
+	//キャラクターを描画
+    std::shared_ptr<Chara> m_chara;
 public:
     TitleScene(SceneController& contoller);
 

@@ -81,7 +81,7 @@ namespace
 	
 }
 
-Chara::Chara(int* index, CharaColorIndex charaColorIndex) :
+Chara::Chara(int* selectCommandIndex, CharaColorIndex charaColorIndex) :
 	//モーション
 	m_velocity(),
 	m_handle(-1),//画像
@@ -121,7 +121,7 @@ Chara::Chara(int* index, CharaColorIndex charaColorIndex) :
 	m_voice = std::make_shared<SE>();//ボイスを確保
 	for (int i = 0; i < 3;++i)
 	{
-		m_selectCommandIndex[i] = index[i];
+		m_selectCommandIndex[i] = selectCommandIndex[i];
 	}
 }
 
