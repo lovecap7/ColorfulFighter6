@@ -11,7 +11,9 @@ namespace
 	//弾の大きさ
 	constexpr int kBulletScale = 5.0f;
 	//弾のアニメーションの速さ
-	constexpr int kOneAnimFrame = 6;
+	constexpr int kBulletOneAnimFrame = 5;
+	//消滅のアニメーションの速さ
+	constexpr int kDisappearOneAnimFrame = 3;
 
 	//波動拳
 	//弾の判定
@@ -37,6 +39,10 @@ namespace
 	constexpr int kFinishPowerWaveAnimIndex = 9;
 	//弾の位置の調整
 	constexpr int kPowerWaveOffsetPosY = 120;
+
+	//消滅
+	constexpr int kStartDisappearAnimIndex = 256;
+	constexpr int kFinishDisappearAnimIndex = 260;
 }
 
 Bullet::Bullet(PlayerIndex playerIndex):
@@ -108,6 +114,7 @@ void Bullet::SetShotEffect(float damage, int giveNoActFrame, int giveGuardFrame)
 
 void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
 {
+	m_animCountFrame++;
 	if (m_isShooting)
 	{
 		//移動
@@ -128,10 +135,8 @@ void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
 		{
 			Disappear();
 		}
-		
-		m_animCountFrame++;
 		//アニメーションのフレームを数える
-		if (m_animCountFrame % kOneAnimFrame == 0 && m_animCountFrame != 0)
+		if (m_animCountFrame % kBulletOneAnimFrame == 0 && m_animCountFrame != 0)
 		{
 			m_animIndex++;
 			//アニメーションの数が最大まで行ったとき
@@ -141,53 +146,57 @@ void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
 			}
 		}
 	}
+	else
+	{
+		//アニメーションのフレームを数える
+		if (m_animCountFrame % kDisappearOneAnimFrame == 0 && m_animCountFrame != 0)
+		{
+			m_animIndex++;
+			//アニメーションの数が最大まで行ったとき
+			if ((m_animIndex > m_finishAnimIndex))
+			{
+				m_animIndex = m_finishAnimIndex;
+			}
+		}
+	}
 	
 }
 
 void Bullet::Draw(Camera& camera)
 {
 	////弾
-	if (m_isShooting)
+	//左に進んでるなら左を向く
+	bool isLeft = false;
+	if (m_velocity.x < 0)
 	{
-		//左に進んでるなら左を向く
-		bool isLeft = false;
-		if (m_velocity.x < 0)
-		{
-			isLeft = true;
-		}
+		isLeft = true;
+	}
 
-		//切り取るを計算する
-		int sizeX, sizeY;
-		GetGraphSize(m_bulletHandle, &sizeX, &sizeY);//画像サイズ
-		int cutX = m_animIndex % (sizeX / 32);//横
-		int cutY = m_animIndex / (sizeX / 32);//縦
-		//描画
-		////メイン
-		DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
-			static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-			32 * cutX,
-			32 * cutY,
-			32, 32,
-			kBulletScale, 0.0f, m_bulletHandle, true, isLeft);
-
-
+	//切り取るを計算する
+	int sizeX, sizeY;
+	GetGraphSize(m_bulletHandle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_animIndex % (sizeX / 32);//横
+	int cutY = m_animIndex / (sizeX / 32);//縦
+	//描画
+	////メイン
+	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
+		32 * cutX,
+		32 * cutY,
+		32, 32,
+		kBulletScale, 0.0f, m_bulletHandle, true, isLeft);
 #if _DEBUG
-		//当たり判定
-		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-		//攻撃判定
-		DxLib::DrawBox(
-			(static_cast<int>(m_pos.x) + m_hitBoxAttack.x1) + camera.m_drawOffset.x,
-			(static_cast<int>(m_pos.y) + m_hitBoxAttack.y1) + camera.m_drawOffset.y,
-			(static_cast<int>(m_pos.x) + m_hitBoxAttack.x2) + camera.m_drawOffset.x,
-			(static_cast<int>(m_pos.y) + m_hitBoxAttack.y2) + camera.m_drawOffset.y,
-			0xff0000, true);
-		DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
+	//当たり判定
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	//攻撃判定
+	DxLib::DrawBox(
+		(static_cast<int>(m_pos.x) + m_hitBoxAttack.x1) + camera.m_drawOffset.x,
+		(static_cast<int>(m_pos.y) + m_hitBoxAttack.y1) + camera.m_drawOffset.y,
+		(static_cast<int>(m_pos.x) + m_hitBoxAttack.x2) + camera.m_drawOffset.x,
+		(static_cast<int>(m_pos.y) + m_hitBoxAttack.y2) + camera.m_drawOffset.y,
+		0xff0000, true);
+	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 100);
 #endif
-	}
-	if (m_isHitPlayer)
-	{
-		
-	}
 }
 
 void Bullet::Disappear()
@@ -195,6 +204,10 @@ void Bullet::Disappear()
 	m_isShooting = false;
 	ResetAttackBox();
 	ResetIsHitPlayer();
+	m_startAnimIndex = kStartDisappearAnimIndex;
+	m_finishAnimIndex = kFinishDisappearAnimIndex;
+	m_animIndex = m_startAnimIndex;
+	m_animCountFrame = 0;
 }
 
 //波動拳
