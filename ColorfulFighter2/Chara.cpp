@@ -230,7 +230,7 @@ void Chara::ColorInit(CharaColorIndex charaColorIndex)
 		m_commandHandle9 = LoadGraph("./img/Chara/Red/waza/wildhant.png");//コマンド技
 		m_winPoseHandle = LoadGraph("./img/Chara/Red/playerbase/win_001.png");//勝利ポーズ
 		break;
-	case CharaColorIndex::Bule://青
+	case CharaColorIndex::Blue://青
 		m_idleStandHandel = LoadGraph("./img/Chara/Blue/playerbase/idle_001.png");//待機
 		m_idleSquatHandel = LoadGraph("./img/Chara/Blue/playerbase/idle_squat_001.png");//しゃがみ待機
 		m_walkFrontHandel = LoadGraph("./img/Chara/Blue/playerbase/walk_front_001.png");//前歩き

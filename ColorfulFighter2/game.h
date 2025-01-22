@@ -25,7 +25,7 @@ enum class CharaColorIndex
 {
 	White,
 	Red,
-	Bule,
+	Blue,
 	Yellow,
 	Green
 };

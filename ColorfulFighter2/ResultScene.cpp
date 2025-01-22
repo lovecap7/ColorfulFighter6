@@ -70,8 +70,48 @@ ResultScene::ResultScene(SceneController& controller):
 	//1PÇ™èüÇ¡ÇΩÇ»ÇÁ
 	if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player1)
 	{
-		m_p1Handle = LoadGraph("./img/Result/Chara1_win.png");
-		m_p2Handle = LoadGraph("./img/Result/Chara1_lose.png");
+		//P1ÇÃèüóòâÊëú
+		switch (m_controller.GetCharaColorIndexP1())
+		{
+		case CharaColorIndex::White:
+			m_p1Handle = LoadGraph("./img/Result/Face/White_Win.png");
+			break;
+		case CharaColorIndex::Red:
+			m_p1Handle = LoadGraph("./img/Result/Face/Red_Win.png");
+			break;
+		case CharaColorIndex::Blue:
+			m_p1Handle = LoadGraph("./img/Result/Face/Blue_Win.png");
+			break;
+		case CharaColorIndex::Green:
+			m_p1Handle = LoadGraph("./img/Result/Face/Green_Win.png");
+			break;
+		case CharaColorIndex::Yellow:
+			m_p1Handle = LoadGraph("./img/Result/Face/Yellow_Win.png");
+			break;
+		default:
+			break;
+		}
+		//P2ÇÃîsñkâÊëú
+		switch (m_controller.GetCharaColorIndexP1())
+		{
+		case CharaColorIndex::White:
+			m_p2Handle = LoadGraph("./img/Result/Face/White_Lose.png");
+			break;
+		case CharaColorIndex::Red:
+			m_p2Handle = LoadGraph("./img/Result/Face/Red_Win.png");
+			break;
+		case CharaColorIndex::Blue:
+			m_p2Handle = LoadGraph("./img/Result/Face/Blue_Win.png");
+			break;
+		case CharaColorIndex::Green:
+			m_p2Handle = LoadGraph("./img/Result/Face/Green_Win.png");
+			break;
+		case CharaColorIndex::Yellow:
+			m_p2Handle = LoadGraph("./img/Result/Face/Yellow_Win.png");
+			break;
+		default:
+			break;
+		}
 	}
 	else if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player2)
 	{
