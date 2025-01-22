@@ -186,7 +186,7 @@ void Bullet::Draw(Camera& camera)
 	}
 	if (m_isHitPlayer)
 	{
-		DrawString(0, 600, "”g“®Œƒqƒbƒg", 0xff0055);
+		
 	}
 }
 

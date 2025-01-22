@@ -12,14 +12,14 @@
 namespace
 {
 	//プレイヤーの画像
-	constexpr int kP1ImagePosX = 100;
-	constexpr int kP2ImagePosX = Game::kScreenWidth - 600;
+	constexpr int kP1ImagePosX = (Game::kScreenWidth / 2) - 500;
+	constexpr int kP2ImagePosX = (Game::kScreenWidth / 2) + 100;
 	constexpr int kPlayerImagePosY = (Game::kScreenHeight / 2) - 400;
 	//セリフ数
 	constexpr int kSerifNum = 5;
 	constexpr int kSerifMaxIndex = kSerifNum - 1;
-	constexpr int kSerifPosX = 500;
-	constexpr int kSerifPosY = (Game::kScreenHeight / 2) + 120;
+	constexpr int kSerifPosX = (Game::kScreenWidth / 2) - 300;
+	constexpr int kSerifPosY = (Game::kScreenHeight / 2) + 50;
 	//メニュー数
 	constexpr int kMenuNum = 3;
 	//BGMボリューム
@@ -92,10 +92,34 @@ ResultScene::ResultScene(SceneController& controller):
 			break;
 		}
 		//P2の敗北画像
-		switch (m_controller.GetCharaColorIndexP1())
+		switch (m_controller.GetCharaColorIndexP2())
 		{
 		case CharaColorIndex::White:
 			m_p2Handle = LoadGraph("./img/Result/Face/White_Lose.png");
+			break;
+		case CharaColorIndex::Red:
+			m_p2Handle = LoadGraph("./img/Result/Face/Red_Lose.png");
+			break;
+		case CharaColorIndex::Blue:
+			m_p2Handle = LoadGraph("./img/Result/Face/Blue_Lose.png");
+			break;
+		case CharaColorIndex::Green:
+			m_p2Handle = LoadGraph("./img/Result/Face/Green_Lose.png");
+			break;
+		case CharaColorIndex::Yellow:
+			m_p2Handle = LoadGraph("./img/Result/Face/Yellow_Lose.png");
+			break;
+		default:
+			break;
+		}
+	}
+	else if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player2)
+	{
+		//P2の勝利画像
+		switch (m_controller.GetCharaColorIndexP2())
+		{
+		case CharaColorIndex::White:
+			m_p2Handle = LoadGraph("./img/Result/Face/White_Win.png");
 			break;
 		case CharaColorIndex::Red:
 			m_p2Handle = LoadGraph("./img/Result/Face/Red_Win.png");
@@ -112,11 +136,27 @@ ResultScene::ResultScene(SceneController& controller):
 		default:
 			break;
 		}
-	}
-	else if (m_controller.GetWinPlayerIndex() == PlayerIndex::Player2)
-	{
-		m_p1Handle = LoadGraph("./img/Result/Chara1_lose.png");
-		m_p2Handle = LoadGraph("./img/Result/Chara1_win.png");
+		//P1の敗北画像
+		switch (m_controller.GetCharaColorIndexP1())
+		{
+		case CharaColorIndex::White:
+			m_p1Handle = LoadGraph("./img/Result/Face/White_Lose.png");
+			break;
+		case CharaColorIndex::Red:
+			m_p1Handle = LoadGraph("./img/Result/Face/Red_Lose.png");
+			break;
+		case CharaColorIndex::Blue:
+			m_p1Handle = LoadGraph("./img/Result/Face/Blue_Lose.png");
+			break;
+		case CharaColorIndex::Green:
+			m_p1Handle = LoadGraph("./img/Result/Face/Green_Lose.png");
+			break;
+		case CharaColorIndex::Yellow:
+			m_p1Handle = LoadGraph("./img/Result/Face/Yellow_Lose.png");
+			break;
+		default:
+			break;
+		}
 	}
 
 	m_bgm = std::make_shared<BGM>();
@@ -218,7 +258,9 @@ void ResultScene::Draw()
 {
 #if _DEBUG	
 	DrawString(10, 10, "Result Scene", 0xffffff);
+	DrawLine(Game::kScreenWidth / 2, 0, Game::kScreenWidth / 2, Game::kScreenHeight, 0xffffff);
 #endif
+
 	//リザルトの画像
 	DxLib::DrawGraph(kP1ImagePosX, kPlayerImagePosY, m_p1Handle, true);
 	DxLib::DrawTurnGraph(kP2ImagePosX, kPlayerImagePosY, m_p2Handle, true);
