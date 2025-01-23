@@ -1,19 +1,5 @@
-﻿  Bullet.cpp
-  GameManager.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Player.h(67,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'Bullet.cpp' をコンパイルしています)
+﻿  TitleScene.cpp
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
   
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(22,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(31,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(38,33): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(198,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(197,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(196,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(195,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Player.h(67,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-  (ソース ファイル 'GameManager.cpp' をコンパイルしています)
-  
-  コードを生成中...
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\GameManager.cpp(339,1): warning C4715: 'GameManager::ResultWinPlayerIndex': 値を返さないコントロール パスがあります。
-  LINK : 前回のインクリメンタル リンクで C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe

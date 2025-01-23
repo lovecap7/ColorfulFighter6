@@ -22,19 +22,21 @@ namespace
 	//プレイヤーの画像の大きさ
 	constexpr int kPlayerWidth = 512;
 	constexpr int kPlayerHeight = 512;
-	//画像の倍率
 	constexpr float kPlayerScale = 5.0f;
+	//再生速度
+	constexpr int kAttackAnimFrame = 5;
+	constexpr int kDeffenceAnimFrame = 10;
 }
 
 void TitleScene::BlinkingTextDraw()
 {
-	if (m_countFrame < kTextHiddenFrame)
+	if (m_textBlinkFrame < kTextHiddenFrame)
 	{
 		DrawGraph(kTextPosX, kTextPosY, m_textHandle, true);
 	}
-	if (kFrameReset < m_countFrame)
+	if (kFrameReset < m_textBlinkFrame)
 	{
-		m_countFrame = 0;
+		m_textBlinkFrame = 0;
 	}
 }
 
@@ -52,7 +54,7 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 	}
 #endif
 
-	m_countFrame++;
+	m_textBlinkFrame++;
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||
 		input.IsTrigger("X") ||
@@ -69,18 +71,19 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 	}
 
 	m_animCountFrame++;
-	//戦闘開始前のUpdateを止めてるときにこのアニメーションだけは止めたくないのでここに書く
 	//アニメーションの1枚目を0番として数えるので
 	//アニメーションの最大数から-1した値が最後のアニメーション
-	int animMaxNum = m_animNum - 1;
+	int animMaxNum = m_actor1.animNum - 1;
 	//アニメーションのフレームを数える
-	if (m_animCountFrame % m_oneAnimFrame == 0 && m_animCountFrame != 0)
+	if (m_animCountFrame % m_actor1.oneAnimFrame == 0 && m_animCountFrame != 0)
 	{
-		m_animIndex++;
+		m_actor1.animIndex++;
+		m_actor2.animIndex++;
 		//アニメーションの数が最大まで行ったとき
-		if ((m_animIndex > animMaxNum))
+		if ((m_actor1.animIndex > animMaxNum))
 		{
-			m_animIndex = 0;
+			m_actor1.animIndex = 0;
+			m_actor2.animIndex = 0;
 		}
 	}
 }
@@ -98,21 +101,7 @@ void TitleScene::NormalDraw()
 
 void TitleScene::DemoUpdate(Input& input, Input& input2)
 {
-	m_animCountFrame++;
-	//戦闘開始前のUpdateを止めてるときにこのアニメーションだけは止めたくないのでここに書く
-	//アニメーションの1枚目を0番として数えるので
-	//アニメーションの最大数から-1した値が最後のアニメーション
-	int animMaxNum = m_animNum - 1;
-	//アニメーションのフレームを数える
-	if (m_animCountFrame % m_oneAnimFrame == 0 && m_animCountFrame != 0)
-	{
-		m_animIndex++;
-		//アニメーションの数が最大まで行ったとき
-		if ((m_animIndex > animMaxNum))
-		{
-			m_animIndex = 0;
-		}
-	}
+	
 }
 
 void TitleScene::DemoDraw()
@@ -127,15 +116,24 @@ void TitleScene::ActorDraw()
 	SetDrawBright(0, 0, 0);
 	//切り取るを計算する
 	int sizeX, sizeY;
-	GetGraphSize(m_actorHandle, &sizeX, &sizeY);//画像サイズ
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//横
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//縦
+	GetGraphSize(m_actor1.handle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_actor1.animIndex % (sizeX / kPlayerWidth);//横
+	int cutY = m_actor1.animIndex / (sizeX / kPlayerWidth);//縦
 	//描画
-	DrawRectRotaGraphFast(100, kTextPosY,
+	DrawRectRotaGraphFast(200, kTextPosY,
 		kPlayerWidth * cutX,
 		kPlayerHeight * cutY,
 		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_actorHandle, true, false);
+		kPlayerScale, 0.0f, m_actor1.handle, true, false);
+	GetGraphSize(m_actor2.handle, &sizeX, &sizeY);//画像サイズ
+	cutX = m_actor2.animIndex % (sizeX / kPlayerWidth);//横
+	cutY = m_actor2.animIndex / (sizeX / kPlayerWidth);//縦
+	//描画
+	DrawRectRotaGraphFast(1400, kTextPosY,
+		kPlayerWidth * cutX,
+		kPlayerHeight * cutY,
+		kPlayerWidth, kPlayerHeight,
+		kPlayerScale, 0.0f, m_actor2.handle, true, true);
 	SetDrawBright(255, 255, 255);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
@@ -144,14 +142,14 @@ TitleScene::TitleScene(SceneController& contoller) :
 	SceneBase(contoller),
 	m_titleHandle(LoadGraph("./img/title/TitleBack.png")),
 	m_textHandle(LoadGraph("./img/title/PressAnyButton.png")),
-	m_countFrame(0),
+	m_textBlinkFrame(0),
 	m_update(&TitleScene::NormalUpdate),
 	m_draw(&TitleScene::NormalDraw),
-	m_animCountFrame(0),
-	m_animIndex(0),
-	m_animNum(6),
-	m_oneAnimFrame(5),
-	m_actorHandle(LoadGraph("./img/Chara/White/playerbase/idle_001.png"))
+	m_punchHandle(LoadGraph("./img/Chara/White/punch/punch_stand_001.png")),
+	m_kickHandle(LoadGraph("./img/Chara/White/kick/kick_stand_002.png")),
+	m_guardHandle(LoadGraph("./img/Chara/White/guard/guard_stand_001.png")),
+	m_actor1(m_punchHandle, 11,kAttackAnimFrame),
+	m_actor2(m_guardHandle, 6,kDeffenceAnimFrame)
 {
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");

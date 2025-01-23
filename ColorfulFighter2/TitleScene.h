@@ -11,7 +11,7 @@ private:
     std::shared_ptr<BGM> m_bgm;
 
     //テキストが出たり消えたりする
-    int m_countFrame;
+    int m_textBlinkFrame;
     void BlinkingTextDraw();
 
     using UpdateFunc_t = void(TitleScene::*)(Input& input, Input& input2);
@@ -26,15 +26,36 @@ private:
 	void DemoUpdate(Input& input, Input& input2);
 	void DemoDraw();
 
+
+    struct Actor
+    {
+        int& handle;
+        int animIndex;	//アニメーションの番号を数える(1増える毎にアニメーションが進む)
+        int animNum;		//アニメーションの数
+        int oneAnimFrame;	//1枚のアニメーションにかかるフレーム
+		/// <summary>
+		/// 初期化
+		/// </summary>
+		/// <param name="handle">ハンドル</param>
+		/// <param name="animNum">絵の枚数</param>
+		Actor(int& Handle, int AnimNum,int OneAnimFrame) :
+			handle(Handle),
+			animIndex(0),
+			animNum(AnimNum),
+            oneAnimFrame(OneAnimFrame)
+		{
+		}
+    };
+
     //裏で戦っているキャラクター
-	int m_actorHandle;
+	Actor m_actor1;
+	Actor m_actor2;
 	void ActorDraw();
     //アニメーション関連
-    int m_animCountFrame;	//フレームを数える
-    int m_animIndex;	//アニメーションの番号を数える(1増える毎にアニメーションが進む)
-    int m_animNum;		//アニメーションの数
-    int m_oneAnimFrame;	//1枚のアニメーションにかかるフレーム
-
+    int m_animCountFrame;	
+	int m_punchHandle;
+	int m_kickHandle;
+	int m_guardHandle;
 public:
     TitleScene(SceneController& contoller);
 
