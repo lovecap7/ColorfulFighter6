@@ -28,7 +28,7 @@ private:
 
     //裏で戦っているキャラクター
 	int m_actorHandle;
-	void m_actorDraw();
+	void ActorDraw();
     //アニメーション関連
     int m_animCountFrame;	//フレームを数える
     int m_animIndex;	//アニメーションの番号を数える(1増える毎にアニメーションが進む)

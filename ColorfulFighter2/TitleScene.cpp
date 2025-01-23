@@ -23,7 +23,7 @@ namespace
 	constexpr int kPlayerWidth = 512;
 	constexpr int kPlayerHeight = 512;
 	//画像の倍率
-	constexpr float kPlayerScale = 1.0f;
+	constexpr float kPlayerScale = 5.0f;
 }
 
 void TitleScene::BlinkingTextDraw()
@@ -67,21 +67,8 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
 		return;//忘れずreturn
 	}
-}
 
-void TitleScene::NormalDraw()
-{
-#if _DEBUG	
-	DrawString(10, 10, "Title Scene", 0xffffff);
-#endif
-
-	DrawGraph(0, 0, m_titleHandle, true);
-	m_actorDraw();
-	BlinkingTextDraw();
-}
-
-void TitleScene::DemoUpdate(Input& input, Input& input2)
-{
+	m_animCountFrame++;
 	//戦闘開始前のUpdateを止めてるときにこのアニメーションだけは止めたくないのでここに書く
 	//アニメーションの1枚目を0番として数えるので
 	//アニメーションの最大数から-1した値が最後のアニメーション
@@ -96,28 +83,61 @@ void TitleScene::DemoUpdate(Input& input, Input& input2)
 			m_animIndex = 0;
 		}
 	}
+}
+
+void TitleScene::NormalDraw()
+{
+#if _DEBUG	
+	DrawString(10, 10, "Title Scene", 0xffffff);
+#endif
+
+	DrawGraph(0, 0, m_titleHandle, true);
+	BlinkingTextDraw();
+	ActorDraw();
+}
+
+void TitleScene::DemoUpdate(Input& input, Input& input2)
+{
 	m_animCountFrame++;
+	//戦闘開始前のUpdateを止めてるときにこのアニメーションだけは止めたくないのでここに書く
+	//アニメーションの1枚目を0番として数えるので
+	//アニメーションの最大数から-1した値が最後のアニメーション
+	int animMaxNum = m_animNum - 1;
+	//アニメーションのフレームを数える
+	if (m_animCountFrame % m_oneAnimFrame == 0 && m_animCountFrame != 0)
+	{
+		m_animIndex++;
+		//アニメーションの数が最大まで行ったとき
+		if ((m_animIndex > animMaxNum))
+		{
+			m_animIndex = 0;
+		}
+	}
 }
 
 void TitleScene::DemoDraw()
 {
-	m_actorDraw();
+	
 }
 
 //裏で戦っているキャラクター
-void TitleScene::m_actorDraw()
+void TitleScene::ActorDraw()
 {
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	SetDrawBright(0, 0, 0);
 	//切り取るを計算する
 	int sizeX, sizeY;
 	GetGraphSize(m_actorHandle, &sizeX, &sizeY);//画像サイズ
 	int cutX = m_animIndex % (sizeX / kPlayerWidth);//横
 	int cutY = m_animIndex / (sizeX / kPlayerWidth);//縦
 	//描画
-	DrawRectRotaGraphFast(0, 0,
+	DrawRectRotaGraphFast(100, kTextPosY,
 		kPlayerWidth * cutX,
 		kPlayerHeight * cutY,
 		kPlayerWidth, kPlayerHeight,
 		kPlayerScale, 0.0f, m_actorHandle, true, false);
+	SetDrawBright(255, 255, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 TitleScene::TitleScene(SceneController& contoller) :
@@ -129,9 +149,9 @@ TitleScene::TitleScene(SceneController& contoller) :
 	m_draw(&TitleScene::NormalDraw),
 	m_animCountFrame(0),
 	m_animIndex(0),
-	m_animNum(0),
-	m_oneAnimFrame(0),
-	m_actorHandle(LoadGraph("./img/Chara/White/playerbase/stand_001.png"))
+	m_animNum(6),
+	m_oneAnimFrame(5),
+	m_actorHandle(LoadGraph("./img/Chara/White/playerbase/idle_001.png"))
 {
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");

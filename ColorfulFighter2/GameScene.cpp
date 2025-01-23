@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "Dxlib.h"
+#include <DxLib.h>
 #include "game.h"
 #include "Input.h"
 #include "SceneController.h"
@@ -86,19 +86,19 @@ void GameScene::GameInit()
 }
 void GameScene::StageDraw()
 {
-	DrawGraph(kStageBackPosX + static_cast<int>(m_camera->m_drawOffset.x), 
+	DxLib::DrawGraph(kStageBackPosX + static_cast<int>(m_camera->m_drawOffset.x),
 		kStageBackPosY + static_cast<int>(m_camera->m_drawOffset.y), 
 		m_backBaseHandle, true);
-	DrawGraph(kStageFloorPosX + static_cast<int>(m_camera->m_drawOffset.x), 
+	DxLib::DrawGraph(kStageFloorPosX + static_cast<int>(m_camera->m_drawOffset.x),
 		kStageFloorPosY + static_cast<int>(m_camera->m_drawOffset.y), 
 		m_floorBaseHandle, true);
 	//êF
 	//êFÇ™ã≠Ç¢Ç©ÇÁè≠ÇµìßñæÇ…ÇµÇƒÇÈ
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-	DrawGraph(kStageBackPosX + static_cast<int>(m_camera->m_drawOffset.x), 
+	DxLib::DrawGraph(kStageBackPosX + static_cast<int>(m_camera->m_drawOffset.x),
 		kStageBackPosY + static_cast<int>(m_camera->m_drawOffset.y), 
 		m_backColorHandle[m_colorIndex], true);
-	DrawGraph(kStageFloorPosX + static_cast<int>(m_camera->m_drawOffset.x), 
+	DxLib::DrawGraph(kStageFloorPosX + static_cast<int>(m_camera->m_drawOffset.x),
 		kStageFloorPosY + static_cast<int>(m_camera->m_drawOffset.y), 
 		m_floorColorHandle[m_colorIndex], true);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
