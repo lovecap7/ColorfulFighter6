@@ -1,9 +1,11 @@
 ﻿  TitleScene.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
   (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
   
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(182,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(182,35): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(191,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(191,35): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(28,28): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(30,28): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(263,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(263,35): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(272,50): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\TitleScene.cpp(272,35): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  ColorfulFighter2.vcxproj -> C:\Users\lovecap\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe

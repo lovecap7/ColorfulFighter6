@@ -19,10 +19,10 @@ namespace
 	constexpr float kGravityPower = 3.2f;
 
 	//ƒvƒŒƒCƒ„[‚Ì‰æ‘œ‚Ì‘å‚«‚³
-	constexpr int kPlayerWidth = 512;
-	constexpr int kPlayerHeight = 512;
+	constexpr int kCharaWidth = 512;
+	constexpr int kCharaHeight = 512;
 	//‰æ‘œ‚Ì”{—¦
-	constexpr float kPlayerScale = 1.0f;
+	constexpr float kCharaScale = 1.0f;
 
 	//ˆÚ“®‘¬“x
 	constexpr float kMoveSpeedFront = 12.0f;
@@ -44,7 +44,7 @@ namespace
 	constexpr int kBaseCollisionWidthBottom = 200;
 
 	//ƒ_ƒEƒ“‚µ‚½‚Æ‚«‚Ì‰æ‘œ‚ÌˆÊ’u‚ğ•â³
-	constexpr int kDownDrawOffset = kPlayerHeight/2 - 90;
+	constexpr int kDownDrawOffset = kCharaHeight/2 - 90;
 	constexpr int kDownFrame = 30;//ƒ_ƒEƒ“‚µ‚Ä‚éŠÔ
 
 	//“Š‚°‚Ìƒ_ƒ[ƒW
@@ -908,7 +908,7 @@ bool Player::CheckDead()
 		//‰Ÿ‚µ‡‚¢”»’è‚ğÁ‚·(‰æ–ÊŠO‚És‚­‚½‚ß‚É)
 		ResetPushBox();
 		//‰æ–ÊŠO‚É‚Á”ò‚Ô
-		if ((0 - kPlayerWidth) < m_pos.x && m_pos.x < (kStageWidth + kPlayerWidth))
+		if ((0 - kCharaWidth) < m_pos.x && m_pos.x < (kStageWidth + kCharaWidth))
 		{
 			m_velocity.x *= 1.5f;
 			m_velocity.y -= 10.0f;
@@ -1205,15 +1205,15 @@ void Player::IdleStandDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::IdleSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -1407,15 +1407,15 @@ void Player::IdleSquatDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::JumpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -1570,15 +1570,15 @@ void Player::JumpDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::AttackStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -1724,15 +1724,15 @@ void Player::AttackStandDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::AttackSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -1866,15 +1866,15 @@ void Player::AttackSquatDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::AttackAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -1992,15 +1992,15 @@ void Player::AttackAerialDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 //‹ó’†UŒ‚Œã
@@ -2046,15 +2046,15 @@ void Player::AttackedAerialDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::CommandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2187,15 +2187,15 @@ void Player::CommandDraw(const Camera& camera)
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
 	
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 
@@ -2246,15 +2246,15 @@ void Player::GuardStandDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::GuardSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2303,15 +2303,15 @@ void Player::GuardSquatDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 //“Š‚°
@@ -2457,15 +2457,15 @@ void Player::GraspDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 //“Š‚°‚é
@@ -2537,15 +2537,15 @@ void Player::ThrowDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2649,15 +2649,15 @@ void Player::BeThrownDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 //“Š‚°”²‚¯
@@ -2717,15 +2717,15 @@ void Player::ThrowEscapeDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::DamageUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2790,15 +2790,15 @@ void Player::DamageDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::DamageSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2873,15 +2873,15 @@ void Player::DownDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y) + kDownDrawOffset,
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::DownAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -2927,15 +2927,15 @@ void Player::DownAerialDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 //‹N‚«ã‚ª‚è
@@ -2982,15 +2982,15 @@ void Player::StandUpDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
 void Player::ResultUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
@@ -3052,13 +3052,13 @@ void Player::ResultDraw(const Camera& camera)
 	//Ø‚èæ‚é‚ğŒvZ‚·‚é
 	int sizeX, sizeY;
 	GetGraphSize(m_handle, &sizeX, &sizeY);//‰æ‘œƒTƒCƒY
-	int cutX = m_animIndex % (sizeX / kPlayerWidth);//‰¡
-	int cutY = m_animIndex / (sizeX / kPlayerWidth);//c
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//‰¡
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//c
 	//•`‰æ
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		kPlayerWidth * cutX,
-		kPlayerHeight * cutY,
-		kPlayerWidth, kPlayerHeight,
-		kPlayerScale, 0.0f, m_handle, true, m_isLeft);
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }

@@ -9,6 +9,7 @@ class TitleScene :
 private:
     int m_backHandle;
 	int m_titleHandle;
+    int m_titleFadeCountFrame;
     int m_textHandle;
     std::shared_ptr<BGM> m_bgm;
 
@@ -36,7 +37,7 @@ private:
 
     struct Actor
     {
-        int& handle;
+        int handle;
         int animIndex;	//アニメーションの番号を数える(1増える毎にアニメーションが進む)
         int animNum;		//アニメーションの数
         int oneAnimFrame;	//1枚のアニメーションにかかるフレーム
@@ -45,7 +46,7 @@ private:
 		/// </summary>
 		/// <param name="handle">ハンドル</param>
 		/// <param name="animNum">絵の枚数</param>
-		Actor(int& Handle, int AnimNum,int OneAnimFrame) :
+		Actor(int Handle, int AnimNum,int OneAnimFrame) :
 			handle(Handle),
 			animIndex(0),
 			animNum(AnimNum),
@@ -64,7 +65,6 @@ private:
 	int m_punchHandle;
 	int m_kickHandle;
 	int m_guardHandle;
-	int m_shouryuuHandle;
 	int m_walkHandle;
   
 	Vector3 m_actor1Pos;
