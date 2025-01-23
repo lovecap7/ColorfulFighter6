@@ -33,21 +33,7 @@ void TitleScene::BlinkingTextDraw()
 	}
 }
 
-TitleScene::TitleScene(SceneController& contoller) :
-	SceneBase(contoller),
-	m_titleHandle(LoadGraph("./img/title/Title.png")),
-	m_textHandle(LoadGraph("./img/title/PressAnyButton.png")),
-	m_countFrame(0)
-{
-	m_bgm = std::make_shared<BGM>();
-	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
-	m_bgm->SetBGM(bgmhandle);
-	m_bgm->Volume(kBgmVolume);
-	m_bgm->PlayLoop();
-	//m_chara = std::make_shared<Chara>();
-}
-
-void TitleScene::Update(Input& input, Input& input2)
+void TitleScene::NormalUpdate(Input& input, Input& input2)
 {
 #if _DEBUG	
 	if (input.IsTrigger("Start"))
@@ -65,11 +51,11 @@ void TitleScene::Update(Input& input, Input& input2)
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||
 		input.IsTrigger("X") ||
-		input.IsTrigger("Y") || 
+		input.IsTrigger("Y") ||
 		input2.IsTrigger("A") ||
 		input2.IsTrigger("B") ||
 		input2.IsTrigger("X") ||
-		input2.IsTrigger("Y") )
+		input2.IsTrigger("Y"))
 	{
 		//‰Ÿ‚³‚ê‚½‚çŸ‚Ìó‘Ô‚É‘@ˆÛ
 		//Ÿ‚Ìó‘Ô‚Í‚±‚ÌƒNƒ‰ƒX‚ªŠo‚¦‚Ä‚¨‚­
@@ -78,12 +64,45 @@ void TitleScene::Update(Input& input, Input& input2)
 	}
 }
 
-void TitleScene::Draw()
+void TitleScene::NormalDraw()
 {
 #if _DEBUG	
 	DrawString(10, 10, "Title Scene", 0xffffff);
 #endif
-	
+
 	DrawGraph(0, 0, m_titleHandle, true);
 	BlinkingTextDraw();
+}
+
+void TitleScene::DemoUpdate(Input& input, Input& input2)
+{
+}
+
+void TitleScene::DemoDraw()
+{
+}
+
+TitleScene::TitleScene(SceneController& contoller) :
+	SceneBase(contoller),
+	m_titleHandle(LoadGraph("./img/title/Title.png")),
+	m_textHandle(LoadGraph("./img/title/PressAnyButton.png")),
+	m_countFrame(0),
+	m_update(&TitleScene::NormalUpdate),
+	m_draw(&TitleScene::NormalDraw)
+{
+	m_bgm = std::make_shared<BGM>();
+	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
+	m_bgm->SetBGM(bgmhandle);
+	m_bgm->Volume(kBgmVolume);
+	m_bgm->PlayLoop();
+}
+
+void TitleScene::Update(Input& input, Input& input2)
+{
+	(this->*m_update)(input, input2);
+}
+
+void TitleScene::Draw()
+{
+	(this->*m_draw)();
 }
