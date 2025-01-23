@@ -63,9 +63,9 @@ Bullet::Bullet(PlayerIndex playerIndex):
 	m_finishAnimIndex(kFinishHadouAnimIndex),
 	m_animCountFrame(0)
 {
-	m_blueBulletHandle = LoadGraph("./img/Bullet/BlueBullet32x32.png");//ê¬
-	m_yellowBulletHandle = LoadGraph("./img/Bullet/YellowBullet32x32.png");//â©êF
-	m_purpleBulletHandle = LoadGraph("./img/Bullet/PurpleBullet32x32.png");//éá
+	m_blueBulletHandle = LoadGraph("./img/Bullet/BlueBullet160x160.png");//ê¬
+	m_yellowBulletHandle = LoadGraph("./img/Bullet/YellowBullet160x160.png");//â©êF
+	m_purpleBulletHandle = LoadGraph("./img/Bullet/PurpleBullet160x160.png");//éá
 	m_bulletHandle = m_blueBulletHandle;
 }
 
