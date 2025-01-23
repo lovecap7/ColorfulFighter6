@@ -258,7 +258,7 @@ void ResultScene::Draw()
 {
 #if _DEBUG	
 	DrawString(10, 10, "Result Scene", 0xffffff);
-	DrawLine(Game::kScreenWidth / 2, 0, Game::kScreenWidth / 2, Game::kScreenHeight, 0xffffff);
+	//DrawLine(Game::kScreenWidth / 2, 0, Game::kScreenWidth / 2, Game::kScreenHeight, 0xffffff);
 #endif
 
 	//ƒŠƒUƒ‹ƒg‚Ì‰æ‘œ

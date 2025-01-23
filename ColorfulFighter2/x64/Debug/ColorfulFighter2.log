@@ -1,5 +1,6 @@
-﻿  TitleScene.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
-  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
+﻿  GameManager.cpp
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Player.h(67,54): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  (ソース ファイル 'GameManager.cpp' をコンパイルしています)
   
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\GameManager.cpp(339,1): warning C4715: 'GameManager::ResultWinPlayerIndex': 値を返さないコントロール パスがあります。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe

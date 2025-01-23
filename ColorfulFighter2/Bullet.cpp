@@ -9,7 +9,9 @@ namespace
 	constexpr float kBulletOffsetPos = 90.0f;
 
 	//弾の大きさ
-	constexpr int kBulletScale = 5.0f;
+	constexpr float kBulletScale = 1.0f;
+	constexpr int kBulletWidth = 160;
+	constexpr int kBulletHeight = 160;
 	//弾のアニメーションの速さ
 	constexpr int kBulletOneAnimFrame = 5;
 	//消滅のアニメーションの速さ
@@ -17,7 +19,7 @@ namespace
 
 	//波動拳
 	//弾の判定
-	constexpr int kHadouRadius = 16.0f * kBulletScale;
+	constexpr int kHadouRadius = 80.0f;
 	//弾の番号
 	constexpr int kStartHadouAnimIndex = 211;
 	constexpr int kFinishHadouAnimIndex = 214;
@@ -26,14 +28,14 @@ namespace
 	
 	//ソニックブーム
 	//弾の判定
-	constexpr int kSonicRadius = 16.0f * kBulletScale;
+	constexpr int kSonicRadius = 80.0f;
 	//弾の番号
 	constexpr int kStartSonicAnimIndex = 231;
 	constexpr int kFinishSonicAnimIndex = 234;
 
 	//パワーウェイブ
 	//弾の判定
-	constexpr int kPowerWaveRadius = 16.0f * kBulletScale;
+	constexpr int kPowerWaveRadius = 80.0f;
 	//弾の番号
 	constexpr int kStartPowerWaveAnimIndex = 6;
 	constexpr int kFinishPowerWaveAnimIndex = 9;
@@ -175,15 +177,15 @@ void Bullet::Draw(Camera& camera)
 	//切り取るを計算する
 	int sizeX, sizeY;
 	GetGraphSize(m_bulletHandle, &sizeX, &sizeY);//画像サイズ
-	int cutX = m_animIndex % (sizeX / 32);//横
-	int cutY = m_animIndex / (sizeX / 32);//縦
+	int cutX = m_animIndex % (sizeX / kBulletWidth);//横
+	int cutY = m_animIndex / (sizeX / kBulletHeight);//縦
 	//描画
 	////メイン
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
-		32 * cutX,
-		32 * cutY,
-		32, 32,
+		kBulletWidth * cutX,
+		kBulletHeight * cutY,
+		kBulletWidth, kBulletHeight,
 		kBulletScale, 0.0f, m_bulletHandle, true, isLeft);
 #if _DEBUG
 	//当たり判定

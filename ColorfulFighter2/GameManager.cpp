@@ -33,6 +33,9 @@ namespace
 	//ガードエフェクトのアニメーション
 	constexpr int kGuardAnimFirstIndex = 205;
 	constexpr int kGuardAnimFinishIndex = 210;
+
+	constexpr int kEffectWidth = 160;
+	constexpr int kEffectHeight = 160;
 	
 	//seボリューム
 	constexpr int kSeVolume = 150;
@@ -234,46 +237,46 @@ void GameManager::HitEffectDraw(Camera& camera)
 	int sizeX, sizeY;
 	int cutX, cutY;
 	GetGraphSize(m_hitEffectHandleP1, &sizeX, &sizeY);//画像サイズ
-	cutX = m_hitAnimIndexP1 % (sizeX / 32);//横
-	cutY = m_hitAnimIndexP1 / (sizeX / 32);//縦
+	cutX = m_hitAnimIndexP1 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP1 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP1.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_hitEffectPosP1.y) + static_cast<int>(camera.m_drawOffset.y),
-		32 * cutX,
-		32 * cutY,
-		32, 32,
-		5.0f, 1.0f, m_hitEffectHandleP1, true, false);
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		1.0f, 2.0f, m_hitEffectHandleP1, true, false);
 	//P2
 	//切り取るを計算する
 	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
-	cutX = m_hitAnimIndexP2 % (sizeX / 32);//横
-	cutY = m_hitAnimIndexP2 / (sizeX / 32);//縦
+	cutX = m_hitAnimIndexP2 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP2 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP2.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_hitEffectPosP2.y) + static_cast<int>(camera.m_drawOffset.y),
-		32 * cutX,
-		32 * cutY,
-		32, 32,
-		5.0f, 1.0f, m_hitEffectHandleP2, true, true);
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		1.0f, 2.0f, m_hitEffectHandleP2, true, false);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 	//P1
 	GetGraphSize(m_hitEffectHandleP1, &sizeX, &sizeY);//画像サイズ
-	cutX = m_hitAnimIndexP1 % (sizeX / 32);//横
-	cutY = m_hitAnimIndexP1 / (sizeX / 32);//縦
+	cutX = m_hitAnimIndexP1 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP1 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP1.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_hitEffectPosP1.y) + static_cast<int>(camera.m_drawOffset.y),
-		32 * cutX,
-		32 * cutY,
-		32, 32,
-		5.0f, 0.0f, m_hitEffectHandleP1, true, false);
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		1.0f, 1.0f, m_hitEffectHandleP1, true, false);
 	//P2
 	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
-	cutX = m_hitAnimIndexP2 % (sizeX / 32);//横
-	cutY = m_hitAnimIndexP2 / (sizeX / 32);//縦
+	cutX = m_hitAnimIndexP2 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP2 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP2.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_hitEffectPosP2.y) + static_cast<int>(camera.m_drawOffset.y),
-		32 * cutX,
-		32 * cutY,
-		32, 32,
-		5.0f, 0.0f, m_hitEffectHandleP2, true, true);
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		1.0f, 1.0f, m_hitEffectHandleP2, true, false);
 
 
 
