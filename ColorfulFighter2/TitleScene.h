@@ -2,7 +2,6 @@
 #include "SceneBase.h"
 #include <memory>
 class BGM;
-class Chara;
 class TitleScene :
     public SceneBase
 {
@@ -14,8 +13,6 @@ private:
     //テキストが出たり消えたりする
     int m_countFrame;
     void BlinkingTextDraw();
-	//キャラクターを描画
-    std::shared_ptr<Chara> m_chara;
 
     using UpdateFunc_t = void(TitleScene::*)(Input& input, Input& input2);
     UpdateFunc_t m_update;
@@ -28,6 +25,15 @@ private:
 
 	void DemoUpdate(Input& input, Input& input2);
 	void DemoDraw();
+
+    //裏で戦っているキャラクター
+	int m_actorHandle;
+	void m_actorDraw();
+    //アニメーション関連
+    int m_animCountFrame;	//フレームを数える
+    int m_animIndex;	//アニメーションの番号を数える(1増える毎にアニメーションが進む)
+    int m_animNum;		//アニメーションの数
+    int m_oneAnimFrame;	//1枚のアニメーションにかかるフレーム
 
 public:
     TitleScene(SceneController& contoller);

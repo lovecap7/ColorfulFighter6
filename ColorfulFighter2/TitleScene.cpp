@@ -6,7 +6,6 @@
 #include "CommandSelectScene.h"
 #include "ResultScene.h"
 #include "BGM.h"
-#include "Chara.h"
 
 namespace
 {
@@ -19,6 +18,12 @@ namespace
 	constexpr int kBgmVolume = 120;
 	//SEボリューム
 	constexpr int kSeVolume = 150;
+
+	//プレイヤーの画像の大きさ
+	constexpr int kPlayerWidth = 512;
+	constexpr int kPlayerHeight = 512;
+	//画像の倍率
+	constexpr float kPlayerScale = 1.0f;
 }
 
 void TitleScene::BlinkingTextDraw()
@@ -71,24 +76,62 @@ void TitleScene::NormalDraw()
 #endif
 
 	DrawGraph(0, 0, m_titleHandle, true);
+	m_actorDraw();
 	BlinkingTextDraw();
 }
 
 void TitleScene::DemoUpdate(Input& input, Input& input2)
 {
+	//戦闘開始前のUpdateを止めてるときにこのアニメーションだけは止めたくないのでここに書く
+	//アニメーションの1枚目を0番として数えるので
+	//アニメーションの最大数から-1した値が最後のアニメーション
+	int animMaxNum = m_animNum - 1;
+	//アニメーションのフレームを数える
+	if (m_animCountFrame % m_oneAnimFrame == 0 && m_animCountFrame != 0)
+	{
+		m_animIndex++;
+		//アニメーションの数が最大まで行ったとき
+		if ((m_animIndex > animMaxNum))
+		{
+			m_animIndex = 0;
+		}
+	}
+	m_animCountFrame++;
 }
 
 void TitleScene::DemoDraw()
 {
+	m_actorDraw();
+}
+
+//裏で戦っているキャラクター
+void TitleScene::m_actorDraw()
+{
+	//切り取るを計算する
+	int sizeX, sizeY;
+	GetGraphSize(m_actorHandle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_animIndex % (sizeX / kPlayerWidth);//横
+	int cutY = m_animIndex / (sizeX / kPlayerWidth);//縦
+	//描画
+	DrawRectRotaGraphFast(0, 0,
+		kPlayerWidth * cutX,
+		kPlayerHeight * cutY,
+		kPlayerWidth, kPlayerHeight,
+		kPlayerScale, 0.0f, m_actorHandle, true, false);
 }
 
 TitleScene::TitleScene(SceneController& contoller) :
 	SceneBase(contoller),
-	m_titleHandle(LoadGraph("./img/title/Title.png")),
+	m_titleHandle(LoadGraph("./img/title/TitleBack.png")),
 	m_textHandle(LoadGraph("./img/title/PressAnyButton.png")),
 	m_countFrame(0),
 	m_update(&TitleScene::NormalUpdate),
-	m_draw(&TitleScene::NormalDraw)
+	m_draw(&TitleScene::NormalDraw),
+	m_animCountFrame(0),
+	m_animIndex(0),
+	m_animNum(0),
+	m_oneAnimFrame(0),
+	m_actorHandle(LoadGraph("./img/Chara/White/playerbase/stand_001.png"))
 {
 	m_bgm = std::make_shared<BGM>();
 	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
