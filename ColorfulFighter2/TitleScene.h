@@ -1,12 +1,14 @@
 #pragma once
 #include "SceneBase.h"
 #include <memory>
+#include "Vector3.h"
 class BGM;
 class TitleScene :
     public SceneBase
 {
 private:
-    int m_titleHandle;
+    int m_backHandle;
+	int m_titleHandle;
     int m_textHandle;
     std::shared_ptr<BGM> m_bgm;
 
@@ -23,6 +25,11 @@ private:
 	void NormalUpdate(Input& input, Input& input2);
 	void NormalDraw();
 
+    //オープニング
+	void OpeningUpdate(Input& input, Input& input2);
+	void OpeningDraw();
+
+    //デモ映像
 	void DemoUpdate(Input& input, Input& input2);
 	void DemoDraw();
 
@@ -53,9 +60,17 @@ private:
 	void ActorDraw();
     //アニメーション関連
     int m_animCountFrame;	
+	int m_idleHandle;
 	int m_punchHandle;
 	int m_kickHandle;
 	int m_guardHandle;
+	int m_shouryuuHandle;
+	int m_walkHandle;
+  
+	Vector3 m_actor1Pos;
+	Vector3 m_actor2Pos;
+	Vector3 m_actor1Velo;
+	Vector3 m_actor2Velo;
 public:
     TitleScene(SceneController& contoller);
 
