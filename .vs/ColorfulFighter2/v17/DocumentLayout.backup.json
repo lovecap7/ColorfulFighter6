@@ -174,44 +174,8 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 8,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Player.h",
-              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.h",
-              "RelativeDocumentMoniker": "ColorfulFighter2\\Player.h",
-              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.h",
-              "RelativeToolTip": "ColorfulFighter2\\Player.h",
-              "ViewState": "AgIAAMkAAAAAAAAAAAAAANkAAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-24T01:50:22.797Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Chara.cpp",
-              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
-              "RelativeDocumentMoniker": "ColorfulFighter2\\Chara.cpp",
-              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
-              "RelativeToolTip": "ColorfulFighter2\\Chara.cpp",
-              "ViewState": "AgIAAE0GAAAAAAAAAAAAAHsAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-24T01:37:15.058Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GameScene.cpp",
-              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameScene.cpp",
-              "RelativeDocumentMoniker": "ColorfulFighter2\\GameScene.cpp",
-              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameScene.cpp",
-              "RelativeToolTip": "ColorfulFighter2\\GameScene.cpp",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-21T12:30:24.486Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 1,
@@ -222,8 +186,7 @@
               "RelativeToolTip": "ColorfulFighter2\\Bullet.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-28T08:06:56.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-28T08:06:56.952Z"
             },
             {
               "$type": "Document",
@@ -271,8 +234,7 @@
               "RelativeToolTip": "ColorfulFighter2\\ResultScene.cpp",
               "ViewState": "AgIAAPwAAAAAAAAAAAAAAAQBAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-21T13:05:23.49Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-21T13:05:23.49Z"
             },
             {
               "$type": "Document",
@@ -308,8 +270,7 @@
               "RelativeToolTip": "ColorfulFighter2\\Bullet.h",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAB8AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-28T08:05:27.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-28T08:05:27.277Z"
             },
             {
               "$type": "Document",
@@ -317,12 +278,48 @@
               "Title": "GameManager.cpp",
               "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameManager.cpp",
               "RelativeDocumentMoniker": "ColorfulFighter2\\GameManager.cpp",
-              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameManager.cpp",
-              "RelativeToolTip": "ColorfulFighter2\\GameManager.cpp",
-              "ViewState": "AgIAAPYAAAAAAAAAAAAAAA8BAAAwAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameManager.cpp*",
+              "RelativeToolTip": "ColorfulFighter2\\GameManager.cpp*",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAEsAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-22T12:14:54.031Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "GameScene.cpp",
+              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameScene.cpp",
+              "RelativeDocumentMoniker": "ColorfulFighter2\\GameScene.cpp",
+              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\GameScene.cpp",
+              "RelativeToolTip": "ColorfulFighter2\\GameScene.cpp",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAAEAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-21T12:30:24.486Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Chara.cpp",
+              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
+              "RelativeDocumentMoniker": "ColorfulFighter2\\Chara.cpp",
+              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Chara.cpp",
+              "RelativeToolTip": "ColorfulFighter2\\Chara.cpp",
+              "ViewState": "AgIAAE0GAAAAAAAAAAAAAHsAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-24T01:37:15.058Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.h",
+              "RelativeDocumentMoniker": "ColorfulFighter2\\Player.h",
+              "ToolTip": "C:\\Users\\fko2447025\\Documents\\GitHub\\ColorfulFighter6\\ColorfulFighter2\\Player.h",
+              "RelativeToolTip": "ColorfulFighter2\\Player.h",
+              "ViewState": "AgIAAMkAAAAAAAAAAAAAANkAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-24T01:50:22.797Z"
             },
             {
               "$type": "Document",

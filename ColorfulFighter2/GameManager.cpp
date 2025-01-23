@@ -73,7 +73,7 @@ GameManager::GameManager():
 	m_hitAnimIndexP2(kHitAnimFinishIndex),
 	m_hitAnimFinishIndexP2(kHitAnimFinishIndex),
 	//エフェクト
-	m_hitHandle(LoadGraph("./img/Bullet/YellowBullet32x32.png")),
+	m_hitHandle(LoadGraph("./img/Bullet/YellowBullet160x160.png")),
 	m_guardHandle(LoadGraph("./img/Bullet/BlueBullet32x32.png")),
 	m_hitEffectHandleP1(m_hitHandle),
 	m_hitEffectHandleP2(m_hitHandle),
