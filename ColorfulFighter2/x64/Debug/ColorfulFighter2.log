@@ -1,5 +1,4 @@
-﻿  TitleScene.cpp
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\CommandSelectScene.h(2,10): warning C4067: プリプロセッサ ディレクティブの後に余分な文字がありました - 改行が必要です
-  (ソース ファイル 'TitleScene.cpp' をコンパイルしています)
-  
-  ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe
+﻿BGM.obj : error LNK2019: 未解決の外部シンボル "int __cdecl DxLib::StopSoundMem(int)" (?StopSoundMem@DxLib@@YAHH@Z) が関数 "public: void __cdecl BGM::Stop(void)" (?Stop@BGM@@QEAAXXZ) で参照されました
+SE.obj : error LNK2001: 外部シンボル "int __cdecl DxLib::StopSoundMem(int)" (?StopSoundMem@DxLib@@YAHH@Z) は未解決です
+GameScene.obj : error LNK2019: 未解決の外部シンボル "int __cdecl DxLib::DrawCircleAA(float,float,float,int,unsigned int,int,float)" (?DrawCircleAA@DxLib@@YAHMMMHIHM@Z) が関数 "public: virtual void __cdecl GameScene::Draw(void)" (?Draw@GameScene@@UEAAXXZ) で参照されました
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe : fatal error LNK1120: 2 件の未解決の外部参照
