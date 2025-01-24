@@ -34,6 +34,10 @@ private:
 	void DemoUpdate(Input& input, Input& input2);
 	void DemoDraw();
 
+	//フェード
+    void FadeUpdate(Input& input, Input& input2);
+    void FadeDraw();
+	int m_fadeCountFrame;
 
     struct Actor
     {

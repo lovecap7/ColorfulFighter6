@@ -78,15 +78,19 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 		input.IsTrigger("B") ||
 		input.IsTrigger("X") ||
 		input.IsTrigger("Y") ||
+		input.IsTrigger("LB") ||
+		input.IsTrigger("RB") ||
 		input2.IsTrigger("A") ||
 		input2.IsTrigger("B") ||
 		input2.IsTrigger("X") ||
-		input2.IsTrigger("Y"))
+		input2.IsTrigger("Y") ||
+		input2.IsTrigger("LB") ||
+		input2.IsTrigger("RB") )
 	{
-		//押されたら次の状態に繊維
-		//次の状態はこのクラスが覚えておく
-		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
-		return;//忘れずreturn
+		//フェードイン
+		m_update = &TitleScene::FadeUpdate;
+		m_draw = &TitleScene::FadeDraw;
+		return;
 	}
 
 	//キャラクターが画面外から特定の位置まで歩いてくる
@@ -250,6 +254,33 @@ void TitleScene::DemoDraw()
 	
 }
 
+void TitleScene::FadeUpdate(Input& input, Input& input2)
+{
+	//フェードイン
+	if (m_fadeCountFrame < 255)
+	{
+		m_fadeCountFrame += 2;
+	}
+	else
+	{
+		//フェードアウト
+		if (m_fadeCountFrame == 255)
+		{
+			//押されたら次の状態に繊維
+			//次の状態はこのクラスが覚えておく
+			m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
+			return;//忘れずreturn
+		}
+	}
+}
+
+void TitleScene::FadeDraw()
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCountFrame);
+	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
 //裏で戦っているキャラクター
 void TitleScene::ActorDraw()
 {
@@ -299,7 +330,8 @@ TitleScene::TitleScene(SceneController& contoller) :
 	m_actor1Pos(Vector3(kActor1PosX, kActor1PosY, 0)),
 	m_actor1Velo(Vector3(0, 0, 0)),
 	m_actor2Pos(Vector3(kActor2PosX, kActor2PosY, 0)),
-	m_actor2Velo(Vector3(0, 0, 0))
+	m_actor2Velo(Vector3(0, 0, 0)),
+	m_fadeCountFrame(0)
 {
 	m_actor1.handle = m_walkHandle;
 	m_actor2.handle = m_walkHandle;
