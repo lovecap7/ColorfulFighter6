@@ -2244,11 +2244,11 @@ void Chara::GetHitBoxDownAerial(Player& player)
 	headBox.y1 = 0;
 	headBox.x2 = 0;
 	headBox.y2 = 0;
-	//‘Ì	70x70
-	bodyBox.x1 = 0;
-	bodyBox.y1 = 0;
-	bodyBox.x2 = 0;
-	bodyBox.y2 = 0;
+	//‘Ì	
+	bodyBox.x1 = -60;
+	bodyBox.y1 = -60;
+	bodyBox.x2 = 70;
+	bodyBox.y2 = 60;
 	//‘«	70x70
 	legBox.x1 = 0;
 	legBox.y1 = 0;

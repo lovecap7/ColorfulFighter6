@@ -865,6 +865,7 @@ void Player::Cancel(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr
 				//コマンドをチェックして成立している技を取得
 				if (m_chara->SuccessCommandCheck(input, *this))
 				{
+					m_isPossibleCancel = false;
 					//コマンド技
 					//アニメーションの取得
 					m_chara->GetAnimCommand(*this);
@@ -1683,6 +1684,8 @@ void Player::AttackStandUpdate(Input& input, std::shared_ptr<Player> enemy, std:
 		}
 	}
 	
+	//キャンセル
+	Cancel(input, enemy, myBullet, gameManager);
 
 	isCheckAttackBox = false;
 	//フレームが攻撃持続フレーム以内の時
@@ -1705,8 +1708,6 @@ void Player::AttackStandUpdate(Input& input, std::shared_ptr<Player> enemy, std:
 			m_attackType = AttackTypes::Null;
 		}
 	}
-	//キャンセル
-	Cancel(input, enemy, myBullet, gameManager);
 
 	//攻撃持続終わり
 	if (m_animCountFrame > m_finishAttackFrame)
@@ -1828,6 +1829,9 @@ void Player::AttackSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std:
 	}
 	
 
+	//キャンセル
+	Cancel(input, enemy, myBullet, gameManager);
+
 	isCheckAttackBox = false;
 	//フレームが攻撃持続フレーム以内の時
 	if (m_startAttackFrame <= m_animCountFrame && m_animCountFrame <= m_finishAttackFrame)
@@ -1848,10 +1852,6 @@ void Player::AttackSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std:
 			//ResetAttackBox();
 		}
 	}
-
-	//キャンセル
-	Cancel(input, enemy, myBullet, gameManager);
-
 	//攻撃持続終わり
 	if (m_animCountFrame > m_finishAttackFrame)
 	{

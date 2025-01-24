@@ -702,6 +702,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 	//P1‚ªUŒ‚‚ğ“–‚Ä‚½
 	else if (p1.GetIsHitAttack() && !p2.GetIsHitAttack())
 	{
+
 		//UŒ‚‚ª¬Œ÷‚µ‚½‚ç
 		if (CheckSuccessAttack(p1,p2))
 		{

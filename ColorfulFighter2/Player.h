@@ -91,6 +91,9 @@ public:
 	void OnIsThrownSuccess() { m_isThrowSuccess = true; }
 	//投げられたらtrueにする
 	void OnIsThrown() { m_isThrown = true; }
+	//攻撃が当たりキャンセルができるようにする
+	void OnIsPossibleCancel() { m_isPossibleCancel = true; }
+
 	//当たり判定とか
 	void ResetAttackBox() {
 		//攻撃の判定をリセット

@@ -190,6 +190,7 @@ void TitleScene::NormalDraw()
 
 void TitleScene::OpeningUpdate(Input& input, Input& input2)
 {
+	//スキップ
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||
 		input.IsTrigger("X") ||
@@ -203,7 +204,14 @@ void TitleScene::OpeningUpdate(Input& input, Input& input2)
 		input2.IsTrigger("LB") ||
 		input2.IsTrigger("RB"))
 	{
-		//フェードイン
+		m_actor1Pos.x = Game::kScreenWidth / 2 - kEyeContactDistance;
+		m_actor2Pos.x = Game::kScreenWidth / 2 + kEyeContactDistance;
+		m_actor1.animIndex = 0;
+		m_actor2.animIndex = 0;
+		m_actor1.handle = m_guardHandle;
+		m_actor1.oneAnimFrame = kDefenceOneAnimFrame;
+		m_actor2.handle = m_punchHandle;
+		m_actor2.oneAnimFrame = kAttackOneAnimFrame;
 		m_update = &TitleScene::NormalUpdate;
 		m_draw = &TitleScene::NormalDraw;
 		return;
@@ -219,6 +227,7 @@ void TitleScene::OpeningUpdate(Input& input, Input& input2)
 	}
 	else
 	{
+		m_actor1Pos.x = Game::kScreenWidth / 2 - kEyeContactDistance;
 		m_actor1.handle = m_idleHandle;
 	}
 	if (m_actor2Pos.x > (Game::kScreenWidth / 2 + kEyeContactDistance))
@@ -228,6 +237,7 @@ void TitleScene::OpeningUpdate(Input& input, Input& input2)
 	}
 	else
 	{
+		m_actor2Pos.x = Game::kScreenWidth / 2 + kEyeContactDistance;
 		m_actor2.handle = m_idleHandle;
 	}
 	//アニメーションの1枚目を0番として数えるので

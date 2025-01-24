@@ -59,6 +59,9 @@ namespace
 	//SEÉ{ÉäÉÖÅ[ÉÄ
 	constexpr int kSeVolume = 150;
 	constexpr int kOkSeVolume = 180;
+
+	//ì_ñ≈ÇÃÉXÉpÉì
+	constexpr int kBlinkSpan = 20;
 }
 
 CommandSelectScene::CommandSelectScene(SceneController& controller) :
@@ -72,7 +75,7 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	m_selectCommandIndexP1{ 0,0,0 },
 	m_selectCommandIndexP2{ 0,0,0 },
 	m_isFadeIn(false),
-	m_frashCountFrame(0),
+	m_blinkCountFrame(0),
 	//ÉJÅ[É\Éã
 	m_cursorP1Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP1.png")),
 	m_cursorP2Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP2.png")),
@@ -199,10 +202,13 @@ void CommandSelectScene::Update(Input& input, Input& input2)
 			m_animIndex = 0;
 		}
 	}
-	m_animCountFrame++;
 
 	//ÇøÇ©ÇøÇ©Ç…égÇ§
-	++m_frashCountFrame;
+	++m_blinkCountFrame;
+	if (m_blinkCountFrame >= kBlinkSpan * 2)
+	{
+		m_blinkCountFrame = 0;
+	}
 	//Ç±ÇÃÉVÅ[ÉìÇ≈Ç‚ÇËÇΩÇ¢Ç±Ç∆
 	//ÉLÉÉÉâÉNÉ^Å[ÇåàíËÇµÇΩÇÁÇªÇÃÉLÉÉÉâÉNÉ^Å[ÇÃ
 	//É|ÉCÉìÉ^ÇéüÇÃÉVÅ[ÉìÇ…ìnÇµÇΩÇ¢
@@ -598,17 +604,14 @@ void CommandSelectScene::SelectCommandP2(Input& input)
 
 void CommandSelectScene::SelectColorP1(Input& input)
 {
-	if (input.IsTrigger("RB"))
+	if (input.IsTrigger("X"))
 	{
+		//åàíËÇÃâπ
+		m_seP1->Stop();
+		m_seP1->SetSE(m_selectSehandle);
+		m_seP1->Volume(kOkSeVolume);
+		m_seP1->PlayOnce();
 		m_currentColorIndexP1++;
-	}
-	if (input.IsTrigger("LB"))
-	{
-		m_currentColorIndexP1--;
-	}
-	if (m_currentColorIndexP1 < 0)
-	{
-		m_currentColorIndexP1 = 4;
 	}
 	if (m_currentColorIndexP1 > 4)
 	{
@@ -617,19 +620,16 @@ void CommandSelectScene::SelectColorP1(Input& input)
 	m_charaP1Handle = m_charaColorHandle[m_currentColorIndexP1];
 }
 
-void CommandSelectScene::SelectColorP2(Input& input)
+void CommandSelectScene::SelectColorP2(Input& input2)
 {
-	if (input.IsTrigger("RB"))
+	if (input2.IsTrigger("X"))
 	{
+		//åàíËÇÃâπ
+		m_seP2->Stop();
+		m_seP2->SetSE(m_selectSehandle);
+		m_seP2->Volume(kOkSeVolume);
+		m_seP2->PlayOnce();
 		m_currentColorIndexP2++;
-	}
-	if (input.IsTrigger("LB"))
-	{
-		m_currentColorIndexP2--;
-	}
-	if (m_currentColorIndexP2 < 0)
-	{
-		m_currentColorIndexP2 = 4;
 	}
 	if (m_currentColorIndexP2 > 4)
 	{
@@ -779,106 +779,109 @@ void CommandSelectScene::DrawCommandIcon()
 
 void CommandSelectScene::DrawCursor()
 {
-	//ÉJÅ[É\Éã
-	//P1
-	//ÇøÇ©ÇøÇ©
-	
-	if ((m_frashCountFrame % 10 == 0) && !m_isSelectFinishP1)
+	//ëIÇ—èIÇÌÇ¡ÇΩÇÁîÒï\é¶
+	if (!m_isSelectFinishP1)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
+		if (m_blinkCountFrame <= kBlinkSpan)
+		{
+			//ÉJÅ[É\ÉãÇøÇ©ÇøÇ©
+			DxLib::SetDrawBright(200, 0, 0);
+		}
+		switch (m_currentSelectCommandIndexP1)
+		{
+		case 1:
+			//ãZ1
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 2:
+			//ãZ2
+			DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 3:
+			//ãZ3
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 4:
+			//ãZ4
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 5:
+			//ãZ5
+			DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 6:
+			//ãZ6
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 7:
+			//ãZ7
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 8:
+			//ãZ8
+			DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		case 9:
+			//ãZ9
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
+			break;
+		default:
+			break;
+		}
+		DxLib::SetDrawBright(255, 255, 255);
 	}
-	switch (m_currentSelectCommandIndexP1)
+	if (!m_isSelectFinishP2)
 	{
-	case 1:
-		//ãZ1
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 2:
-		//ãZ2
-		DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 3:
-		//ãZ3
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 4:
-		//ãZ4
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 5:
-		//ãZ5
-		DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 6:
-		//ãZ6
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 7:
-		//ãZ7
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 8:
-		//ãZ8
-		DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	case 9:
-		//ãZ9
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP1Handle, true, 0, 0);
-		break;
-	default:
-		break;
+		//P2
+		//ÇøÇ©ÇøÇ©
+		if (m_blinkCountFrame <= kBlinkSpan)
+		{
+			//ÉJÅ[É\ÉãÇøÇ©ÇøÇ©
+			DxLib::SetDrawBright(0, 0, 200);
+		}
+		switch (m_currentSelectCommandIndexP2)
+		{
+		case 1:
+			//ãZ1
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 2:
+			//ãZ2
+			DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 3:
+			//ãZ3
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 4:
+			//ãZ4
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 5:
+			//ãZ5
+			DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 6:
+			//ãZ6
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 7:
+			//ãZ7
+			DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 8:
+			//ãZ8
+			DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		case 9:
+			//ãZ9
+			DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
+			break;
+		default:
+			break;
+		}
+		DxLib::SetDrawBright(255, 255, 255);
 	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
-
-	//P2
-	//ÇøÇ©ÇøÇ©
-	if ((m_frashCountFrame % 10 == 0) && !m_isSelectFinishP2)
-	{
-		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
-	}
-	switch (m_currentSelectCommandIndexP2)
-	{
-	case 1:
-		//ãZ1
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 2:
-		//ãZ2
-		DxLib::DrawRotaGraph(kCenterX, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 3:
-		//ãZ3
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY - kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 4:
-		//ãZ4
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 5:
-		//ãZ5
-		DxLib::DrawRotaGraph(kCenterX, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 6:
-		//ãZ6
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 7:
-		//ãZ7
-		DxLib::DrawRotaGraph(kCenterX - kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 8:
-		//ãZ8
-		DxLib::DrawRotaGraph(kCenterX, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	case 9:
-		//ãZ9
-		DxLib::DrawRotaGraph(kCenterX + kIconPosOffset, kCenterY + kIconPosOffset, 1.0, 0, m_cursorP2Handle, true, 0, 0);
-		break;
-	default:
-		break;
-	}
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 void CommandSelectScene::DrawSelectPlayerCommandIcon()
@@ -905,10 +908,20 @@ void CommandSelectScene::ReadyDraw()
 	//èÄîıÇ≈Ç´ÇΩÇ©ÇÃämîF
 	if (m_isSelectFinishP1)
 	{
+		if ((m_blinkCountFrame <= kBlinkSpan) && !m_isReadyP1)
+		{
+			DxLib::SetDrawBright(150, 150, 150);
+		}
 		DxLib::DrawGraph(kReadyPosXP1, kReadyPosY, m_currentReadyP1Handle, true);//1PÇÃReady
+		DxLib::SetDrawBright(255, 255, 255);
 	}
 	if (m_isSelectFinishP2)
 	{
+		if ((m_blinkCountFrame <= kBlinkSpan) && !m_isReadyP2)
+		{
+			DxLib::SetDrawBright(150, 150, 150);
+		}
 		DxLib::DrawGraph(kReadyPosXP2, kReadyPosY, m_currentReadyP2Handle, true);//2PÇÃReady
+		DxLib::SetDrawBright(255, 255, 255);
 	}
 }

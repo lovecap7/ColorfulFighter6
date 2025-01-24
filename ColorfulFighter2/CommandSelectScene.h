@@ -28,7 +28,7 @@ private:
     int m_cursorP2Handle;
     //カーソルの描画
     void DrawCursor();
-    int m_frashCountFrame;
+    int m_blinkCountFrame;
    
     //現在の技のセレクト番号
     int m_currentSelectCommandIndexP1;
