@@ -91,6 +91,9 @@ private:
     //Loading’†‚Ì‰æ‘œ
     int m_loadingHandle;
 
+    //‘€ì‚ÉŠÖ‚·‚éUI
+	int m_operationHandle;
+
 public:
     CommandSelectScene(SceneController& controller);
 

@@ -90,7 +90,9 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	m_currentColorIndexP1(0),
 	m_currentColorIndexP2(0),
 	m_animCountFrame(0),
-	m_animIndex(0)
+	m_animIndex(0),
+	//操作に関するUI
+	m_operationHandle(LoadGraph("img/CharacterSelect/Operation.png"))
 {
 	//BGM
 	m_bgm = std::make_shared<BGM>();
@@ -657,6 +659,9 @@ void CommandSelectScene::Draw()
 	DrawSelectPlayerCommandIcon();
 	//"コマンド技を3つ選んでください"のテキスト
 	DrawRotaGraph(kCenterX, 100, 1.0, 0, m_selectTextHandle, true, 0, 0);
+
+	//操作説明
+	DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight - 100, 1.0, 0, m_operationHandle, true, 0, 0);
 
 	//フェードイン
 	m_fadeManager->FadeDraw(m_isFadeIn);
