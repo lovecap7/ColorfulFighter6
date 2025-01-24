@@ -661,7 +661,7 @@ void CommandSelectScene::Draw()
 	DrawRotaGraph(kCenterX, 100, 1.0, 0, m_selectTextHandle, true, 0, 0);
 
 	//操作説明
-	DrawRotaGraph(Game::kScreenWidth / 2, Game::kScreenHeight - 100, 1.0, 0, m_operationHandle, true, 0, 0);
+	DrawGraph(0, Game::kScreenHeight - 50, m_operationHandle, true);
 
 	//フェードイン
 	m_fadeManager->FadeDraw(m_isFadeIn);
