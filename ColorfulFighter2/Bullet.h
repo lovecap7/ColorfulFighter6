@@ -29,7 +29,9 @@ private:
 	//’e‚É“–‚½‚Á‚½‚©
 	bool HitCheckBullet(Bullet& otherBullet);
 	//UŒ‚”»’è‚Ì‰Šú‰»
-	void InitHitBoxAttack();
+	void InitHitBoxHadou();
+	void InitHitBoxSonic();
+	void InitHitBoxWave();
 
 	void ResetAttackBox() {
 		//UŒ‚‚Ì”»’è‚ğƒŠƒZƒbƒg

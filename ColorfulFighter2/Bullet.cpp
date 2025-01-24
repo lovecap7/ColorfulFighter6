@@ -35,7 +35,8 @@ namespace
 
 	//パワーウェイブ
 	//弾の判定
-	constexpr int kPowerWaveRadius = 80.0f;
+	constexpr int kPowerWaveRadiusX = 80.0f;
+	constexpr int kPowerWaveRadiusY = 30.0f;
 	//弾の番号
 	constexpr int kStartPowerWaveAnimIndex = 6;
 	constexpr int kFinishPowerWaveAnimIndex = 9;
@@ -81,7 +82,7 @@ void Bullet::Init()
 	m_velocity.x = 0;
 	m_velocity.y = 0;
 	m_isShooting = false;
-	InitHitBoxAttack();
+	InitHitBoxHadou();
 	m_isHitPlayer = false;
 }
 
@@ -101,7 +102,7 @@ void Bullet::SetShotMove(Vector3 pos, bool isLeft, float speed)
 		m_pos.x = pos.x + kBulletOffsetPos;
 		m_velocity.x = speed;
 	}
-	InitHitBoxAttack();
+
 }
 
 void Bullet::SetShotEffect(float damage, int giveNoActFrame, int giveGuardFrame)
@@ -232,7 +233,7 @@ void Bullet::LoadBullet1Handle()
 	{
 		m_pos.x += kHadouOffsetPosX;
 	}
-	
+	InitHitBoxHadou();
 }
 //ソニックブーム
 void Bullet::LoadBullet2Handle()
@@ -245,6 +246,7 @@ void Bullet::LoadBullet2Handle()
 	m_finishAnimIndex = kFinishSonicAnimIndex;
 	m_animIndex = m_startAnimIndex;
 	m_animCountFrame = 0;
+	InitHitBoxSonic();
 }
 //闇払い
 void Bullet::LoadBullet3Handle()
@@ -259,6 +261,7 @@ void Bullet::LoadBullet3Handle()
 	m_animCountFrame = 0;
 	//地面を滑らせたいので位置調整
 	m_pos.y += kPowerWaveOffsetPosY;
+	InitHitBoxWave();
 }
 
 bool Bullet::HitCheckPlayer(Player& enemy)
@@ -431,12 +434,30 @@ bool Bullet::HitCheckBullet(Bullet& otherBullet)
 	return true;
 }
 
-void Bullet::InitHitBoxAttack()
+void Bullet::InitHitBoxHadou()
 {
 	//攻撃範囲
 	m_hitBoxAttack.x1 = -kHadouRadius;
 	m_hitBoxAttack.y1 = -kHadouRadius;
 	m_hitBoxAttack.x2 = kHadouRadius;
 	m_hitBoxAttack.y2 = kHadouRadius;
+}
+
+void Bullet::InitHitBoxSonic()
+{
+	//攻撃範囲
+	m_hitBoxAttack.x1 = -kSonicRadius;
+	m_hitBoxAttack.y1 = -kSonicRadius;
+	m_hitBoxAttack.x2 = kSonicRadius;
+	m_hitBoxAttack.y2 = kSonicRadius;
+}
+
+void Bullet::InitHitBoxWave()
+{
+	//攻撃範囲
+	m_hitBoxAttack.x1 = -kPowerWaveRadiusX;
+	m_hitBoxAttack.y1 = -kPowerWaveRadiusY;
+	m_hitBoxAttack.x2 = kPowerWaveRadiusX;
+	m_hitBoxAttack.y2 = kPowerWaveRadiusY;
 }
 

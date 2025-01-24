@@ -54,7 +54,8 @@ namespace
 	constexpr int kAllFrameCommand4High = 49;
 	constexpr int kStartFrameCommand4High = 15;
 	constexpr float kCommand4VeloX = 30.0f;
-	constexpr float kCommand4VeloY = -6.0f;
+	constexpr float kCommand4VeloUp = -6.0f;
+	constexpr float kCommand4VeloDown = 60.0f;
 
 
 	//ソニックブーム
@@ -2763,20 +2764,20 @@ void Chara::GetHitBoxCommand4(Player& player)
 	Box attackBox;
 	Box graspBox;
 	//頭	
-	headBox.x1 = -10;
-	headBox.y1 = -150;
+	headBox.x1 = -200;
+	headBox.y1 = 0;
 	headBox.x2 = 80;
-	headBox.y2 = -60;
+	headBox.y2 = 100;
 	//体	
 	bodyBox.x1 = -60;
-	bodyBox.y1 = -60;
+	bodyBox.y1 = 0;
 	bodyBox.x2 = 90;
-	bodyBox.y2 = 60;
+	bodyBox.y2 = 100;
 	//足	
 	legBox.x1 = -70;
-	legBox.y1 = 60;
-	legBox.x2 = 70;
-	legBox.y2 = 180;
+	legBox.y1 = 0;
+	legBox.x2 = 200;
+	legBox.y2 = 100;
 	//投げやられ 
 	throwBox.x1 = -100;
 	throwBox.y1 = 0;
@@ -2805,7 +2806,7 @@ void Chara::GetGiveEffectCommand4(Player& player)
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 	{
-		m_velocity.y = kCommand4VeloY;
+		m_velocity.y = kCommand4VeloUp;
 		m_velocity.x = kCommand4VeloX;
 		if (player.GetDirState())
 		{
@@ -2822,6 +2823,7 @@ void Chara::GetGiveEffectCommand4(Player& player)
 	//弱版
 	else if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
 	{
+		m_velocity.y = kCommand4VeloDown;
 		m_velocity.x = kCommand4VeloX;
 		if (player.GetDirState())
 		{
@@ -2830,7 +2832,7 @@ void Chara::GetGiveEffectCommand4(Player& player)
 		player.SetGiveDamage(8.0f);
 		player.SetGiveNoActFrame(kDown);
 		player.SetGiveGuardFrame(kAllFrameCommand4Light - kStartFrameCommand4Light - 12);
-		player.SetAttackAttributes(AttackAttributes::Upper);//上段
+		player.SetAttackAttributes(AttackAttributes::Lower);//下段
 		m_giveAttackVelo.x = 5.0f;
 		m_giveAttackVelo.y = -10.0f;
 		player.SetGiveAttackVelo(m_giveAttackVelo);
