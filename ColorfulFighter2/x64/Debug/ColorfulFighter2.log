@@ -6,8 +6,8 @@ C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cp
 C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(31,29): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(38,34): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(39,34): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(199,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(198,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(197,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(196,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(209,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(208,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(207,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\ColorfulFighter2\Bullet.cpp(206,51): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
   ColorfulFighter2.vcxproj -> C:\Users\fko2447025\Documents\GitHub\ColorfulFighter6\x64\Debug\ColorfulFighter2.exe

@@ -44,8 +44,8 @@ namespace
 	constexpr int kPowerWaveOffsetPosY = 120;
 
 	//消滅
-	constexpr int kStartDisappearAnimIndex = 256;
-	constexpr int kFinishDisappearAnimIndex = 260;
+	constexpr int kStartDisappearAnimIndex = 202;
+	constexpr int kFinishDisappearAnimIndex = 205;
 }
 
 Bullet::Bullet(PlayerIndex playerIndex):
@@ -180,7 +180,6 @@ void Bullet::Draw(Camera& camera)
 	GetGraphSize(m_bulletHandle, &sizeX, &sizeY);//画像サイズ
 	int cutX = m_animIndex % (sizeX / kBulletWidth);//横
 	int cutY = m_animIndex / (sizeX / kBulletHeight);//縦
-	//描画
 	////メイン
 	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
 		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
