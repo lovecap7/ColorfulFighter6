@@ -15,9 +15,17 @@ namespace
 	constexpr int kCenterY = Game::kScreenHeight / 2;
 	//カーソル
 	constexpr int kCursorOffset = 50;
-	//立ち絵の大きさ
-	constexpr int kPlayerImageWidth = 300;
-	constexpr int kPlayerImageHeight = 500;
+	//キャラの画像の大きさ
+	constexpr int kCharaWidth = 512;
+	constexpr int kCharaHeight = 512;
+	//キャラの表示位置
+	constexpr int kCharaPosXP1 = 200;
+	constexpr int kCharaPosXP2 = Game::kScreenWidth - 200;
+	constexpr int kCharaPosY = 250;
+
+	//アニメーション
+	constexpr int kAnimNum = 6;
+	constexpr int kOneAnimFrame = 5;
 
 	//コマンド技の数
 	constexpr int kCommandIndexMin = 1;
@@ -37,11 +45,14 @@ namespace
 	constexpr int kCommandIconImageHight = 200;
 	//選べるコマンド技の数
 	constexpr int kSelectCommandNum = 3;
+	//選んだ技の表示位置
+	constexpr int kSelectedCommandOffsetPosX = kCommandIconImageWidth * kCommandIconImageScale;
+	constexpr int kSelectedCommandPosY = Game::kScreenHeight / 2 + 100;
 
 	//Ready
 	constexpr int kReadyPosXP1 = 50;
 	constexpr int kReadyPosXP2 = Game::kScreenWidth - 350;
-	constexpr int kReadyPosY = 650;
+	constexpr int kReadyPosY = kSelectedCommandPosY + kIconRadius;
 
 	//BGMボリューム
 	constexpr int kBgmVolume = 120;
@@ -61,9 +72,7 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	m_selectCommandIndexP1{ 0,0,0 },
 	m_selectCommandIndexP2{ 0,0,0 },
 	m_isFadeIn(false),
-	m_countFrame(0),
-	//イメージ画像(立ち絵)
-	m_imageChara1Handle(LoadGraph("img/CharacterSelect/FighterImage/Chara1Image.png")),
+	m_frashCountFrame(0),
 	//カーソル
 	m_cursorP1Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP1.png")),
 	m_cursorP2Handle(LoadGraph("img/CharacterSelect/Icon/SelectFrameP2.png")),
@@ -79,8 +88,9 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	m_loadingHandle(LoadGraph("./img/Loading/NowLoading.png")),
 	//色
 	m_currentColorIndexP1(0),
-	m_currentColorIndexP2(0)
-	
+	m_currentColorIndexP2(0),
+	m_animCountFrame(0),
+	m_animIndex(0)
 {
 	//BGM
 	m_bgm = std::make_shared<BGM>();
@@ -91,6 +101,35 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 	//SE
 	m_seP1 = std::make_shared<SE>();
 	m_seP2 = std::make_shared<SE>();
+
+	for (int i = 0; i < 5; ++i)
+	{
+		int tmpHandle = 0;
+		switch (i)
+		{
+		case 0:
+			tmpHandle = LoadGraph("img/Chara/White/playerbase/idle_001.png");
+			break;
+		case 1:
+			tmpHandle = LoadGraph("img/Chara/Red/playerbase/idle_001.png");
+			break;
+		case 2:
+			tmpHandle = LoadGraph("img/Chara/Blue/playerbase/idle_001.png");
+			break;
+		case 3:
+			tmpHandle = LoadGraph("img/Chara/Green/playerbase/idle_001.png");
+			break;
+		case 4:
+			tmpHandle = LoadGraph("img/Chara/Yellow/playerbase/idle_001.png");
+			break;
+		default:
+			break;
+		}
+		m_charaColorHandle[i] = tmpHandle;
+	}
+	m_charaP1Handle = m_charaColorHandle[0];
+	m_charaP2Handle = m_charaColorHandle[0];
+
 	//アイコン
 	for (int i = 0; i < kCommandNum; ++i)
 	{
@@ -145,8 +184,23 @@ CommandSelectScene::CommandSelectScene(SceneController& controller) :
 
 void CommandSelectScene::Update(Input& input, Input& input2)
 {
+	//アニメーション
+	++m_animCountFrame;
+	int animMaxNum = kAnimNum - 1;
+	//アニメーションのフレームを数える
+	if (m_animCountFrame % kOneAnimFrame == 0 && m_animCountFrame != 0)
+	{
+		m_animIndex++;
+		//アニメーションの数が最大まで行ったとき
+		if ((m_animIndex > animMaxNum))
+		{
+			m_animIndex = 0;
+		}
+	}
+	m_animCountFrame++;
+
 	//ちかちかに使う
-	m_countFrame++;
+	++m_frashCountFrame;
 	//このシーンでやりたいこと
 	//キャラクターを決定したらそのキャラクターの
 	//ポインタを次のシーンに渡したい
@@ -558,6 +612,7 @@ void CommandSelectScene::SelectColorP1(Input& input)
 	{
 		m_currentColorIndexP1 = 0;
 	}
+	m_charaP1Handle = m_charaColorHandle[m_currentColorIndexP1];
 }
 
 void CommandSelectScene::SelectColorP2(Input& input)
@@ -578,26 +633,20 @@ void CommandSelectScene::SelectColorP2(Input& input)
 	{
 		m_currentColorIndexP2 = 0;
 	}
+	m_charaP2Handle = m_charaColorHandle[m_currentColorIndexP2];
 }
-
 
 void CommandSelectScene::Draw()
 {
 	//背景
 	DxLib::DrawGraph(0, 0, m_backHandle, true);
-	//立ち絵
-	DxLib::DrawGraph(0, 20, m_imageChara1Handle, true);//1P
-	DxLib::DrawTurnGraph(Game::kScreenWidth - kPlayerImageWidth, 20, m_imageChara1Handle, true);//2P
 
-	//準備できたかの確認
-	if (m_isSelectFinishP1)
-	{
-		DxLib::DrawGraph(kReadyPosXP1, kReadyPosY, m_currentReadyP1Handle, true);//1PのReady
-	}
-	if (m_isSelectFinishP2)
-	{
-		DxLib::DrawGraph(kReadyPosXP2, kReadyPosY, m_currentReadyP2Handle, true);//2PのReady
-	}
+	//キャラクター
+	CharaDraw();
+
+	//Ready
+	ReadyDraw();
+
 	//技のアイコン
 	DrawCommandIcon();
 
@@ -629,6 +678,32 @@ void CommandSelectScene::Draw()
 #endif
 	
 }
+
+void CommandSelectScene::CharaDraw()
+{
+	//切り取るを計算する
+	int sizeX, sizeY;
+	GetGraphSize(m_charaP1Handle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_animIndex % (sizeX / kCharaWidth);//横
+	int cutY = m_animIndex / (sizeX / kCharaWidth);//縦
+	//描画
+	DrawRectRotaGraphFast(kCharaPosXP1, kCharaPosY,
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		1.0f, 0.0f, m_charaP1Handle, true, false);
+	//切り取るを計算する
+	GetGraphSize(m_charaP2Handle, &sizeX, &sizeY);//画像サイズ
+	cutX = m_animIndex % (sizeX / kCharaWidth);//横
+	cutY = m_animIndex / (sizeX / kCharaWidth);//縦
+	//描画
+	DrawRectRotaGraphFast(kCharaPosXP2, kCharaPosY,
+		kCharaWidth * cutX,
+		kCharaHeight * cutY,
+		kCharaWidth, kCharaHeight,
+		1.0f, 0.0f, m_charaP2Handle, true, true);
+}
+
 
 void CommandSelectScene::DrawCommandIcon()
 {
@@ -703,7 +778,7 @@ void CommandSelectScene::DrawCursor()
 	//P1
 	//ちかちか
 	
-	if ((m_countFrame % 10 == 0) && !m_isSelectFinishP1)
+	if ((m_frashCountFrame % 10 == 0) && !m_isSelectFinishP1)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
 	}
@@ -753,7 +828,7 @@ void CommandSelectScene::DrawCursor()
 
 	//P2
 	//ちかちか
-	if ((m_countFrame % 10 == 0) && !m_isSelectFinishP2)
+	if ((m_frashCountFrame % 10 == 0) && !m_isSelectFinishP2)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_INVSRC, 255);
 	}
@@ -808,14 +883,27 @@ void CommandSelectScene::DrawSelectPlayerCommandIcon()
 	{
 		//選んだ技のアイコン
 		DrawRectRotaGraphFast(
-			(kCommandIconImageWidth * kCommandIconImageScale) * (i + 1),
-			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
+			kSelectedCommandOffsetPosX * (i + 1),
+			kSelectedCommandPosY,
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP1Handle[i], true);
 		DrawRectRotaGraphFast(
-			Game::kScreenWidth - ((kCommandIconImageWidth * kCommandIconImageScale) * (i + 1)),
-			kPlayerImageHeight + (kCommandIconImageHight * kCommandIconImageScale),
+			Game::kScreenWidth - kSelectedCommandOffsetPosX * (i + 1),
+			kSelectedCommandPosY,
 			0, 0, kCommandIconImageWidth, kCommandIconImageHight,
 			kCommandIconImageScale, 0.0f, m_selectCommandIconP2Handle[i], true);
+	}
+}
+
+void CommandSelectScene::ReadyDraw()
+{
+	//準備できたかの確認
+	if (m_isSelectFinishP1)
+	{
+		DxLib::DrawGraph(kReadyPosXP1, kReadyPosY, m_currentReadyP1Handle, true);//1PのReady
+	}
+	if (m_isSelectFinishP2)
+	{
+		DxLib::DrawGraph(kReadyPosXP2, kReadyPosY, m_currentReadyP2Handle, true);//2PのReady
 	}
 }

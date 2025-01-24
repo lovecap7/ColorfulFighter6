@@ -13,8 +13,7 @@ private:
     //キャラクターのアイコンハンドル
     int m_iconEmptyHandle;
     int m_iconChara1Handle;
-    //キャラクターのイメージ画像
-    int m_imageChara1Handle;
+  
     //コマンドのアイコン
     int m_commandIconHandle[9];
     int m_selectCommandIconP1Handle[3];//P1が選んだコマンドを表示
@@ -29,7 +28,7 @@ private:
     int m_cursorP2Handle;
     //カーソルの描画
     void DrawCursor();
-    int m_countFrame;
+    int m_frashCountFrame;
    
     //現在の技のセレクト番号
     int m_currentSelectCommandIndexP1;
@@ -46,6 +45,7 @@ private:
     int m_readyHandle;//準備完了
     int m_currentReadyP1Handle;//準備完了かどうかを表示
     int m_currentReadyP2Handle;//準備完了かどうかを表示
+	void ReadyDraw();
 
     //選んだ技を保存
     int m_selectCommandIndexP1[3];
@@ -69,9 +69,18 @@ private:
     void SelectCommandP1(Input& input);
     void SelectCommandP2(Input& input);
 
-    //色
+    //選んでいる色
     int m_currentColorIndexP1;
     int m_currentColorIndexP2;
+    //キャラクター
+    int m_charaP1Handle;
+    int m_charaP2Handle;
+	int m_animIndex;
+	int m_animCountFrame;
+	//キャラクターの色
+	int m_charaColorHandle[5];
+	//キャラクターの描画
+    void CharaDraw();
     //色を選ぶ処理
     void SelectColorP1(Input& input);
     void SelectColorP2(Input& input);

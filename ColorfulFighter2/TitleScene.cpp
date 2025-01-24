@@ -190,6 +190,25 @@ void TitleScene::NormalDraw()
 
 void TitleScene::OpeningUpdate(Input& input, Input& input2)
 {
+	if (input.IsTrigger("A") ||
+		input.IsTrigger("B") ||
+		input.IsTrigger("X") ||
+		input.IsTrigger("Y") ||
+		input.IsTrigger("LB") ||
+		input.IsTrigger("RB") ||
+		input2.IsTrigger("A") ||
+		input2.IsTrigger("B") ||
+		input2.IsTrigger("X") ||
+		input2.IsTrigger("Y") ||
+		input2.IsTrigger("LB") ||
+		input2.IsTrigger("RB"))
+	{
+		//フェードイン
+		m_update = &TitleScene::NormalUpdate;
+		m_draw = &TitleScene::NormalDraw;
+		return;
+	}
+
 	m_actor1Velo.x = 0;
 	m_actor2Velo.x = 0;
 	//キャラクターが画面外から特定の位置まで歩いてくる
@@ -259,23 +278,20 @@ void TitleScene::FadeUpdate(Input& input, Input& input2)
 	//フェードイン
 	if (m_fadeCountFrame < 255)
 	{
-		m_fadeCountFrame += 2;
+		m_fadeCountFrame += 5;
 	}
 	else
 	{
-		//フェードアウト
-		if (m_fadeCountFrame == 255)
-		{
-			//押されたら次の状態に繊維
-			//次の状態はこのクラスが覚えておく
-			m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
-			return;//忘れずreturn
-		}
+		//押されたら次の状態に繊維
+		//次の状態はこのクラスが覚えておく
+		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
+		return;//忘れずreturn
 	}
 }
 
 void TitleScene::FadeDraw()
 {
+	ActorDraw();
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCountFrame);
 	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
