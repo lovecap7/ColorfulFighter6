@@ -25,6 +25,9 @@ namespace
 	constexpr int kFinishHadouAnimIndex = 214;
 	//弾の位置の調整
 	constexpr int kHadouOffsetPosX = 100;
+	//速度
+	constexpr int kHadouVeloXLight = 10;
+	constexpr int kHadouVeloXHigh = 30;
 	
 	//ソニックブーム
 	//弾の判定
@@ -32,6 +35,10 @@ namespace
 	//弾の番号
 	constexpr int kStartSonicAnimIndex = 231;
 	constexpr int kFinishSonicAnimIndex = 234;
+	//速度
+	constexpr int kSonicVeloXLight = 5;
+	constexpr int kSonicVeloXHigh = 20;
+	constexpr int kSonicShotInterval = 60;
 
 	//パワーウェイブ
 	//弾の判定
@@ -48,76 +55,8 @@ namespace
 	constexpr int kFinishDisappearAnimIndex = 205;
 }
 
-Bullet::Bullet(PlayerIndex playerIndex):
-	m_pos(),
-	m_velocity(),
-	m_playerIndex(playerIndex),
-	m_isShooting(false),
-	m_hitBoxAttack(-kHadouRadius,-kHadouRadius, kHadouRadius, kHadouRadius),
-	m_isHitPlayer(false),
-	m_giveNoActFrame(0),
-	m_giveGuardFrame(0),
-	m_giveDamage(5.0f),
-	m_giveAttackVelo(5,0,0),
-	m_animIndex(kStartHadouAnimIndex),
-	m_startAnimIndex(kStartHadouAnimIndex),
-	m_finishAnimIndex(kFinishHadouAnimIndex),
-	m_animCountFrame(0)
+void Bullet::HadouUpdate(Player& enemy, Bullet& otherBullet, Camera& camera)
 {
-	m_blueBulletHandle = LoadGraph("./img/Bullet/BlueBullet160x160.png");//青
-	m_yellowBulletHandle = LoadGraph("./img/Bullet/YellowBullet160x160.png");//黄色
-	m_purpleBulletHandle = LoadGraph("./img/Bullet/PurpleBullet160x160.png");//紫
-	m_bulletHandle = m_blueBulletHandle;
-}
-
-Bullet::~Bullet()
-{
-
-}
-
-void Bullet::Init()
-{
-	m_pos.x = 0;
-	m_pos.y = 0;
-	m_velocity.x = 0;
-	m_velocity.y = 0;
-	m_isShooting = false;
-	InitHitBoxHadou();
-	m_isHitPlayer = false;
-}
-
-void Bullet::SetShotMove(Vector3 pos, bool isLeft, float speed)
-{
-	//すでに弾が発射されているならやらない
-	if (m_isShooting)return;
-	//ポジションとスピードと向きをセット
-	m_pos.y = pos.y;
-	if (isLeft)
-	{
-		m_pos.x = pos.x - kBulletOffsetPos;
-		m_velocity.x = -speed;
-	}
-	else
-	{
-		m_pos.x = pos.x + kBulletOffsetPos;
-		m_velocity.x = speed;
-	}
-
-}
-
-void Bullet::SetShotEffect(float damage, int giveNoActFrame, int giveGuardFrame)
-{
-	//すでに弾が発射されているならやらない
-	if (m_isShooting)return;
-	//相手に与える影響をセット
-	m_giveDamage = damage;
-	m_giveNoActFrame = giveNoActFrame;
-	m_giveGuardFrame = giveGuardFrame;
-}
-
-void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
-{
-	m_animCountFrame++;
 	if (m_isShooting)
 	{
 		//移動
@@ -162,10 +101,155 @@ void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
 			}
 		}
 	}
-	
 }
 
-void Bullet::Draw(Camera& camera)
+void Bullet::HadouDraw(Camera& camera)
+{
+	////弾
+//左に進んでるなら左を向く
+	bool isLeft = false;
+	if (m_velocity.x < 0)
+	{
+		isLeft = true;
+	}
+
+	//切り取るを計算する
+	int sizeX, sizeY;
+	GetGraphSize(m_blueBulletHandle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_animIndex % (sizeX / kBulletWidth);//横
+	int cutY = m_animIndex / (sizeX / kBulletHeight);//縦
+	////メイン
+	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
+		kBulletWidth * cutX,
+		kBulletHeight * cutY,
+		kBulletWidth, kBulletHeight,
+		kBulletScale, 0.0f, m_blueBulletHandle, true, isLeft);
+}
+
+void Bullet::SonicUpdate(Player& enemy, Bullet& otherBullet, Camera& camera)
+{
+	if (m_isShooting)
+	{
+		if (m_animCountFrame > kSonicShotInterval)
+		{
+			//移動
+			m_pos += m_velocity;
+		}
+		//敵に当たったかどうかをチェック
+		//当たった後の処理はCollisionCheckがやる（1P側と2P側で処理の順で優劣がつかないようにするため）
+		m_isHitPlayer = HitCheckPlayer(enemy);
+
+		//弾同士で相殺
+		if (HitCheckBullet(otherBullet) && otherBullet.GetIsShooting())
+		{
+			Disappear();
+			otherBullet.Disappear();
+		}
+		//壁の外にいったら消す
+		if (camera.GetCameraLeftWallPos() - m_hitBoxAttack.x2 > m_pos.x || camera.GetCameraRightWallPos() - m_hitBoxAttack.x1 < m_pos.x)
+		{
+			Disappear();
+		}
+		//アニメーションのフレームを数える
+		if (m_animCountFrame % kBulletOneAnimFrame == 0 && m_animCountFrame != 0)
+		{
+			m_animIndex++;
+			//アニメーションの数が最大まで行ったとき
+			if ((m_animIndex > m_finishAnimIndex))
+			{
+				m_animIndex = m_startAnimIndex;
+			}
+		}
+	}
+	else
+	{
+		//アニメーションのフレームを数える
+		if (m_animCountFrame % kDisappearOneAnimFrame == 0 && m_animCountFrame != 0)
+		{
+			m_animIndex++;
+			//アニメーションの数が最大まで行ったとき
+			if ((m_animIndex > m_finishAnimIndex))
+			{
+				m_animIndex = m_finishAnimIndex;
+			}
+		}
+	}
+}
+
+void Bullet::SonicDraw(Camera& camera)
+{
+	////弾
+//左に進んでるなら左を向く
+	bool isLeft = false;
+	if (m_velocity.x < 0)
+	{
+		isLeft = true;
+	}
+
+	//切り取るを計算する
+	int sizeX, sizeY;
+	GetGraphSize(m_yellowBulletHandle, &sizeX, &sizeY);//画像サイズ
+	int cutX = m_animIndex % (sizeX / kBulletWidth);//横
+	int cutY = m_animIndex / (sizeX / kBulletHeight);//縦
+	////メイン
+	DrawRectRotaGraphFast(static_cast<int>(m_pos.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_pos.y) + static_cast<int>(camera.m_drawOffset.y),
+		kBulletWidth * cutX,
+		kBulletHeight * cutY,
+		kBulletWidth, kBulletHeight,
+		kBulletScale, 0.0f, m_yellowBulletHandle, true, isLeft);
+}
+
+void Bullet::WaveUpdate(Player& enemy, Bullet& otherBullet, Camera& camera)
+{
+	if (m_isShooting)
+	{
+		//移動
+		m_pos += m_velocity;
+
+		//敵に当たったかどうかをチェック
+		//当たった後の処理はCollisionCheckがやる（1P側と2P側で処理の順で優劣がつかないようにするため）
+		m_isHitPlayer = HitCheckPlayer(enemy);
+
+		//弾同士で相殺
+		if (HitCheckBullet(otherBullet) && otherBullet.GetIsShooting())
+		{
+			Disappear();
+			otherBullet.Disappear();
+		}
+		//壁の外にいったら消す
+		if (camera.GetCameraLeftWallPos() - m_hitBoxAttack.x2 > m_pos.x || camera.GetCameraRightWallPos() - m_hitBoxAttack.x1 < m_pos.x)
+		{
+			Disappear();
+		}
+		//アニメーションのフレームを数える
+		if (m_animCountFrame % kBulletOneAnimFrame == 0 && m_animCountFrame != 0)
+		{
+			m_animIndex++;
+			//アニメーションの数が最大まで行ったとき
+			if ((m_animIndex > m_finishAnimIndex))
+			{
+				m_animIndex = m_startAnimIndex;
+			}
+		}
+	}
+	else
+	{
+		//アニメーションのフレームを数える
+		if (m_animCountFrame % kDisappearOneAnimFrame == 0 && m_animCountFrame != 0)
+		{
+			m_animIndex++;
+			//アニメーションの数が最大まで行ったとき
+			if ((m_animIndex > m_finishAnimIndex))
+			{
+				m_animIndex = m_finishAnimIndex;
+			}
+		}
+	}
+}
+
+void Bullet::WaveDraw(Camera& camera)
 {
 	////弾
 	//左に進んでるなら左を向く
@@ -177,7 +261,7 @@ void Bullet::Draw(Camera& camera)
 
 	//切り取るを計算する
 	int sizeX, sizeY;
-	GetGraphSize(m_bulletHandle, &sizeX, &sizeY);//画像サイズ
+	GetGraphSize(m_purpleBulletHandle, &sizeX, &sizeY);//画像サイズ
 	int cutX = m_animIndex % (sizeX / kBulletWidth);//横
 	int cutY = m_animIndex / (sizeX / kBulletHeight);//縦
 	////メイン
@@ -186,7 +270,65 @@ void Bullet::Draw(Camera& camera)
 		kBulletWidth * cutX,
 		kBulletHeight * cutY,
 		kBulletWidth, kBulletHeight,
-		kBulletScale, 0.0f, m_bulletHandle, true, isLeft);
+		kBulletScale, 0.0f, m_purpleBulletHandle, true, isLeft);
+}
+
+Bullet::Bullet(PlayerIndex playerIndex):
+	m_pos(),
+	m_velocity(),
+	m_playerIndex(playerIndex),
+	m_isShooting(false),
+	m_hitBoxAttack(-kHadouRadius,-kHadouRadius, kHadouRadius, kHadouRadius),
+	m_isHitPlayer(false),
+	m_giveNoActFrame(0),
+	m_giveGuardFrame(0),
+	m_giveDamage(0.0f),
+	m_giveAttackVelo(5,0,0),
+	m_animIndex(kStartHadouAnimIndex),
+	m_startAnimIndex(kStartHadouAnimIndex),
+	m_finishAnimIndex(kFinishHadouAnimIndex),
+	m_animCountFrame(0),
+	m_update(&Bullet::HadouUpdate),
+	m_draw(&Bullet::HadouDraw)
+{
+	m_blueBulletHandle = LoadGraph("./img/Bullet/BlueBullet160x160.png");//青
+	m_yellowBulletHandle = LoadGraph("./img/Bullet/YellowBullet160x160.png");//黄色
+	m_purpleBulletHandle = LoadGraph("./img/Bullet/PurpleBullet160x160.png");//紫
+}
+
+Bullet::~Bullet()
+{
+
+}
+
+void Bullet::Init()
+{
+	m_pos.x = 0;
+	m_pos.y = 0;
+	m_velocity.x = 0;
+	m_velocity.y = 0;
+	m_isShooting = false;
+	InitHitBoxHadou();
+	m_isHitPlayer = false;
+}
+
+void Bullet::SetShotEffect(float damage, int giveNoActFrame, int giveGuardFrame)
+{
+	//相手に与える影響をセット
+	m_giveDamage = damage;
+	m_giveNoActFrame = giveNoActFrame;
+	m_giveGuardFrame = giveGuardFrame;
+}
+
+void Bullet::Update(Player& enemy, Bullet& otherBullet, Camera& camera)
+{
+	m_animCountFrame++;
+	(this->*m_update)(enemy,otherBullet,camera);
+}
+
+void Bullet::Draw(Camera& camera)
+{
+	(this->*m_draw)(camera);
 #if _DEBUG
 	//当たり判定
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
@@ -205,7 +347,7 @@ void Bullet::Disappear()
 {
 	m_isShooting = false;
 	ResetAttackBox();
-	ResetIsHitPlayer();
+	m_isHitPlayer = false;
 	m_startAnimIndex = kStartDisappearAnimIndex;
 	m_finishAnimIndex = kFinishDisappearAnimIndex;
 	m_animIndex = m_startAnimIndex;
@@ -213,16 +355,41 @@ void Bullet::Disappear()
 }
 
 //波動拳
-void Bullet::LoadBullet1Handle()
+void Bullet::LoadHadou(Player& player, float damage, int giveNoActFrame, int giveGuardFrame)
 {
 	//すでに弾が発射されているならやらない
 	if (m_isShooting)return;
 	//波動拳
-	m_bulletHandle = m_blueBulletHandle;
 	m_startAnimIndex = kStartHadouAnimIndex;
 	m_finishAnimIndex = kFinishHadouAnimIndex;
 	m_animIndex = m_startAnimIndex;
 	m_animCountFrame = 0;
+	//ポジションとスピードと向きをセット
+	m_pos.y = player.GetPos().y;
+	if (player.GetDirState())
+	{
+		m_pos.x = player.GetPos().x - kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightPunch)
+		{
+			m_velocity.x = -kHadouVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
+		{
+			m_velocity.x = -kHadouVeloXHigh;
+		}
+	}
+	else
+	{
+		m_pos.x = player.GetPos().x + kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightPunch)
+		{
+			m_velocity.x = kHadouVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
+		{
+			m_velocity.x = kHadouVeloXHigh;
+		}
+	}
 	//手から出したいので位置調整
 	if (m_velocity.x < 0)
 	{
@@ -232,35 +399,108 @@ void Bullet::LoadBullet1Handle()
 	{
 		m_pos.x += kHadouOffsetPosX;
 	}
+	//当たり判定初期化
 	InitHitBoxHadou();
+	//相手に与える効果
+	SetShotEffect(damage, giveNoActFrame, giveGuardFrame);
+	if (m_update != &Bullet::HadouUpdate || m_draw != &Bullet::HadouDraw)
+	{
+		m_update = &Bullet::HadouUpdate;
+		m_draw = &Bullet::HadouDraw;
+	}
 }
 //ソニックブーム
-void Bullet::LoadBullet2Handle()
+void Bullet::LoadSonic(Player& player, float damage, int giveNoActFrame, int giveGuardFrame)
 {
 	//すでに弾が発射されているならやらない
 	if (m_isShooting)return;
 	//ソニックブーム
-	m_bulletHandle = m_yellowBulletHandle;
 	m_startAnimIndex = kStartSonicAnimIndex;
 	m_finishAnimIndex = kFinishSonicAnimIndex;
 	m_animIndex = m_startAnimIndex;
 	m_animCountFrame = 0;
+	//ポジションとスピードと向きをセット
+	m_pos.y = player.GetPos().y;
+	if (player.GetDirState())
+	{
+		m_pos.x = player.GetPos().x - kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightPunch)
+		{
+			m_velocity.x = -kSonicVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
+		{
+			m_velocity.x = -kSonicVeloXHigh;
+		}
+	}
+	else
+	{
+		m_pos.x = player.GetPos().x + kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightPunch)
+		{
+			m_velocity.x = kSonicVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighPunch)
+		{
+			m_velocity.x = kSonicVeloXHigh;
+		}
+	}
+	//初期化
 	InitHitBoxSonic();
+	//相手に与える効果
+	SetShotEffect(damage, giveNoActFrame, giveGuardFrame);
+	if (m_update != &Bullet::SonicUpdate || m_draw != &Bullet::SonicDraw)
+	{
+		m_update = &Bullet::SonicUpdate;
+		m_draw = &Bullet::SonicDraw;
+	}
 }
 //闇払い
-void Bullet::LoadBullet3Handle()
+void Bullet::LoadWave(Player& player, float damage, int giveNoActFrame, int giveGuardFrame)
 {
 	//すでに弾が発射されているならやらない
 	if (m_isShooting)return;
 	//闇払い
-	m_bulletHandle = m_purpleBulletHandle;
 	m_startAnimIndex = kStartPowerWaveAnimIndex;
 	m_finishAnimIndex = kFinishPowerWaveAnimIndex;
 	m_animIndex = m_startAnimIndex;
 	m_animCountFrame = 0;
+	//ポジションとスピードと向きをセット
 	//地面を滑らせたいので位置調整
-	m_pos.y += kPowerWaveOffsetPosY;
+	m_pos.y = player.GetPos().y + kPowerWaveOffsetPosY;
+	if (player.GetDirState())
+	{
+		m_pos.x = player.GetPos().x - kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
+		{
+			m_velocity.x = -kHadouVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
+		{
+			m_velocity.x = -kHadouVeloXHigh;
+		}
+	}
+	else
+	{
+		m_pos.x = player.GetPos().x + kBulletOffsetPos;
+		if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
+		{
+			m_velocity.x = kHadouVeloXLight;
+		}
+		else if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
+		{
+			m_velocity.x = kHadouVeloXHigh;
+		}
+	}
+	//初期化
 	InitHitBoxWave();
+	//相手に与える効果
+	SetShotEffect(damage, giveNoActFrame, giveGuardFrame);
+	if (m_update != &Bullet::WaveUpdate || m_draw != &Bullet::WaveDraw)
+	{
+		m_update = &Bullet::WaveUpdate;
+		m_draw = &Bullet::WaveDraw;
+	}
 }
 
 bool Bullet::HitCheckPlayer(Player& enemy)

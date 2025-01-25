@@ -17,7 +17,7 @@ private:
 	float m_giveDamage;			//‘Šè‚É—^‚¦‚éƒ_ƒ[ƒW
 	//UŒ‚‚É‚æ‚Á‚Ä‘Šè‚É—^‚¦‚éVelo
 	Vector3 m_giveAttackVelo;
-
+	void SetShotEffect(float damage, int giveNoActFrame, int giveGuardFrame);
 
 	//true‚È‚ç”­Ë’†
 	bool m_isShooting;
@@ -40,27 +40,34 @@ private:
 		m_hitBoxAttack.x2 = 0;
 		m_hitBoxAttack.y2 = 0;
 	}
-	//“–‚½‚Á‚½‚±‚Æ‚ğƒŠƒZƒbƒg
-	void ResetIsHitPlayer() { m_isHitPlayer = false; }
 
 	//’e‚Ìƒnƒ“ƒhƒ‹
 	int m_blueBulletHandle;//Â‚¢’e
 	int m_yellowBulletHandle;//‰©F‚¢’e
 	int m_purpleBulletHandle;//‡‚Ì’e
 	
-
-	//Œ»İ‚Ìƒnƒ“ƒhƒ‹
-	int m_bulletHandle;
 	int m_animIndex;//Œ»İ‚Ì‰æ‘œ‚Ì”Ô†
 	int m_startAnimIndex;//Å‰‚Ì‰æ‘œ‚Ì”Ô†
 	int m_finishAnimIndex;//ÅŒã‚Ì‰æ‘œ‚Ì”Ô†
 	int m_animCountFrame;
+
+	using UpdateFunc_t = void(Bullet::*)(Player& enemy, Bullet& otherBullet, Camera& camera);
+	UpdateFunc_t m_update;
+	//Draw
+	using DrawFunc_t = void(Bullet::*)(Camera& camera);
+	DrawFunc_t m_draw;
+
+	void HadouUpdate(Player& enemy, Bullet& otherBullet, Camera& camera);
+	void HadouDraw(Camera& camera);
+	void SonicUpdate(Player& enemy, Bullet& otherBullet, Camera& camera);
+	void SonicDraw(Camera& camera);
+	void WaveUpdate(Player& enemy, Bullet& otherBullet, Camera& camera);
+	void WaveDraw(Camera& camera);
+
 public:
 	Bullet(PlayerIndex playerIndex);
 	~Bullet();
 	void Init();
-	void SetShotMove(Vector3 pos , bool isLeft,float speed);
-	void SetShotEffect(float damage,int giveNoActFrame,int giveGuardFrame);
 	void Update(Player& enemy, Bullet& otherBullet,Camera& camera);
 	void Draw(Camera& camera);
 	void Disappear();//’e‚ªÁ‚¦‚é
@@ -92,10 +99,9 @@ public:
 	//UŒ‚‚É‚æ‚Á‚Ä‘Šè‚É—^‚¦‚éVelo
 	Vector3 GetGiveAttackVelo() { return m_giveAttackVelo; }
 	void SetGiveAttackVelo(Vector3 giveAttackVelo) { m_giveAttackVelo = giveAttackVelo; }
-
 	//3í—Ş‚Ì’e
-	void LoadBullet1Handle();
-	void LoadBullet2Handle();
-	void LoadBullet3Handle();
+	void LoadHadou(Player& player, float damage, int giveNoActFrame, int giveGuardFrame);
+	void LoadSonic(Player& player, float damage, int giveNoActFrame, int giveGuardFrame);
+	void LoadWave(Player& player, float damage, int giveNoActFrame, int giveGuardFrame);
 };
 

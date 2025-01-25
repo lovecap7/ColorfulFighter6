@@ -345,8 +345,12 @@ public:
 
 	//立ちガードモーション取得
 	void GetAnimGuardStand(Player& player) ;
+	//立ちガードの当たり判定(右向き)
+	void GetHitBoxGuardStand(Player& player);
 	//しゃがみガードモーション取得
 	void GetAnimGuardSquat(Player& player) ;
+	//しゃがみガードの当たり判定(右向き)
+	void GetHitBoxGuardSquat(Player& player);
 
 	//つかみモーション取得
 	void GetAnimGrasp(Player& player) ;

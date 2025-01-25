@@ -424,6 +424,39 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 	Vector3 giveVeloP1(p2.GetGiveAttackVelo());
 	Vector3 giveVeloP2(p1.GetGiveAttackVelo());
 
+	//投げと攻撃が重なっていない場合投げは成立する
+	if (!p1.GetIsHitAttack() && !bulletP1.GetIsHitPlayer() && !p2.GetIsHitAttack() && !bulletP2.GetIsHitPlayer())
+	{
+		//投げぬけ
+		if (p1.GetIsHitGrasp() && p2.GetIsHitGrasp() || p1.GetIsThrowSuccess() && p2.GetIsThrowSuccess())
+		{
+			p1.LoadStateThrowEscape();
+			p2.LoadStateThrowEscape();
+			p1.ResetIsHitGrasp();
+			p2.ResetIsHitGrasp();
+		}
+		//P1の投げが当たったとき
+		else if (p1.GetIsHitGrasp() && !p2.GetIsHitGrasp())
+		{
+			//描画を後ろに
+			//投げるときは後ろにしたほうが見栄えがいい
+			gameManager.SetIsDrawFrontP1(false);
+			//投げられ状態にする
+			p2.LoadStateBeThrown();
+			//投げる状態にする
+			p1.ResetIsHitGrasp();
+			p1.OnIsThrownSuccess();;
+		}
+		//P2の投げが当たったとき
+		else if (p2.GetIsHitGrasp() && !p1.GetIsHitGrasp())
+		{
+			//描画を前に
+			gameManager.SetIsDrawFrontP1(true);
+			p1.LoadStateBeThrown();
+			p2.ResetIsHitGrasp();
+			p2.OnIsThrownSuccess();
+		}
+	}
 
 	//弾による攻撃の処理
 	//P1の弾がP2に当たった時
@@ -596,7 +629,6 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		//エフェクトの位置
 		gameManager.SetHitEffectPosP2(CreateHitEffectPosBtoP(bulletP2, p1));
 		
-
 		//弾を削除}
 		bulletP2.Disappear();
 	}
@@ -902,40 +934,6 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		//エフェクトの位置
 		gameManager.SetHitEffectPosP2(CreateHitEffectPosPtoP(p2, p1));
 		p2.ResetAttackBox();
-	}
-
-	//投げと攻撃が重なっていない場合投げは成立する
-	if (!p1.GetIsHitAttack() && !bulletP1.GetIsHitPlayer() && !p2.GetIsHitAttack() && !bulletP2.GetIsHitPlayer())
-	{
-		//投げぬけ
-		if (p1.GetIsHitGrasp() && p2.GetIsHitGrasp() || p1.GetIsThrowSuccess() && p2.GetIsThrowSuccess())
-		{
-			p1.LoadStateThrowEscape();
-			p2.LoadStateThrowEscape();
-			p1.ResetIsHitGrasp();
-			p2.ResetIsHitGrasp();
-		}
-		//P1の投げが当たったとき
-		else if (p1.GetIsHitGrasp() && !p2.GetIsHitGrasp())
-		{
-			//描画を後ろに
-			//投げるときは後ろにしたほうが見栄えがいい
-			gameManager.SetIsDrawFrontP1(false);
-			//投げられ状態にする
-			p2.LoadStateBeThrown();
-			//投げる状態にする
-			p1.ResetIsHitGrasp();
-			p1.OnIsThrownSuccess();;
-		}
-		//P2の投げが当たったとき
-		else if (p2.GetIsHitGrasp() && !p1.GetIsHitGrasp())
-		{
-			//描画を前に
-			gameManager.SetIsDrawFrontP1(true);
-			p1.LoadStateBeThrown();
-			p2.ResetIsHitGrasp();
-			p2.OnIsThrownSuccess();
-		}
 	}
 	
 	//攻撃の処理が終わったら判定を消す

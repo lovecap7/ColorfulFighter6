@@ -760,7 +760,7 @@ void Chara::GetAnimIdleStand(Player& player)
 	/// ‚P‚Â‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚É‚©‚©‚éƒtƒŒ[ƒ€
 	/// </summary>
 	m_oneAnimFrame = 4;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -813,7 +813,7 @@ void Chara::GetAnimIdleSquat(Player& player)
 	m_handle = m_idleSquatHandel;//‚µ‚á‚ª‚İ‘Ò‹@
 	m_animNum = 6;
 	m_oneAnimFrame = 4;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -915,7 +915,7 @@ void Chara::GetAnimWalkBack(Player& player)
 	m_handle = m_walkBackHandel;//•à‚«
 	m_animNum = 8;
 	m_oneAnimFrame = 4;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -966,7 +966,7 @@ void Chara::GetAnimJump(Player& player)
 	m_handle = m_jumpHandel;//ƒWƒƒƒ“ƒv
 	m_animNum = 10;
 	m_oneAnimFrame = 4;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -1021,7 +1021,7 @@ void Chara::GetAnimPunchLight(Player& player)
 	m_startAttackFrame = kStartFramePunchLight;//UŒ‚”­¶
 	m_finishAttackFrame = kFinishFramePunchLight;//‘±I—¹
 
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1095,7 +1095,7 @@ void Chara::GetAnimPunchHigh(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = kStartFramePunchHigh;//UŒ‚”­¶
 	m_finishAttackFrame = 16;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1169,7 +1169,7 @@ void Chara::GetAnimKickLight(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = kStartFrameKickLight;//UŒ‚”­¶
 	m_finishAttackFrame = 7;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1245,7 +1245,7 @@ void Chara::GetAnimKickHigh(Player& player)
 	m_oneAnimFrame = 3;
 	m_startAttackFrame = kStartFrameKickHigh;//UŒ‚”­¶
 	m_finishAttackFrame = 15;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1318,7 +1318,7 @@ void Chara::GetAnimPunchLightSquat(Player& player)
 	m_oneAnimFrame = 1;
 	m_startAttackFrame = kStartFramePunchLightSquat;//UŒ‚”­¶
 	m_finishAttackFrame = 5;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1391,7 +1391,7 @@ void Chara::GetAnimPunchHighSquat(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = kStartFramePunchHighSquat;//UŒ‚”­¶
 	m_finishAttackFrame = 14;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1464,7 +1464,7 @@ void Chara::GetAnimKickLightSquat(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = kStartFrameKickLightSquat;//UŒ‚”­¶
 	m_finishAttackFrame = 6;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1538,7 +1538,7 @@ void Chara::GetAnimKickHighSquat(Player& player)
 	m_oneAnimFrame = 4;
 	m_startAttackFrame = kStartFrameKickHighSquat;//UŒ‚”­¶
 	m_finishAttackFrame = 11;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1611,7 +1611,7 @@ void Chara::GetAnimPunchLightAerial(Player& player)
 	m_oneAnimFrame = 1;
 	m_startAttackFrame = 4;//UŒ‚”­¶
 	m_finishAttackFrame = 13;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1685,7 +1685,7 @@ void Chara::GetAnimPunchHighAerial(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = 9;//UŒ‚”­¶
 	m_finishAttackFrame = 14;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1758,7 +1758,7 @@ void Chara::GetAnimKickLightAerial(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = 5;//UŒ‚”­¶
 	m_finishAttackFrame = 6;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1834,7 +1834,7 @@ void Chara::GetAnimKickHighAerial(Player& player)
 	m_oneAnimFrame = 2;
 	m_startAttackFrame = 12;//UŒ‚”­¶
 	m_finishAttackFrame = 19;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -1909,18 +1909,96 @@ void Chara::GetAnimGuardStand(Player& player)
 	m_handle = m_guardStandHandle;//ƒK[ƒh
 	m_animNum = 6;
 	m_oneAnimFrame =1;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
+}
+void Chara::GetHitBoxGuardStand(Player& player)
+{
+	Box headBox;
+	Box bodyBox;
+	Box legBox;
+	Box throwBox;
+	Box attackBox;
+	//“ª	
+	headBox.x1 = -10;
+	headBox.y1 = -150;
+	headBox.x2 = 60;
+	headBox.y2 = -60;
+	//‘Ì	
+	bodyBox.x1 = -60;
+	bodyBox.y1 = -60;
+	bodyBox.x2 = 70;
+	bodyBox.y2 = 60;
+	//‘«	
+	legBox.x1 = -70;
+	legBox.y1 = 60;
+	legBox.x2 = 60;
+	legBox.y2 = 180;
+	//“Š‚°‚â‚ç‚ê 
+	throwBox.x1 = 0;
+	throwBox.y1 = 0;
+	throwBox.x2 = 0;
+	throwBox.y2 = 0;
+	//UŒ‚
+	attackBox.x1 = 0;
+	attackBox.y1 = 0;
+	attackBox.x2 = 0;
+	attackBox.y2 = 0;
+	//“–‚½‚è”»’èƒZƒbƒg
+	player.SetHitBoxHead(headBox);
+	player.SetHitBoxBody(bodyBox);
+	player.SetHitBoxLeg(legBox);
+	player.SetHitBoxThrow(throwBox);
+	player.SetHitBoxAttack(attackBox);
 }
 void Chara::GetAnimGuardSquat(Player& player)
 {
 	m_handle = m_guardSquatHandle;//ƒK[ƒh
 	m_animNum = 8;
 	m_oneAnimFrame = 1;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
+}
+void Chara::GetHitBoxGuardSquat(Player& player)
+{
+	Box headBox;
+	Box bodyBox;
+	Box legBox;
+	Box throwBox;
+	Box attackBox;
+	//“ª	
+	headBox.x1 = 0;
+	headBox.y1 = -40;
+	headBox.x2 = 90;
+	headBox.y2 = 50;
+	//‘Ì	
+	bodyBox.x1 = -40;
+	bodyBox.y1 = 50;
+	bodyBox.x2 = 60;
+	bodyBox.y2 = 120;
+	//‘«	
+	legBox.x1 = -70;
+	legBox.y1 = 120;
+	legBox.x2 = 60;
+	legBox.y2 = 180;
+	//“Š‚°‚â‚ç‚ê 
+	throwBox.x1 = 0;
+	throwBox.y1 = 0;
+	throwBox.x2 = 0;
+	throwBox.y2 = 0;
+	//UŒ‚
+	attackBox.x1 = 0;
+	attackBox.y1 = 0;
+	attackBox.x2 = 0;
+	attackBox.y2 = 0;
+	//“–‚½‚è”»’èƒZƒbƒg
+	player.SetHitBoxHead(headBox);
+	player.SetHitBoxBody(bodyBox);
+	player.SetHitBoxLeg(legBox);
+	player.SetHitBoxThrow(throwBox);
+	player.SetHitBoxAttack(attackBox);
 }
 //‚Â‚©‚İƒ‚[ƒVƒ‡ƒ“
 void Chara::GetAnimGrasp(Player& player)
@@ -1931,7 +2009,7 @@ void Chara::GetAnimGrasp(Player& player)
 	m_oneAnimFrame = 5;
 	m_startAttackFrame = 5;//UŒ‚”­¶
 	m_finishAttackFrame = 7;//‘±I—¹
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 	player.SetStartAttackFrame(m_startAttackFrame);//UŒ‚”­¶
@@ -2024,7 +2102,7 @@ void Chara::GetAnimThrowFront(Player& player)
 {
 	m_handle = m_throwFrontHandle;
 	m_animNum = 12;
-	m_oneAnimFrame = 6;player.SetHandle(m_handle);//¸—³Œ
+	m_oneAnimFrame = 6;player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -2177,7 +2255,7 @@ void Chara::GetAnimDown(Player& player)
 	m_handle = m_downHandle;
 	m_animNum = 13 ;
 	m_oneAnimFrame = 3;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -2229,7 +2307,7 @@ void Chara::GetAnimDownAerial(Player& player)
 	m_handle = m_downAerialHandle;
 	m_animNum = 8;
 	m_oneAnimFrame = 3;
-	player.SetHandle(m_handle);//¸—³Œ
+	player.SetHandle(m_handle);
 	player.SetAnimNum(m_animNum);
 	player.SetOneAnimFrame(m_oneAnimFrame);
 }
@@ -2406,11 +2484,10 @@ void Chara::MovementCommand1(Player& player,Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Hadouken));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kHadouSpeedHigh);
-			bullet.SetShotEffect(6.0f,		//ƒ_ƒ[ƒW
+			bullet.LoadHadou(player,
+				6.0f,		//ƒ_ƒ[ƒW
 				kAllFrameCommand1 - kStartFrameCommand1High - 3,//ƒqƒbƒg‚Ìd’¼
 				kAllFrameCommand1 - kStartFrameCommand1High - 9);//ƒK[ƒh‚µ‚Ä‚¢‚é“G‚É“–‚½‚Á‚½‚Ìd’¼
-			bullet.LoadBullet1Handle();
 			bullet.OnIsShooting();
 		}
 	}
@@ -2422,11 +2499,9 @@ void Chara::MovementCommand1(Player& player,Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Hadouken));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kHadouSpeedLight);
-			bullet.SetShotEffect(6.0f,
+			bullet.LoadHadou(player,6.0f,
 				kAllFrameCommand1 - kStartFrameCommand1Light + 1,
 				kAllFrameCommand1 - kStartFrameCommand1Light - 5);
-			bullet.LoadBullet1Handle();
 			bullet.OnIsShooting();
 		}
 	}
@@ -2942,11 +3017,10 @@ void Chara::MovementCommand5(Player& player, Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Sonic));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kSonicSpeedHigh);
-			bullet.SetShotEffect(5.5f,		//ƒ_ƒ[ƒW
+			bullet.LoadSonic(player,
+				5.5f,		//ƒ_ƒ[ƒW
 				kAllFrameCommand1 - kStartFrameCommand5 + 3,//ƒqƒbƒg‚Ìd’¼
 				kAllFrameCommand1 - kStartFrameCommand5 - 3);//ƒK[ƒh‚µ‚Ä‚¢‚é“G‚É“–‚½‚Á‚½‚Ìd’¼
-			bullet.LoadBullet2Handle();
 			bullet.OnIsShooting();
 		}
 	}
@@ -2958,11 +3032,10 @@ void Chara::MovementCommand5(Player& player, Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Sonic));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kSonicSpeedLight);
-			bullet.SetShotEffect(5.5f,
+			bullet.LoadSonic(player,
+				5.5f,
 				kAllFrameCommand1 - kStartFrameCommand5 + 3,
 				kAllFrameCommand1 - kStartFrameCommand5 - 3);
-			bullet.LoadBullet2Handle();
 			bullet.OnIsShooting();
 		}
 	}
@@ -3060,11 +3133,10 @@ void Chara::MovementCommand6(Player& player, Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Wave));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kWaveSpeedHigh);
-			bullet.SetShotEffect(4.0f,		//ƒ_ƒ[ƒW
+			bullet.LoadWave(player,
+				4.0f,		//ƒ_ƒ[ƒW
 				kAllFrameCommand1 - kStartFrameCommand6High + 3,//ƒqƒbƒg‚Ìd’¼
-				kAllFrameCommand1 - kStartFrameCommand6High - 3);//ƒK[ƒh‚µ‚Ä‚¢‚é“G‚É“–‚½‚Á‚½‚Ìd’¼
-			bullet.LoadBullet3Handle();
+				kAllFrameCommand1 - kStartFrameCommand6High - 3);//ƒK[ƒh‚µ‚Ä‚¢‚é“G‚É“–‚½‚Á‚½‚Ìd’¼);
 			bullet.OnIsShooting();
 		}
 	}
@@ -3076,11 +3148,10 @@ void Chara::MovementCommand6(Player& player, Bullet& bullet, Player& enemy)
 			//Ä¶
 			CommandSe(static_cast<int>(Command::Wave));
 			//’ei”g“®Œ‚ğo‚·j
-			bullet.SetShotMove(player.GetPos(), player.GetDirState(), kWaveSpeedLight);
-			bullet.SetShotEffect(4.0f,
+			bullet.LoadWave(player,
+				4.0f,
 				kAllFrameCommand1 - kStartFrameCommand6Light + 3,
 				kAllFrameCommand1 - kStartFrameCommand6Light - 3);
-			bullet.LoadBullet3Handle();
 			bullet.OnIsShooting();
 		}
 	}
