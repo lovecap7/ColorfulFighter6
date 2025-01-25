@@ -78,6 +78,9 @@ namespace
 
 	//ステージの大きさ
 	constexpr int kStageWidth = 2600;
+
+	//入力の残るフレーム
+	constexpr int kRemainInputFrame = 7;
 }
 
 //プレイヤーの番号と選んだキャラを渡す
@@ -151,6 +154,11 @@ Player::~Player()
 //ラウンド切り替わりの際の初期化にも使う
 void Player::Init(float X,bool isLeft)
 {
+	//入力リセット
+	m_lightPunchBottun.Init(false, 0);
+	m_highPunchBottun.Init(false, 0);
+	m_lightKickBottun.Init(false, 0);
+	m_highKickBottun.Init(false, 0);
 	//初期位置
 	Vector3 firstPos(X, kGroundHeight, 0);
 	m_pos = firstPos;
@@ -216,6 +224,7 @@ void Player::Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr
 	//体力があるなら行動できる
 	if (!CheckDead())
 	{
+		PlayerInput(input);
 		(this->*m_update)(input, enemy, myBullet, gameManager);
 	}
 }
@@ -341,6 +350,35 @@ void Player::DrawShadow(const Camera& camera)
 		kShadowPosY + static_cast<int>(camera.m_drawOffset.y),
 		120, 30, 0x000000, true);
 	DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void Player::PlayerInput(Input& input)
+{
+	m_lightPunchBottun.isPress = input.IsPress("X");
+	m_highPunchBottun.isPress = input.IsPress("Y");
+	m_lightKickBottun.isPress = input.IsPress("A");
+	m_highKickBottun.isPress = input.IsPress("B");
+	//指定した猶予フレームの間だけ押し続けても入力を残す
+	CheckContinuePressBottun(m_lightPunchBottun);
+	CheckContinuePressBottun(m_highPunchBottun);
+	CheckContinuePressBottun(m_lightKickBottun);
+	CheckContinuePressBottun(m_highKickBottun);
+}
+
+void Player::CheckContinuePressBottun(PressBottun& bottun)
+{
+	if (bottun.isPress)
+	{
+		++bottun.pressCountFrame;
+		if (bottun.pressCountFrame > kRemainInputFrame)
+		{
+			bottun.isPress = false;
+		}
+	}
+	else
+	{
+		bottun.pressCountFrame = 0;
+	}
 }
 
 void Player::CheckGround()
@@ -840,22 +878,22 @@ void Player::Cancel(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr
 		{
 			////////////////////攻撃//////////////////////////////////////
 			//弱パンチ
-			if (input.IsTrigger("X"))
+			if (m_lightPunchBottun.isPress)
 			{
 				m_attackType = AttackTypes::LightPunch;
 			}
 			//強パンチ
-			if (input.IsTrigger("Y"))
+			if (m_highPunchBottun.isPress)
 			{
 				m_attackType = AttackTypes::HighPunch;
 			}
 			//弱キック
-			if (input.IsTrigger("A"))
+			if (m_lightKickBottun.isPress)
 			{
 				m_attackType = AttackTypes::LightKick;
 			}
 			//強キック
-			if (input.IsTrigger("B"))
+			if (m_highKickBottun.isPress)
 			{
 				m_attackType = AttackTypes::HighKick;
 			}
@@ -1002,24 +1040,24 @@ void Player::IdleStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::s
 	bool isLightPunch = false;
 	bool isLightKick = false;
 		//弱パンチ
-	if (input.IsTrigger("X"))
+	if (m_lightPunchBottun.isPress)
 	{
 		m_attackType = AttackTypes::LightPunch;
 		isLightPunch = true;
 	}
 	//強パンチ
-	if (input.IsTrigger("Y"))
+	if (m_highPunchBottun.isPress)
 	{
 		m_attackType = AttackTypes::HighPunch;
 	}
 	//弱キック
-	if (input.IsTrigger("A"))
+	if (m_lightKickBottun.isPress)
 	{
 		m_attackType = AttackTypes::LightKick;
 		isLightKick = true;
 	}
 	//強キック
-	if (input.IsTrigger("B"))
+	if (m_highKickBottun.isPress)
 	{
 		m_attackType = AttackTypes::HighKick;
 	}
@@ -1277,24 +1315,24 @@ void Player::IdleSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::s
 	bool isLightPunch = false;
 	bool isLightKick = false;
 	//弱パンチ
-	if (input.IsTrigger("X"))
+	if (m_lightPunchBottun.isPress)
 	{
 		m_attackType = AttackTypes::LightPunch;
 		isLightPunch = true;
 	}
 	//強パンチ
-	if (input.IsTrigger("Y"))
+	if (m_highPunchBottun.isPress)
 	{
 		m_attackType = AttackTypes::HighPunch;
 	}
 	//弱キック
-	if (input.IsTrigger("A"))
+	if (m_lightKickBottun.isPress)
 	{
 		m_attackType = AttackTypes::LightKick;
 		isLightKick = true;
 	}
 	//強キック
-	if (input.IsTrigger("B"))
+	if (m_highKickBottun.isPress)
 	{
 		m_attackType = AttackTypes::HighKick;
 	}
@@ -1441,22 +1479,22 @@ void Player::JumpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared
 	{
 		m_velocity.x = 0;
 		//弱パンチ
-		if (input.IsTrigger("X"))
+		if (m_lightPunchBottun.isPress)
 		{
 			m_attackType = AttackTypes::LightPunch;
 		}
 		//強パンチ
-		if (input.IsTrigger("Y"))
+		if (m_highPunchBottun.isPress)
 		{
 			m_attackType = AttackTypes::HighPunch;
 		}
 		//弱キック
-		if (input.IsTrigger("A"))
+		if (m_lightKickBottun.isPress)
 		{
 			m_attackType = AttackTypes::LightKick;
 		}
 		//強キック
-		if (input.IsTrigger("B"))
+		if (m_highKickBottun.isPress)
 		{
 			m_attackType = AttackTypes::HighKick;
 		}
@@ -1513,22 +1551,22 @@ void Player::JumpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared
 			return;
 		}
 		//弱パンチ
-		if (input.IsTrigger("X"))
+		if (m_lightPunchBottun.isPress)
 		{
 			m_attackType = AttackTypes::LightPunch;
 		}
 		//強パンチ
-		if (input.IsTrigger("Y"))
+		if (m_highPunchBottun.isPress)
 		{
 			m_attackType = AttackTypes::HighPunch;
 		}
 		//弱キック
-		if (input.IsTrigger("A"))
+		if (m_lightKickBottun.isPress)
 		{
 			m_attackType = AttackTypes::LightKick;
 		}
 		//強キック
-		if (input.IsTrigger("B"))
+		if (m_highKickBottun.isPress)
 		{
 			m_attackType = AttackTypes::HighKick;
 		}
@@ -2567,12 +2605,12 @@ void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::sh
 			bool isLightPunch = false;
 			bool isLightKick = false;
 			//弱パンチ
-			if (input.IsTrigger("X"))
+			if (m_lightPunchBottun.isPress)
 			{
 				isLightPunch = true;
 			}
 			//弱キック
-			if (input.IsTrigger("A"))
+			if (m_lightKickBottun.isPress)
 			{
 				isLightKick = true;
 			}

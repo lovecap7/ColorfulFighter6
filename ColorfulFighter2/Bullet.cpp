@@ -13,7 +13,7 @@ namespace
 	constexpr int kBulletWidth = 160;
 	constexpr int kBulletHeight = 160;
 	//弾のアニメーションの速さ
-	constexpr int kBulletOneAnimFrame = 5;
+	constexpr int kBulletOneAnimFrame = 7;
 	//消滅のアニメーションの速さ
 	constexpr int kDisappearOneAnimFrame = 3;
 
@@ -26,8 +26,10 @@ namespace
 	//弾の位置の調整
 	constexpr int kHadouOffsetPosX = 100;
 	//速度
-	constexpr int kHadouVeloXLight = 10;
-	constexpr int kHadouVeloXHigh = 30;
+	constexpr float kHadouVeloXLight = 0.05f;
+	constexpr float kHadouVeloXHigh = 0.5f;
+	//加速倍率
+	constexpr float acceleration = 1.1f;
 	
 	//ソニックブーム
 	//弾の判定
@@ -36,8 +38,8 @@ namespace
 	constexpr int kStartSonicAnimIndex = 231;
 	constexpr int kFinishSonicAnimIndex = 234;
 	//速度
-	constexpr int kSonicVeloXLight = 5;
-	constexpr int kSonicVeloXHigh = 20;
+	constexpr float kSonicVeloXLight = 15.0f;
+	constexpr float kSonicVeloXHigh = 40.0f;
 	constexpr int kSonicShotInterval = 60;
 
 	//パワーウェイブ
@@ -60,6 +62,7 @@ void Bullet::HadouUpdate(Player& enemy, Bullet& otherBullet, Camera& camera)
 	if (m_isShooting)
 	{
 		//移動
+		m_velocity.x *= acceleration;
 		m_pos += m_velocity;
 
 		//敵に当たったかどうかをチェック

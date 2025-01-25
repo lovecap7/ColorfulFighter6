@@ -517,3 +517,5 @@ bool Input::IsPushTrigger(bool right)
 {
 	return IsPushTrigger(right, kTriggerPower);
 }
+
+//äiÉQÅ[óp

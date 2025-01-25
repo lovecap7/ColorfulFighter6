@@ -126,6 +126,8 @@ public:
 	/// <returns></returns>
 	bool IsPushTrigger(bool right);
 
+	
+
 	/// <summary>
 	/// コマンドをチェックする
 	/// </summary>
@@ -189,7 +191,7 @@ private:
 
 	//PADのIndex
 	int m_padIndex;
-	
+
 };
 
 

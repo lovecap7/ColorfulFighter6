@@ -273,6 +273,26 @@ private:
 	//影
 	void DrawShadow(const Camera& camera);
 
+	//同じボタンを押し続けている場合20フレームだけ入力を取りたい
+	struct PressBottun
+	{
+		bool isPress;
+		int pressCountFrame;
+		void Init(bool IsPress, int PressCountFrame)
+		{
+			isPress = IsPress;
+			pressCountFrame = PressCountFrame;
+		}
+	};
+	PressBottun m_lightPunchBottun;
+	PressBottun m_highPunchBottun;
+	PressBottun m_lightKickBottun;
+	PressBottun m_highKickBottun;
+	//プレイヤー専用の入力
+	void PlayerInput(Input& input);
+	void CheckContinuePressBottun(PressBottun& bottun);
+	
+
 	//メンバ関数ポインタの準備
 //Update
 	using UpdateFunc_t = void(Player::*)(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
