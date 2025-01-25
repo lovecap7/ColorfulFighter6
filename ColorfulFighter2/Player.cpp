@@ -159,6 +159,7 @@ void Player::Init(float X,bool isLeft)
 	m_highPunchBottun.Init(false, 0);
 	m_lightKickBottun.Init(false, 0);
 	m_highKickBottun.Init(false, 0);
+	m_graspBottun.Init(false, 0);
 	//初期位置
 	Vector3 firstPos(X, kGroundHeight, 0);
 	m_pos = firstPos;
@@ -358,11 +359,13 @@ void Player::PlayerInput(Input& input)
 	m_highPunchBottun.isPress = input.IsPress("Y");
 	m_lightKickBottun.isPress = input.IsPress("A");
 	m_highKickBottun.isPress = input.IsPress("B");
+	m_graspBottun.isPress = input.IsPress("RB");
 	//指定した猶予フレームの間だけ押し続けても入力を残す
 	CheckContinuePressBottun(m_lightPunchBottun);
 	CheckContinuePressBottun(m_highPunchBottun);
 	CheckContinuePressBottun(m_lightKickBottun);
 	CheckContinuePressBottun(m_highKickBottun);
+	CheckContinuePressBottun(m_graspBottun);
 }
 
 void Player::CheckContinuePressBottun(PressBottun& bottun)
@@ -769,7 +772,7 @@ void Player::LoadStateHit()
 	m_chara->GetAnimHitStand(*this);
 	assert(m_handle != -1);
 	//喰らい判定
-	m_chara->GetHitBoxIdleStand(*this);
+	m_chara->GetHitBoxHitStand(*this);
 	//喰らい
 	m_update = &Player::DamageUpdate;
 	m_draw = &Player::DamageDraw;
@@ -812,7 +815,7 @@ void Player::LoadStateGuardStand()
 	m_chara->GetAnimGuardStand(*this);
 	assert(m_handle != -1);
 	//喰らい判定
-	m_chara->GetHitBoxIdleStand(*this);
+	m_chara->GetHitBoxGuardStand(*this);
 	//ガード
 	m_update = &Player::GuardStandUpdate;
 	m_draw = &Player::GuardStandDraw;
@@ -826,7 +829,7 @@ void Player::LoadStateGuardSquat()
 	m_chara->GetAnimGuardSquat(*this);
 	assert(m_handle != -1);
 	//喰らい判定
-	m_chara->GetHitBoxIdleSquat(*this);
+	m_chara->GetHitBoxGuardSquat(*this);
 	//ガード
 	m_update = &Player::GuardSquatUpdate;
 	m_draw = &Player::GuardSquatDraw;
@@ -1062,7 +1065,7 @@ void Player::IdleStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::s
 		m_attackType = AttackTypes::HighKick;
 	}
 	//ワンボタン投げ
-	if (input.IsTrigger("RB"))
+	if (m_graspBottun.isPress)
 	{
 		isLightPunch = true;
 		isLightKick = true;
@@ -1337,7 +1340,7 @@ void Player::IdleSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::s
 		m_attackType = AttackTypes::HighKick;
 	}
 	//ワンボタン投げ
-	if (input.IsTrigger("RB"))
+	if (m_graspBottun.isPress)
 	{
 		isLightPunch = true;
 		isLightKick = true;
@@ -2615,7 +2618,7 @@ void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::sh
 				isLightKick = true;
 			}
 			//ワンボタン投げ
-			if (input.IsTrigger("RB"))
+			if (m_graspBottun.isPress)
 			{
 				isLightPunch = true;
 				isLightKick = true;

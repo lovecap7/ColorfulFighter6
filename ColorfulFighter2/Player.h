@@ -288,6 +288,7 @@ private:
 	PressBottun m_highPunchBottun;
 	PressBottun m_lightKickBottun;
 	PressBottun m_highKickBottun;
+	PressBottun m_graspBottun;
 	//プレイヤー専用の入力
 	void PlayerInput(Input& input);
 	void CheckContinuePressBottun(PressBottun& bottun);

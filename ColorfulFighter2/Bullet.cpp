@@ -51,6 +51,10 @@ namespace
 	constexpr int kFinishPowerWaveAnimIndex = 9;
 	//弾の位置の調整
 	constexpr int kPowerWaveOffsetPosY = 120;
+	//速度
+	constexpr float kWaveVeloXLight = 15.0f;
+	constexpr float kWaveVeloXHigh = 30.0f;
+	constexpr float kWaveVeloYHigh = -5.0f;
 
 	//消滅
 	constexpr int kStartDisappearAnimIndex = 202;
@@ -208,6 +212,7 @@ void Bullet::WaveUpdate(Player& enemy, Bullet& otherBullet, Camera& camera)
 {
 	if (m_isShooting)
 	{
+		m_velocity.y *= 1.1f;
 		//移動
 		m_pos += m_velocity;
 
@@ -369,6 +374,8 @@ void Bullet::LoadHadou(Player& player, float damage, int giveNoActFrame, int giv
 	m_animCountFrame = 0;
 	//ポジションとスピードと向きをセット
 	m_pos.y = player.GetPos().y;
+	m_velocity.x = 0;
+	m_velocity.y = 0;
 	if (player.GetDirState())
 	{
 		m_pos.x = player.GetPos().x - kBulletOffsetPos;
@@ -424,6 +431,8 @@ void Bullet::LoadSonic(Player& player, float damage, int giveNoActFrame, int giv
 	m_animCountFrame = 0;
 	//ポジションとスピードと向きをセット
 	m_pos.y = player.GetPos().y;
+	m_velocity.x = 0;
+	m_velocity.y = 0;
 	if (player.GetDirState())
 	{
 		m_pos.x = player.GetPos().x - kBulletOffsetPos;
@@ -471,16 +480,19 @@ void Bullet::LoadWave(Player& player, float damage, int giveNoActFrame, int give
 	//ポジションとスピードと向きをセット
 	//地面を滑らせたいので位置調整
 	m_pos.y = player.GetPos().y + kPowerWaveOffsetPosY;
+	m_velocity.x = 0;
+	m_velocity.y = 0;
 	if (player.GetDirState())
 	{
 		m_pos.x = player.GetPos().x - kBulletOffsetPos;
 		if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
 		{
-			m_velocity.x = -kHadouVeloXLight;
+			m_velocity.x = -kWaveVeloXLight;
 		}
 		else if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 		{
-			m_velocity.x = -kHadouVeloXHigh;
+			m_velocity.x = -kWaveVeloXHigh;
+			m_velocity.y = kWaveVeloYHigh;
 		}
 	}
 	else
@@ -488,11 +500,12 @@ void Bullet::LoadWave(Player& player, float damage, int giveNoActFrame, int give
 		m_pos.x = player.GetPos().x + kBulletOffsetPos;
 		if (player.GetAttackAttackTypes() == AttackTypes::LightKick)
 		{
-			m_velocity.x = kHadouVeloXLight;
+			m_velocity.x = kWaveVeloXLight;
 		}
 		else if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 		{
-			m_velocity.x = kHadouVeloXHigh;
+			m_velocity.x = kWaveVeloXHigh;
+			m_velocity.y = kWaveVeloYHigh;
 		}
 	}
 	//初期化
