@@ -17,7 +17,7 @@ public:
 	Player(PlayerIndex playeIndex, int* selectCommandIndex,CharaColorIndex charaColorIndex,bool isSameColor);
 	~Player();
 	void Init(float X, bool isLeft);
-	void Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void Update(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void Draw(const Camera& camera);
 
 	//なんPなのか
@@ -296,89 +296,89 @@ private:
 
 	//メンバ関数ポインタの準備
 //Update
-	using UpdateFunc_t = void(Player::*)(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	using UpdateFunc_t = void(Player::*)(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	UpdateFunc_t m_update;
 	//Draw
 	using DrawFunc_t = void(Player::*)(const Camera& camera);
 	DrawFunc_t m_draw;
 
 	//立ち待機
-	void IdleStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void IdleStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void IdleStandDraw(const Camera& camera);
 
 	//しゃがみ待機
-	void IdleSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void IdleSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void IdleSquatDraw(const Camera& camera);
 
 	//ジャンプ
-	void JumpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void JumpUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void JumpDraw(const Camera& camera);
 
 	//立ち攻撃
-	void AttackStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void AttackStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void AttackStandDraw(const Camera& camera);
 
 	//しゃがみ攻撃
-	void AttackSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void AttackSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void AttackSquatDraw(const Camera& camera);
 
 	//空中攻撃
-	void AttackAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void AttackAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void AttackAerialDraw(const Camera& camera);
 
 	//空中攻撃後
-	void AttackedAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void AttackedAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void AttackedAerialDraw(const Camera& camera);
 
 	//コマンド1
-	void CommandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void CommandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void CommandDraw(const Camera& camera);
 
 	//立ちガード
-	void GuardStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void GuardStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void GuardStandDraw(const Camera& camera);
 
 	//しゃがみガード
-	void GuardSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void GuardSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void GuardSquatDraw(const Camera& camera);
 
 	//つかみ -> 当たったら投げに移行
-	void GraspUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void GraspUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void GraspDraw(const Camera& camera);
 
 	//投げる
-	void ThrowUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void ThrowUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void ThrowDraw(const Camera& camera);
 
 	//投げられる
-	void BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void BeThrownUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void BeThrownDraw(const Camera& camera);
 
 	//投げぬけ
-	void ThrowEscapeUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void ThrowEscapeUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void ThrowEscapeDraw(const Camera& camera);
 
 	//立ち喰らい
-	void DamageUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void DamageUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void DamageDraw(const Camera& camera);
 
 	//しゃがみ喰らい
-	void DamageSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void DamageSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void DamageSquatDraw(const Camera& camera);
 
 	//ダウン
-	void DownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet,GameManager& gameManager);
+	void DownUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet,GameManager& gameManager);
 	void DownDraw(const Camera& camera);
 	//空中ダウン
-	void DownAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet,GameManager& gameManager);
+	void DownAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet,GameManager& gameManager);
 	void DownAerialDraw(const Camera& camera);
 
 	//起き上がり
-	void StandUpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager);
+	void StandUpUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager);
 	void StandUpDraw(const Camera& camera);
 
 	//勝敗ポーズ
-	void ResultUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet,GameManager& gameManager);
+	void ResultUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet,GameManager& gameManager);
 	void ResultDraw(const Camera& camera);
 };
 

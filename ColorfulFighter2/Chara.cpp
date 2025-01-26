@@ -3319,9 +3319,9 @@ void Chara::GetHitBoxCommand8(Player& player)
 	throwBox.x2 = 0;
 	throwBox.y2 = 0;
 	//攻撃
-	attackBox.x1 = -150;
+	attackBox.x1 = 0;
 	attackBox.y1 = 0;
-	attackBox.x2 = 150;
+	attackBox.x2 = 200;
 	attackBox.y2 = 100;
 	//投げ
 	graspBox.x1 = 0;
@@ -3342,13 +3342,14 @@ void Chara::GetGiveEffectCommand8(Player& player)
 {
 	//一旦再生を止める
 	m_se->Stop();
+	m_velocity.x = 0.0f;
 	m_velocity.y = 0.0f;
 	//強版
 	if (player.GetAttackAttackTypes() == AttackTypes::HighKick)
 	{
 		//全体フレーム61
 		m_allFrame = kAllFrameCommand8High;
-		m_velocity.x = 10.0f;
+		m_velocity.x = 15.0f;
 		//強版は持続長い
 		m_startAttackFrame = 14;//攻撃発生
 		m_finishAttackFrame = 15;//持続終了
@@ -3359,8 +3360,8 @@ void Chara::GetGiveEffectCommand8(Player& player)
 		player.SetGiveNoActFrame(m_allFrame - 27);
 		player.SetGiveGuardFrame(m_allFrame - 12);
 		player.SetAttackAttributes(AttackAttributes::Upper);//上段
-		m_giveAttackVelo.x = 10;
-		m_giveAttackVelo.y = 0;
+		m_giveAttackVelo.x = 5;
+		m_giveAttackVelo.y = -20;
 		player.SetGiveAttackVelo(m_giveAttackVelo);
 	}
 	//弱版
@@ -3368,13 +3369,13 @@ void Chara::GetGiveEffectCommand8(Player& player)
 	{
 		//全体フレーム48
 		m_allFrame = kAllFrameCommand8Light;
-		m_velocity.x = 5.0f;
+		m_velocity.y = -5.0f;
 		player.SetGiveDamage(2.5f);
 		player.SetGiveNoActFrame(m_allFrame - 27);
 		player.SetGiveGuardFrame(m_allFrame - 14);
 		player.SetAttackAttributes(AttackAttributes::Upper);//上段
-		m_giveAttackVelo.x = 10;
-		m_giveAttackVelo.y = 0;
+		m_giveAttackVelo.x = 2;
+		m_giveAttackVelo.y = -40;
 		player.SetGiveAttackVelo(m_giveAttackVelo);
 	}
 	if (player.GetDirState())
@@ -3400,12 +3401,7 @@ void Chara::MovementCommand8(Player& player, Bullet& bullet, Player& enemy)
 				player.SetStartAttackFrame(m_startAttackFrame);//攻撃発生
 				player.SetFinishAttackFrame(m_finishAttackFrame);//持続終了
 				//攻撃
-				Box attackBox;
-				attackBox.x1 = -150;
-				attackBox.y1 = 0;
-				attackBox.x2 = 150;
-				attackBox.y2 = 100;
-				player.SetHitBoxAttack(attackBox);
+				GetHitBoxCommand8(player);
 				player.SetGiveNoActFrame(kDown);
 				player.SetGiveGuardFrame(m_allFrame - m_startAttackFrame - 14);
 			}

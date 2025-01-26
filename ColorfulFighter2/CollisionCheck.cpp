@@ -493,7 +493,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			}
 
 			//ガードエフェクト
-			gameManager.LoadGuardEffect(p1.GetPlayerIndex());
+			gameManager.LoadScrapeGuardEffect(p1);
 
 			//ガードの音
 			m_seP1->Stop();
@@ -531,7 +531,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			p2.SetNoActFrame(bulletP1.GetGiveNoActFrame());//硬直差
 
 			//ヒットエフェクト
-			gameManager.LoadHitEffect(p1.GetPlayerIndex());
+			gameManager.LoadSpecialHitEffect(p1);
 
 			//ヒットの音
 			m_seP1->Stop();
@@ -579,7 +579,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			}
 
 			//ガードエフェクト
-			gameManager.LoadGuardEffect(p2.GetPlayerIndex());
+			gameManager.LoadScrapeGuardEffect(p2);
 
 			//ガードの音
 			m_seP2->Stop();
@@ -617,7 +617,7 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			p1.SetNoActFrame(bulletP2.GetGiveNoActFrame());//硬直差
 
 			//ヒットエフェクト
-			gameManager.LoadHitEffect(p2.GetPlayerIndex());
+			gameManager.LoadSpecialHitEffect(p2);
 
 			//ヒットの音
 			m_seP2->Stop();
@@ -710,8 +710,8 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		p2.SetHp(p2.GetHp() - p1.GetGiveDamage());
 
 		//ヒットエフェクト
-		gameManager.LoadHitEffect(p1.GetPlayerIndex());
-		gameManager.LoadHitEffect(p2.GetPlayerIndex());
+		gameManager.LoadNormalHitEffect(p1);
+		gameManager.LoadNormalHitEffect(p2);
 		//エフェクトの位置
 		gameManager.SetHitEffectPosP1(CreateHitEffectPosPtoP(p1, p2));
 		gameManager.SetHitEffectPosP2(CreateHitEffectPosPtoP(p2, p1));
@@ -741,7 +741,14 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			//カメラ揺らす
 			gameManager.OnIsCameraShake();
 			//ヒットエフェクト
-			gameManager.LoadHitEffect(p1.GetPlayerIndex());
+			if (p1.GetIsCommand())
+			{
+				gameManager.LoadSpecialHitEffect(p1);
+			}
+			else
+			{
+				gameManager.LoadNormalHitEffect(p1);
+			}
 
 			//空中の敵に攻撃を当てたら
 			if (!p2.GetIsGround())
@@ -784,9 +791,6 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		}
 		else
 		{
-			//ガードエフェクト
-			gameManager.LoadGuardEffect(p1.GetPlayerIndex());
-
 			giveVeloP2.y = 0;
 			//相手が左側なら反転
 			if ((p2.GetPos().x < p1.GetPos().x))
@@ -798,6 +802,13 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			if (p1.GetIsCommand())
 			{
 				p2.SetHp(p2.GetHp() - (p1.GetGiveDamage() * kScrapMagin));//ダメージ
+				//削り
+				gameManager.LoadScrapeGuardEffect(p1);
+			}
+			else
+			{
+				//ガードエフェクト
+				gameManager.LoadGuardEffect(p1);
 			}
 
 			p2.m_knockback = giveVeloP2;//相手をずらす
@@ -844,7 +855,14 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			//カメラ揺らす
 			gameManager.OnIsCameraShake();
 			//ヒットエフェクト
-			gameManager.LoadHitEffect(p2.GetPlayerIndex());
+			if (p1.GetIsCommand())
+			{
+				gameManager.LoadSpecialHitEffect(p2);
+			}
+			else
+			{
+				gameManager.LoadNormalHitEffect(p2);
+			}
 			//空中の敵に攻撃を当てたら
 			if (!p1.GetIsGround())
 			{
@@ -888,9 +906,6 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 		}
 		else//ガード
 		{
-			//ガードエフェクト
-			gameManager.LoadGuardEffect(p2.GetPlayerIndex());
-
 			giveVeloP1.y = 0;
 			//相手が左側なら反転
 			if ((p1.GetPos().x < p2.GetPos().x))
@@ -901,6 +916,13 @@ void CollisionCheck::AttackProcess(Player& p1, Player& p2, Bullet& bulletP1, Bul
 			if (p2.GetIsCommand())
 			{
 				p1.SetHp(p1.GetHp() - (p2.GetGiveDamage() * kScrapMagin));//ダメージ
+				//削り
+				gameManager.LoadScrapeGuardEffect(p2);
+			}
+			else
+			{
+				//ガードエフェクト
+				gameManager.LoadGuardEffect(p2);
 			}
 			p1.m_knockback = giveVeloP1;
 			p1.SetVelo(p1.m_knockback);//相手をずらす

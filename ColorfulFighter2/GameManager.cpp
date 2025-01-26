@@ -28,14 +28,18 @@ namespace
 	constexpr int kRoundTime = 99;//99秒
 
 	//ヒットエフェクトのアニメーション
-	constexpr int kHitAnimFirstIndex = 236;
-	constexpr int kHitAnimFinishIndex = 241;
+	constexpr int kHitAnimFirstIndex = 36;
+	constexpr int kHitAnimFinishIndex = 41;
+	//爆発
+	constexpr int kBomAnimFirstIndex = 42;
+	constexpr int kBomAnimFinishIndex = 47;
 	//ガードエフェクトのアニメーション
-	constexpr int kGuardAnimFirstIndex = 205;
-	constexpr int kGuardAnimFinishIndex = 210;
+	constexpr int kGuardAnimFirstIndex = 12;
+	constexpr int kGuardAnimFinishIndex = 17;
 
 	constexpr int kEffectWidth = 160;
 	constexpr int kEffectHeight = 160;
+	
 	
 	//seボリューム
 	constexpr int kSeVolume = 150;
@@ -67,16 +71,21 @@ GameManager::GameManager():
 	m_hitAnimCountFrameP1(0),
 	m_hitAnimIndexP1(kHitAnimFinishIndex),
 	m_hitAnimFinishIndexP1(kHitAnimFinishIndex),
+	m_effectSizeP1(1.0f),
+	m_angleP1(1.0f),
 	//P2
 	m_hitEffectPosP2(),
 	m_hitAnimCountFrameP2(0),
 	m_hitAnimIndexP2(kHitAnimFinishIndex),
 	m_hitAnimFinishIndexP2(kHitAnimFinishIndex),
+	m_angleP2(1.0f),
 	//エフェクト
-	m_hitHandle(LoadGraph("./img/Bullet/YellowBullet160x160.png")),
-	m_guardHandle(LoadGraph("./img/Bullet/BlueBullet160x160.png")),
-	m_hitEffectHandleP1(m_hitHandle),
-	m_hitEffectHandleP2(m_hitHandle),
+	m_redEffectHandle(LoadGraph("./img/HitEffect/Retro Impact Effect Pack 3 A.png")),
+	m_purpleEffectHandle(LoadGraph("./img/HitEffect/Retro Impact Effect Pack 3 B.png")),
+	m_greenEffectHandle(LoadGraph("./img/HitEffect/Retro Impact Effect Pack 3 D.png")),
+	m_blueHandle(LoadGraph("./img/HitEffect/Retro Impact Effect Pack 3 C.png")),
+	m_hitEffectHandleP1(m_redEffectHandle),
+	m_hitEffectHandleP2(m_redEffectHandle),
 	//SE
 	m_round1SeHandle(LoadSoundMem("./SE/Round/Round1.mp3")),
 	m_round2SeHandle(LoadSoundMem("./SE/Round/Round2.mp3")),
@@ -229,14 +238,13 @@ void GameManager::FadeDraw()
 
 void GameManager::HitEffectDraw(Camera& camera)
 {
-	
-	SetDrawBlendMode(DX_BLENDMODE_PMA_INVSRC, 255);
 	//描画
 	//P1
 	//切り取るを計算する
 	int sizeX, sizeY;
 	int cutX, cutY;
-	GetGraphSize(m_hitEffectHandleP1, &sizeX, &sizeY);//画像サイズ
+	//エフェクトを派手にしたいので下に別のエフェクトを重ねておく
+	GetGraphSize(m_redEffectHandle, &sizeX, &sizeY);//画像サイズ
 	cutX = m_hitAnimIndexP1 % (sizeX / kEffectWidth);//横
 	cutY = m_hitAnimIndexP1 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP1.x) + static_cast<int>(camera.m_drawOffset.x),
@@ -244,10 +252,7 @@ void GameManager::HitEffectDraw(Camera& camera)
 		kEffectWidth * cutX,
 		kEffectHeight * cutY,
 		kEffectWidth, kEffectHeight,
-		1.0f, 2.0f, m_hitEffectHandleP1, true, false);
-	//P2
-	//切り取るを計算する
-	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
+		m_effectSizeP1 - 0.5f, 1.5f, m_redEffectHandle, true, false);
 	cutX = m_hitAnimIndexP2 % (sizeX / kEffectWidth);//横
 	cutY = m_hitAnimIndexP2 / (sizeX / kEffectHeight);//縦
 	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP2.x) + static_cast<int>(camera.m_drawOffset.x),
@@ -255,8 +260,26 @@ void GameManager::HitEffectDraw(Camera& camera)
 		kEffectWidth * cutX,
 		kEffectHeight * cutY,
 		kEffectWidth, kEffectHeight,
-		1.0f, 2.0f, m_hitEffectHandleP2, true, false);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		m_effectSizeP2 - 0.5f, 2.5f, m_greenEffectHandle, true, false);
+	GetGraphSize(m_blueHandle, &sizeX, &sizeY);//画像サイズ
+	cutX = m_hitAnimIndexP1 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP1 / (sizeX / kEffectHeight);//縦
+	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP1.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_hitEffectPosP1.y) + static_cast<int>(camera.m_drawOffset.y),
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		m_effectSizeP1 - 0.5f, 1.5f, m_blueHandle, true, false);
+	cutX = m_hitAnimIndexP2 % (sizeX / kEffectWidth);//横
+	cutY = m_hitAnimIndexP2 / (sizeX / kEffectHeight);//縦
+	DrawRectRotaGraphFast(static_cast<int>(m_hitEffectPosP2.x) + static_cast<int>(camera.m_drawOffset.x),
+		static_cast<int>(m_hitEffectPosP2.y) + static_cast<int>(camera.m_drawOffset.y),
+		kEffectWidth * cutX,
+		kEffectHeight * cutY,
+		kEffectWidth, kEffectHeight,
+		m_effectSizeP2 - 0.5f, 2.5f, m_blueHandle, true, false);
+
+
 	//P1
 	GetGraphSize(m_hitEffectHandleP1, &sizeX, &sizeY);//画像サイズ
 	cutX = m_hitAnimIndexP1 % (sizeX / kEffectWidth);//横
@@ -266,7 +289,7 @@ void GameManager::HitEffectDraw(Camera& camera)
 		kEffectWidth * cutX,
 		kEffectHeight * cutY,
 		kEffectWidth, kEffectHeight,
-		1.0f, 1.0f, m_hitEffectHandleP1, true, false);
+		m_effectSizeP1, m_angleP1, m_hitEffectHandleP1, true, false);
 	//P2
 	GetGraphSize(m_hitEffectHandleP2, &sizeX, &sizeY);//画像サイズ
 	cutX = m_hitAnimIndexP2 % (sizeX / kEffectWidth);//横
@@ -276,9 +299,7 @@ void GameManager::HitEffectDraw(Camera& camera)
 		kEffectWidth * cutX,
 		kEffectHeight * cutY,
 		kEffectWidth, kEffectHeight,
-		1.0f, 1.0f, m_hitEffectHandleP2, true, false);
-
-
+		m_effectSizeP2, m_angleP2, m_hitEffectHandleP2, true, false);
 
 #if _DEBUG
 	DrawFormatString(0, 700, 0xffff00, "P1のヒットエフェクト(%2.0f,%2.0f)", m_hitEffectPosP1.x, m_hitEffectPosP1.y);
@@ -286,43 +307,115 @@ void GameManager::HitEffectDraw(Camera& camera)
 #endif
 }
 
-void GameManager::LoadHitEffect(PlayerIndex playerIndex)
+void GameManager::LoadNormalHitEffect(Player& player)
 {
-	if (playerIndex == PlayerIndex::Player1)
+	if (player.GetPlayerIndex() == PlayerIndex::Player1)
 	{
 		//ヒットハンドルをセット
-		m_hitEffectHandleP1 = m_hitHandle;
 		m_hitAnimCountFrameP1 = 0;
 		m_hitAnimIndexP1 = kHitAnimFirstIndex;
 		m_hitAnimFinishIndexP1 = kHitAnimFinishIndex;
+		m_angleP1 *= 2.0f;
+		m_hitEffectHandleP1 = m_greenEffectHandle;
+		m_effectSizeP1 = 1.0f;
 	}
-	else if (playerIndex == PlayerIndex::Player2)
+	else if (player.GetPlayerIndex() == PlayerIndex::Player2)
 	{
 		//ヒットハンドルをセット
-		m_hitEffectHandleP2 = m_hitHandle;
 		m_hitAnimCountFrameP2 = 0;
 		m_hitAnimIndexP2 = kHitAnimFirstIndex;
 		m_hitAnimFinishIndexP2 = kHitAnimFinishIndex;
+		m_angleP2 *= 2.0f;
+		m_hitEffectHandleP2 = m_greenEffectHandle;
+		m_effectSizeP2 = 1.0f;
 	}
 }
 
-void GameManager::LoadGuardEffect(PlayerIndex playerIndex)
+void GameManager::LoadSpecialHitEffect(Player& player)
 {
-	if (playerIndex == PlayerIndex::Player1)
+	if (player.GetPlayerIndex() == PlayerIndex::Player1)
 	{
 		//ヒットハンドルをセット
-		m_hitEffectHandleP1 = m_guardHandle;
+		m_hitAnimCountFrameP1 = 0;
+		m_hitAnimIndexP1 = kHitAnimFirstIndex;
+		m_hitAnimFinishIndexP1 = kHitAnimFinishIndex;
+		m_angleP1 *= 2.0f;
+		m_hitEffectHandleP1 = m_redEffectHandle;
+		m_effectSizeP1 = 1.5f;
+	}
+	else if (player.GetPlayerIndex() == PlayerIndex::Player2)
+	{
+		//ヒットハンドルをセット
+		m_hitAnimCountFrameP2 = 0;
+		m_hitAnimIndexP2 = kHitAnimFirstIndex;
+		m_hitAnimFinishIndexP2 = kHitAnimFinishIndex;
+		m_angleP2 *= 2.0f;
+		m_hitEffectHandleP2 = m_redEffectHandle;
+		m_effectSizeP2 = 1.5f;
+	}
+}
+
+void GameManager::LoadGuardEffect(Player& player)
+{
+	if (player.GetPlayerIndex() == PlayerIndex::Player1)
+	{
+		//ヒットハンドルをセット
+		m_hitEffectHandleP1 = m_blueHandle;
 		m_hitAnimCountFrameP1 = 0;
 		m_hitAnimIndexP1 = kGuardAnimFirstIndex;
 		m_hitAnimFinishIndexP1 = kGuardAnimFinishIndex;
 	}
-	else if (playerIndex == PlayerIndex::Player2)
+	else if (player.GetPlayerIndex() == PlayerIndex::Player2)
 	{
 		//ヒットハンドルをセット
-		m_hitEffectHandleP2 = m_guardHandle;
+		m_hitEffectHandleP2 = m_blueHandle;
 		m_hitAnimCountFrameP2 = 0;
 		m_hitAnimIndexP2 = kGuardAnimFirstIndex;
 		m_hitAnimFinishIndexP2 = kGuardAnimFinishIndex;
+	}
+}
+
+void GameManager::LoadScrapeGuardEffect(Player& player)
+{
+	if (player.GetPlayerIndex() == PlayerIndex::Player1)
+	{
+		//ヒットハンドルをセット
+		m_hitEffectHandleP1 = m_purpleEffectHandle;
+		m_hitAnimCountFrameP1 = 0;
+		m_hitAnimIndexP1 = kGuardAnimFirstIndex;
+		m_hitAnimFinishIndexP1 = kGuardAnimFinishIndex;
+	}
+	else if (player.GetPlayerIndex() == PlayerIndex::Player2)
+	{
+		//ヒットハンドルをセット
+		m_hitEffectHandleP2 = m_purpleEffectHandle;
+		m_hitAnimCountFrameP2 = 0;
+		m_hitAnimIndexP2 = kGuardAnimFirstIndex;
+		m_hitAnimFinishIndexP2 = kGuardAnimFinishIndex;
+	}
+}
+
+void GameManager::LoadBomEffect(Player& player)
+{
+	if (player.GetPlayerIndex() == PlayerIndex::Player1)
+	{
+		//ヒットハンドルをセット
+		m_hitEffectHandleP1 = m_redEffectHandle;
+		m_hitAnimCountFrameP1 = 0;
+		m_hitAnimIndexP1 = kBomAnimFirstIndex;
+		m_hitAnimFinishIndexP1 = kBomAnimFinishIndex;
+		m_angleP1 *= 2.0f;
+		m_effectSizeP1 = 2.0f;
+	}
+	else if (player.GetPlayerIndex() == PlayerIndex::Player2)
+	{
+		//ヒットハンドルをセット
+		m_hitEffectHandleP2 = m_redEffectHandle;
+		m_hitAnimCountFrameP2 = 0;
+		m_hitAnimIndexP2 = kBomAnimFirstIndex;
+		m_hitAnimFinishIndexP2 = kBomAnimFinishIndex;
+		m_angleP2 *= 2.0f;
+		m_effectSizeP2 = 2.0f;
 	}
 }
 

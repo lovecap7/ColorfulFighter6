@@ -55,18 +55,26 @@ private:
 	//エフェクト
 	Vector3 m_hitEffectPosP1;//プレイヤー1が敵を殴った時のエフェクト
 	Vector3 m_hitEffectPosP2;//プレイヤー2が敵を殴った時のエフェクト
-	int m_hitHandle;
-	int m_guardHandle;
+	int m_redEffectHandle;
+	int m_greenEffectHandle;
+	int m_purpleEffectHandle;
+	int m_blueHandle;
 	//再生するハンドル
-	int m_hitEffectHandleP1;//P1
-	int m_hitEffectHandleP2;//P2
+	int m_hitEffectHandleP1;
+	int m_hitEffectHandleP2;
+
 	//アニメーションの再生に必要なもの
 	int m_hitAnimIndexP1;//再生している画像の現在の番号
 	int m_hitAnimFinishIndexP1;//この番号まで画像が来たら終わり
 	int m_hitAnimCountFrameP1;
+	float m_effectSizeP1;
+	float m_angleP1;
+
 	int m_hitAnimIndexP2;//再生している画像の現在の番号
 	int m_hitAnimFinishIndexP2;//この番号まで画像が来たら終わり
 	int m_hitAnimCountFrameP2;
+	float m_effectSizeP2;
+	float m_angleP2;
 
 	//SE
 	std::shared_ptr<SE> m_se;
@@ -81,6 +89,7 @@ private:
 	//プレイヤー1が攻撃を当てた場合プレイヤー1を前に描画(true)
 	//プレイヤー2が攻撃を当てた場合プレイヤー1を後ろに描画(false)
 	bool m_isDrawFrontP1;
+
 public:
 	GameManager();
 	~GameManager();
@@ -121,8 +130,12 @@ public:
 	void SetHitEffectPosP1(Vector3 hitPos) { m_hitEffectPosP1 = hitPos; }
 	void SetHitEffectPosP2(Vector3 hitPos) { m_hitEffectPosP2 = hitPos; }
 	//ヒットエフェクト、ガードエフェクトを表示するための関数
-	void LoadHitEffect(PlayerIndex playerIndex);
-	void LoadGuardEffect(PlayerIndex playerIndex);
+	void LoadNormalHitEffect(Player& player);
+	void LoadSpecialHitEffect(Player& player);
+	void LoadGuardEffect(Player& player);
+	void LoadScrapeGuardEffect(Player& player);
+	void LoadBomEffect(Player& player);
+	//削りダメージ
 
 	//描画順を変えるために使う
 	bool GetIsDrawFrontP1() { return m_isDrawFrontP1; }

@@ -211,7 +211,7 @@ void Player::Init(float X,bool isLeft)
 	m_draw = &Player::IdleStandDraw;
 }
 
-void Player::Update(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::Update(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//地面についてるかチェック
 	CheckGround();
@@ -986,7 +986,7 @@ void Player::InitPushBox()
 
 
 
-void Player::IdleStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::IdleStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -1258,7 +1258,7 @@ void Player::IdleStandDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::IdleSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::IdleSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -1460,7 +1460,7 @@ void Player::IdleSquatDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::JumpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::JumpUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -1623,7 +1623,7 @@ void Player::JumpDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::AttackStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::AttackStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	
 	//ガードできない
@@ -1777,7 +1777,7 @@ void Player::AttackStandDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::AttackSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::AttackSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//ガードできない
 	m_isGuard = false;
@@ -1918,7 +1918,7 @@ void Player::AttackSquatDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::AttackAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::AttackAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//地面についたら
 	if (m_isGround)
@@ -2045,7 +2045,7 @@ void Player::AttackAerialDraw(const Camera& camera)
 }
 
 //空中攻撃後
-void Player::AttackedAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::AttackedAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 #if _DEBUG
 	//コマンドの硬直まで数える
@@ -2098,7 +2098,7 @@ void Player::AttackedAerialDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::CommandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::CommandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//コマンド技
 	m_isCommand = true;
@@ -2240,7 +2240,7 @@ void Player::CommandDraw(const Camera& camera)
 }
 
 
-void Player::GuardStandUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::GuardStandUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -2298,7 +2298,7 @@ void Player::GuardStandDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::GuardSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::GuardSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -2356,7 +2356,7 @@ void Player::GuardSquatDraw(const Camera& camera)
 }
 
 //投げ
-void Player::GraspUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::GraspUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//ガードできない
 	m_isGuard = false;
@@ -2510,7 +2510,7 @@ void Player::GraspDraw(const Camera& camera)
 }
 
 //投げる
-void Player::ThrowUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::ThrowUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 
 	//移動量リセット
@@ -2589,7 +2589,7 @@ void Player::ThrowDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::BeThrownUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//移動量リセット
 	m_velocity.x = 0;
@@ -2702,7 +2702,7 @@ void Player::BeThrownDraw(const Camera& camera)
 }
 
 //投げ抜け
-void Player::ThrowEscapeUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::ThrowEscapeUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -2769,7 +2769,7 @@ void Player::ThrowEscapeDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::DamageUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::DamageUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//やられ判定
 	m_chara->GetHitBoxHitStand(*this);
@@ -2842,7 +2842,7 @@ void Player::DamageDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::DamageSquatUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::DamageSquatUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 
 }
@@ -2853,7 +2853,7 @@ void Player::DamageSquatDraw(const Camera& camera)
 
 
 //ダウン
-void Player::DownUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::DownUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -2925,7 +2925,7 @@ void Player::DownDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::DownAerialUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::DownAerialUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//攻撃判定リセット
 	ResetAttackBox();
@@ -2980,7 +2980,7 @@ void Player::DownAerialDraw(const Camera& camera)
 }
 
 //起き上がり
-void Player::StandUpUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::StandUpUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	m_animCountFrame++;
 	//アニメーションの1枚目を0番として数えるので
@@ -3034,7 +3034,7 @@ void Player::StandUpDraw(const Camera& camera)
 		kCharaScale, 0.0f, m_handle, true, m_isLeft);
 }
 
-void Player::ResultUpdate(Input& input, std::shared_ptr<Player> enemy, std::shared_ptr<Bullet> myBullet, GameManager& gameManager)
+void Player::ResultUpdate(Input& input, std::shared_ptr<Player>& enemy, std::shared_ptr<Bullet>& myBullet, GameManager& gameManager)
 {
 	//判定を消す
 	ResetAttackBox();
