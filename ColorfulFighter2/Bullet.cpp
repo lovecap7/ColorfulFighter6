@@ -27,7 +27,7 @@ namespace
 	constexpr int kHadouOffsetPosX = 100;
 	//‘¬“x
 	constexpr float kHadouVeloXLight = 0.05f;
-	constexpr float kHadouVeloXHigh = 0.5f;
+	constexpr float kHadouVeloXHigh = 2.0f;
 	//‰Á‘¬”{—¦
 	constexpr float acceleration = 1.1f;
 	
