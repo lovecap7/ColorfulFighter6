@@ -3,6 +3,8 @@
 #include <memory>
 #include "Vector3.h"
 class BGM;
+class SE;
+class FadeManager;
 class TitleScene :
     public SceneBase
 {
@@ -12,6 +14,9 @@ private:
     int m_titleFadeCountFrame;
     int m_textHandle;
     std::shared_ptr<BGM> m_bgm;
+    std::shared_ptr<SE> m_se;
+    std::shared_ptr<FadeManager> m_fadeManager;
+    bool m_isFadeIn;
 
     //テキストが出たり消えたりする
     int m_textBlinkFrame;
@@ -34,9 +39,9 @@ private:
 	void DemoUpdate(Input& input, Input& input2);
 	void DemoDraw();
 
-	//フェード
-    void FadeUpdate(Input& input, Input& input2);
-    void FadeDraw();
+	//ゲームスタート
+    void GameStartUpdate(Input& input, Input& input2);
+    void GameStartDraw();
 	int m_fadeCountFrame;
 
     struct Actor

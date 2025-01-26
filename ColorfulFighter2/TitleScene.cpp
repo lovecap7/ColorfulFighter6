@@ -6,6 +6,8 @@
 #include "CommandSelectScene.h"
 #include "ResultScene.h"
 #include "BGM.h"
+#include "SE.h"
+#include "FadeManager.h"
 
 namespace
 {
@@ -15,9 +17,9 @@ namespace
 	constexpr int kTextPosX = (Game::kScreenWidth / 2) - (kTextWidth / 2);
 	constexpr int kTextPosY = 600;
 	//BGMボリューム
-	constexpr int kBgmVolume = 120;
+	constexpr int kBgmVolume = 150;
 	//SEボリューム
-	constexpr int kSeVolume = 150;
+	constexpr int kSeVolume = 130;
 
 	//キャラの画像の大きさ
 	constexpr int kCharaWidth = 512;
@@ -72,7 +74,7 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 		return;//忘れずreturn
 	}
 #endif
-
+	m_bgm->PlayOnce();
 	m_textBlinkFrame++;
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||
@@ -87,9 +89,9 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 		input2.IsTrigger("LB") ||
 		input2.IsTrigger("RB") )
 	{
-		//フェードイン
-		m_update = &TitleScene::FadeUpdate;
-		m_draw = &TitleScene::FadeDraw;
+		m_isFadeIn = false;
+		m_update = &TitleScene::GameStartUpdate;
+		m_draw = &TitleScene::GameStartDraw;
 		return;
 	}
 
@@ -174,6 +176,30 @@ void TitleScene::NormalUpdate(Input& input, Input& input2)
 	{
 		m_titleFadeCountFrame += 5;
 	}
+
+	//最初に戻る
+	if (m_bgm->CheckEndBGM())
+	{
+		m_isFadeIn = true;
+		if (m_fadeManager->IsFinishFadeIn())
+		{
+			m_bgm->Stop();
+			m_se->Stop();
+			m_actor1Pos = Vector3(kActor1PosX, kActor1PosY, 0);
+			m_actor1Velo = Vector3(0, 0, 0);
+			m_actor2Pos = Vector3(kActor2PosX, kActor2PosY, 0);
+			m_actor2Velo = Vector3(0, 0, 0);
+			m_actor1.handle = m_walkHandle;
+			m_actor1.animNum = kAnimNum;
+			m_actor1.oneAnimFrame = kIWalkOneAnimFrame;
+			m_actor2.handle = m_walkHandle;
+			m_actor2.animNum = kAnimNum;
+			m_actor2.oneAnimFrame = kIWalkOneAnimFrame;
+			m_update = &TitleScene::OpeningUpdate;
+			m_draw = &TitleScene::OpeningDraw;
+			return;
+		}
+	}
 }
 
 void TitleScene::NormalDraw()
@@ -190,6 +216,7 @@ void TitleScene::NormalDraw()
 
 void TitleScene::OpeningUpdate(Input& input, Input& input2)
 {
+	m_se->PlayLoop();
 	//スキップ
 	if (input.IsTrigger("A") ||
 		input.IsTrigger("B") ||
@@ -266,6 +293,7 @@ void TitleScene::OpeningUpdate(Input& input, Input& input2)
 			}
 		}
 	}
+	m_isFadeIn = false;
 }
 
 void TitleScene::OpeningDraw()
@@ -283,28 +311,21 @@ void TitleScene::DemoDraw()
 	
 }
 
-void TitleScene::FadeUpdate(Input& input, Input& input2)
+void TitleScene::GameStartUpdate(Input& input, Input& input2)
 {
 	//フェードイン
-	if (m_fadeCountFrame < 255)
+	m_isFadeIn = true;
+	if (m_fadeManager->IsFinishFadeIn())
 	{
-		m_fadeCountFrame += 5;
-	}
-	else
-	{
-		//押されたら次の状態に繊維
 		//次の状態はこのクラスが覚えておく
 		m_controller.ChangeScene(std::make_shared<CommandSelectScene>(m_controller));
 		return;//忘れずreturn
 	}
 }
 
-void TitleScene::FadeDraw()
+void TitleScene::GameStartDraw()
 {
 	ActorDraw();
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, m_fadeCountFrame);
-	DrawBox(0, 0, Game::kScreenWidth, Game::kScreenHeight, 0x000000, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //裏で戦っているキャラクター
@@ -362,10 +383,15 @@ TitleScene::TitleScene(SceneController& contoller) :
 	m_actor1.handle = m_walkHandle;
 	m_actor2.handle = m_walkHandle;
 	m_bgm = std::make_shared<BGM>();
-	int bgmhandle = LoadSoundMem("./BGM/BGM_Title.mp3");
-	m_bgm->SetBGM(bgmhandle);
+	int bgmHandle = LoadSoundMem("./BGM/BGM_Title.mp3");
+	m_bgm->SetBGM(bgmHandle);
 	m_bgm->Volume(kBgmVolume);
-	m_bgm->PlayLoop();
+	m_se = std::make_shared<SE>();
+	int seHandle = LoadSoundMem("./SE/Title/city.mp3");
+	m_se->SetSE(seHandle);
+	m_se->Volume(kSeVolume);
+	m_fadeManager = std::make_shared<FadeManager>();
+	m_isFadeIn = false;
 }
 
 void TitleScene::Update(Input& input, Input& input2)
@@ -378,4 +404,5 @@ void TitleScene::Draw()
 {
 	DrawGraph(0, 0, m_backHandle, true);
 	(this->*m_draw)();
+	m_fadeManager->FadeDraw(m_isFadeIn);
 }
